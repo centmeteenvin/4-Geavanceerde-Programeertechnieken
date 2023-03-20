@@ -5,6 +5,7 @@ package game;
  */
 public abstract class AbstractFactory {
     private GameState gameState;
+    private Settings settings;
     public  AbstractFactory() {
 
     }
@@ -23,5 +24,9 @@ public abstract class AbstractFactory {
 
     public GameState getGameState() {
         return gameState;
+    }
+
+    public Settings getSettings() {
+        return settings;
     }
 }

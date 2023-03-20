@@ -1,13 +1,14 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Game {
     private AbstractFactory abstractFactory;
     private ArrayList<Entity> entities;
     private GameState gameState;
-
+    private Settings settings;
     public Game(AbstractFactory abstractFactory) {
         this.abstractFactory = abstractFactory;
     }
@@ -29,6 +30,7 @@ public class Game {
     public void initialize() {
         abstractFactory.initialize();
         this.gameState = abstractFactory.getGameState();
+        this.settings = abstractFactory.getSettings();
     }
 
     /**
@@ -39,11 +41,23 @@ public class Game {
      * 4 Call AbstractFactory render method add the end of the loop.
      */
     public void gameLoop() {
+        long time;
+        double elapsedTime;
+        double timePerFrame = 1.0/settings.getFps();
         while(gameState.getPlaying()) {
+            time = System.currentTimeMillis();
             //TODO fetchInputs, nog is even nadenken hoe ik inputs ga passeren
             entities.forEach(Entity::update);
             entities.forEach(Entity::visualize);
             abstractFactory.render();
+            elapsedTime = (double) (System.currentTimeMillis() - time);
+            if (elapsedTime < timePerFrame) {
+                try {
+                    TimeUnit.MILLISECONDS.sleep((long) (timePerFrame-elapsedTime));
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 }
