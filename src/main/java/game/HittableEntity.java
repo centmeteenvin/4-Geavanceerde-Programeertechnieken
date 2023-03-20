@@ -3,13 +3,15 @@ package game;
 import java.awt.*;
 
 public abstract class HittableEntity extends Entity {
-    private double health;
-    private Point size;
+    protected double health;
+    protected Point size;
 
     public HittableEntity(double health, Point size) {
         this.health = health;
         this.size = size;
     }
 
-    public abstract void getHit();
+    public void getHit() {
+        health--;
+    }
 }

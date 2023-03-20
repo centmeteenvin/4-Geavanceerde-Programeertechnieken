@@ -10,7 +10,7 @@ public abstract class Entity {
     /**
      * All Entities have a coordinate field to track its position.
      */
-    private Point coordinate;
+    protected Point coordinate;
 
     /**
      * Called after the updates are gathered
