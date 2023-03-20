@@ -7,6 +7,7 @@ package game;
 public class GameState {
     private int score;
     private Boolean isPlaying;
+    private int currentLevel;
 
     public Boolean getPlaying() {
         return isPlaying;
@@ -22,5 +23,13 @@ public class GameState {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
     }
 }

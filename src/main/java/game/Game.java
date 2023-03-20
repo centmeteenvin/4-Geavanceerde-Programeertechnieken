@@ -1,5 +1,6 @@
 package game;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -14,12 +15,31 @@ public class Game {
     }
 
     /**
-     * Call this method to start the game
+     * Call this method to start the game.
+     * 1 call Initialize.
+     * 2 load the level.
+     * 3 start the gameLoop.
      */
     public void start() {
         initialize();
-//        TODO loadLevel();
+        loadLevel();
         gameLoop();
+    }
+
+    private void loadLevel() {
+        File currentLevelFile = new File("src/main/resources/levels/level_" + gameState.getCurrentLevel());
+        try {
+            BufferedReader levelReader = new BufferedReader(new FileReader(currentLevelFile));
+            String line;
+            do {
+                line = levelReader.readLine();
+                //TODO entity lijst updaten maar eerst Player en Enemy maken
+            }   while (line != null);
+        } catch (FileNotFoundException e) {
+            System.out.println("Level does not exist");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
