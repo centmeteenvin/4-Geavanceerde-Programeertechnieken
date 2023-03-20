@@ -1,10 +1,12 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Game {
     private AbstractFactory abstractFactory;
     private ArrayList<Entity> entities;
+    private GameState gameState;
 
     public Game(AbstractFactory abstractFactory) {
         this.abstractFactory = abstractFactory;
@@ -21,10 +23,12 @@ public class Game {
 
     /**
      * Initialize all the settings of the game.
-     * Makes a call to the AbstractFactory InitializeMethod
+     * Makes a call to the AbstractFactory InitializeMethod.
+     * Gets the gameState object from the factory.
      */
     public void initialize() {
         abstractFactory.initialize();
+        this.gameState = abstractFactory.getGameState();
     }
 
     /**
@@ -35,8 +39,11 @@ public class Game {
      * 4 Call AbstractFactory render method add the end of the loop.
      */
     public void gameLoop() {
-        while(true) {
-
+        while(gameState.getPlaying()) {
+            //TODO fetchInputs, nog is even nadenken hoe ik inputs ga passeren
+            entities.forEach(Entity::update);
+            entities.forEach(Entity::visualize);
+            abstractFactory.render();
         }
     }
 }

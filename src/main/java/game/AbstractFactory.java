@@ -4,6 +4,7 @@ package game;
  * Abstract class that defines the Factory that makes the objects needed for the game;
  */
 public abstract class AbstractFactory {
+    private GameState gameState;
     public  AbstractFactory() {
 
     }
@@ -19,4 +20,8 @@ public abstract class AbstractFactory {
      * Is called at the end of every gameLoop.
      */
     public abstract void render();
+
+    public GameState getGameState() {
+        return gameState;
+    }
 }
