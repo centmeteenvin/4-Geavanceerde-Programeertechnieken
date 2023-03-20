@@ -67,7 +67,7 @@ public class Game {
         while(gameState.getPlaying()) {
             time = System.currentTimeMillis();
             //TODO fetchInputs, nog is even nadenken hoe ik inputs ga passeren
-            entities.forEach(Entity::update);
+            entities.forEach(entity -> entity.update(entities));
             entities.forEach(Entity::visualize);
             abstractFactory.render();
             elapsedTime = (double) (System.currentTimeMillis() - time);
