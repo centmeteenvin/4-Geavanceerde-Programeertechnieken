@@ -1,38 +1,38 @@
-package game;
+package SpaceInvaders;
 
-import game.entity.Enemy;
-import game.entity.Entity;
-import game.entity.Player;
-import game.utilities.GameState;
-import game.utilities.Settings;
+import SpaceInvaders.entity.Enemy;
+import SpaceInvaders.entity.Entity;
+import SpaceInvaders.entity.Player;
+import SpaceInvaders.utilities.GameState;
+import SpaceInvaders.utilities.Settings;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 
 /**
- * Abstract class that defines the Factory that makes the objects needed for the game.
+ * Abstract class that defines the Factory that makes the objects needed for the SpaceInvaders.
  * <p>
- * This class should be extended for a concrete implementation and passed to Game constructor.
+ * This class should be extended for a concrete implementation and passed to {@link Game}constructor.
  */
 public abstract class AbstractFactory {
 
     /**
-     * The current GameState of the game.
+     * The current GameState of the SpaceInvaders.
      * <p>
      * Is created or passed in {@link #AbstractFactory() }  constructor.<br>
      * State should be set in {@link #initialize()}.<br>
-     * Game also holds a reference of this object.<br>
+     * {@link Game} also holds a reference of this object.<br>
      * Should als be passed to the {@link Player} object because they need to interact with it.<br>
      */
     protected GameState gameState;
 
     /**
-     * The settings for the game.
+     * The settings for the SpaceInvaders.
      * <p>
      * Is created or passed in {@link #AbstractFactory()} contructor.<br>
      * Settings should be set in {@link #initialize()}.<br>
-     * Game also holds a reference of this object.<br>
+     * {@link Game} also holds a reference of this object.<br>
      */
     protected Settings settings;
 
@@ -93,7 +93,7 @@ public abstract class AbstractFactory {
      * @param location Point that defines the starting location.
      * @param health double that defines the starting health.
      * @param size double that defines the size, need for collision detection.
-     * @param gameState the gameState object of the abstractFactory, is also passed to the game.
+     * @param gameState the gameState object of the abstractFactory, is also passed to the SpaceInvaders.
      * @return a Player object instantiated with the given parameters.
      */
     public abstract Player playerCreator(Point location, double health, double size, GameState gameState);

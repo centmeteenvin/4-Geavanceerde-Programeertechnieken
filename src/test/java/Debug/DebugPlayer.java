@@ -1,7 +1,7 @@
 package Debug;
 
-import game.utilities.GameState;
-import game.entity.Player;
+import SpaceInvaders.utilities.GameState;
+import SpaceInvaders.entity.Player;
 
 import java.awt.*;
 

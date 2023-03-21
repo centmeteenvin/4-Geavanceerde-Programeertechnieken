@@ -1,7 +1,7 @@
 import Debug.DebugFactory;
-import game.AbstractFactory;
-import game.entity.Entity;
-import game.utilities.GameState;
+import SpaceInvaders.AbstractFactory;
+import SpaceInvaders.entity.Entity;
+import SpaceInvaders.utilities.GameState;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;

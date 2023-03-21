@@ -1,4 +1,4 @@
-package game.utilities;
+package SpaceInvaders.utilities;
 
 public enum Input {
     LEFT,

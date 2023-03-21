@@ -1,8 +1,8 @@
-package game;
+package SpaceInvaders;
 
-import game.entity.Entity;
-import game.utilities.GameState;
-import game.utilities.Settings;
+import SpaceInvaders.entity.Entity;
+import SpaceInvaders.utilities.GameState;
+import SpaceInvaders.utilities.Settings;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,10 +11,10 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * Implementation of the game.
+ * Implementation of the SpaceInvaders.
  *
  * <p>Instantiate Game object with an AbstractFactory. <br>
- * start the game with {@link #start() Game.start()} method. </p>
+ * start the SpaceInvaders with {@link #start() Game.start()} method. </p>
  */
 public class Game {
     /**
@@ -26,7 +26,7 @@ public class Game {
     private AbstractFactory abstractFactory;
 
     /**
-     * An ArrayList of all the entities currently in the game.
+     * An ArrayList of all the entities currently in the SpaceInvaders.
      *
      * <p>In the gameLoop the update and visualize method is called on all elements of this list.
      * <p>Is initialized in the constructor and assigned in the {@link #loadLevel() loadLevel} method.
@@ -34,7 +34,7 @@ public class Game {
     private ArrayList<Entity> entities;
 
     /**
-     * The Current state of the game.
+     * The Current state of the SpaceInvaders.
      *
      * <p>Contains information such as current level and pausing.
      * <p>Is created in the {@link AbstractFactory#AbstractFactory() AbstractFactory} constructor.
@@ -43,7 +43,7 @@ public class Game {
     private GameState gameState;
 
     /**
-     * The Settings of the game.
+     * The Settings of the SpaceInvaders.
      *
      * <p>Contains information such as fps.
      * <p>Is created in the {@link AbstractFactory#AbstractFactory() AbstractFactory} constructor.
@@ -60,7 +60,7 @@ public class Game {
     }
 
     /**
-     * Call this method to start the game.
+     * Call this method to start the SpaceInvaders.
      * <p>
      * 1 call {@link #initialize()}.<br>
      * 2 load the level via {@link #loadLevel()}.<br>
@@ -73,7 +73,7 @@ public class Game {
     }
 
     /**
-     * Initialize all the settings of the game.
+     * Initialize all the settings of the SpaceInvaders.
      * <p>
      * Makes a call to {@link AbstractFactory#initialize()}.<br>
      * Gets {@link #gameState} from the {@link #abstractFactory}.<br>
@@ -88,7 +88,7 @@ public class Game {
 
     /**
      * Loads the level from the level data file.<br>
-     * The level that is opened depends on the game-state's currentLevel Field.
+     * The level that is opened depends on the SpaceInvaders-state's currentLevel Field.
      */
     private void loadLevel() {
         File currentLevelFile = new File("src/main/resources/levels/level_" + gameState.getCurrentLevel());
@@ -114,7 +114,7 @@ public class Game {
     }
 
     /**
-     * execute the game loop.
+     * execute the SpaceInvaders loop.
      * <p>
      * 1 Get all the inputs and events.<br>
      * 2 Call the {@link Entity#update(ArrayList)} method on all {@link #entities Entities}.<br>

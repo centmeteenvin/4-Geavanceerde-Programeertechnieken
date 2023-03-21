@@ -1,4 +1,4 @@
-package game.entity;
+package SpaceInvaders.entity;
 
 import java.awt.Point;
 import java.util.ArrayList;

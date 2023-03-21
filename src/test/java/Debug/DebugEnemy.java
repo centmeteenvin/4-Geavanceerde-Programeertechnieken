@@ -1,7 +1,7 @@
 package Debug;
 
-import game.entity.Enemy;
-import game.entity.Entity;
+import SpaceInvaders.entity.Enemy;
+import SpaceInvaders.entity.Entity;
 
 import java.awt.*;
 import java.util.ArrayList;

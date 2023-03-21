@@ -1,10 +1,10 @@
 package Debug;
 
-import game.*;
-import game.entity.Enemy;
-import game.entity.Player;
-import game.utilities.GameState;
-import game.utilities.Settings;
+import SpaceInvaders.*;
+import SpaceInvaders.entity.Enemy;
+import SpaceInvaders.entity.Player;
+import SpaceInvaders.utilities.GameState;
+import SpaceInvaders.utilities.Settings;
 
 import java.awt.*;
 
