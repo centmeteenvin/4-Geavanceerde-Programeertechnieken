@@ -12,6 +12,9 @@ public abstract class Entity {
      */
     protected Point coordinate;
 
+    public Entity(Point location) {
+        this.coordinate = location;
+    }
     /**
      * Called after the updates are gathered
      */
