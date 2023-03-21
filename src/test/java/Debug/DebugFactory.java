@@ -31,7 +31,7 @@ public class DebugFactory extends AbstractFactory {
 
     @Override
     public Player playerCreator(Point location, double health, double size, GameState gameState) {
-        return null;
+        return new DebugPlayer(location, health, size, gameState);
     }
 
 }

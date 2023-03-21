@@ -1,0 +1,17 @@
+package Debug;
+
+import game.GameState;
+import game.Player;
+
+import java.awt.*;
+
+public class DebugPlayer extends Player {
+    public DebugPlayer(Point location, double health, double size, GameState gameState) {
+        super(location, health, size, gameState);
+    }
+
+    @Override
+    public void visualize() {
+
+    }
+}
