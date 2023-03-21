@@ -2,6 +2,7 @@ package game;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -24,33 +25,6 @@ public class Game {
         initialize();
         loadLevel();
         gameLoop();
-    }
-
-    private void loadLevel() {
-        File currentLevelFile = new File("src/main/resources/levels/level_" + gameState.getCurrentLevel());
-        try {
-            BufferedReader levelReader = new BufferedReader(new FileReader(currentLevelFile));
-            String line;
-            do {
-                line = levelReader.readLine();
-                //TODO entity lijst updaten maar eerst Player en Enemy maken
-            }   while (line != null);
-        } catch (FileNotFoundException e) {
-            System.out.println("Level does not exist");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Initialize all the settings of the game.
-     * Makes a call to the AbstractFactory InitializeMethod.
-     * Gets the gameState object from the factory.
-     */
-    public void initialize() {
-        abstractFactory.initialize();
-        this.gameState = abstractFactory.getGameState();
-        this.settings = abstractFactory.getSettings();
     }
 
     /**
@@ -79,5 +53,42 @@ public class Game {
                 }
             }
         }
+    }
+
+    /**
+     * Loads the level from the level data file.
+     * The level that is opened depends on the game-state's currentLevel Field.
+     */
+    private void loadLevel() {
+        File currentLevelFile = new File("src/main/resources/levels/level_" + gameState.getCurrentLevel());
+        try {
+            BufferedReader levelReader = new BufferedReader(new FileReader(currentLevelFile));
+            String line;
+            ArrayList<String> list;
+            levelReader.readLine(); // read passed the first line, it only contains information about the way the data is formatted.
+            do {
+                line = levelReader.readLine();
+                list = new ArrayList<>(List.of(line.split(";")));
+                switch (list.get(0)) {
+                    case "Enemy" -> entities.add(abstractFactory.createEnemy(list));
+                    case "Player" -> entities.add(abstractFactory.createPlayer(list));
+                }
+            }   while (line != null);
+        } catch (FileNotFoundException e) {
+            System.out.println("Level does not exist");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Initialize all the settings of the game.
+     * Makes a call to the AbstractFactory InitializeMethod.
+     * Gets the gameState object from the factory.
+     */
+    public void initialize() {
+        abstractFactory.initialize();
+        this.gameState = abstractFactory.getGameState();
+        this.settings = abstractFactory.getSettings();
     }
 }
