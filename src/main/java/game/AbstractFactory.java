@@ -7,8 +7,8 @@ import java.util.ArrayList;
  * Abstract class that defines the Factory that makes the objects needed for the game;
  */
 public abstract class AbstractFactory {
-    private GameState gameState;
-    private Settings settings;
+    protected GameState gameState;
+    protected Settings settings;
     public  AbstractFactory() {
 
     }
