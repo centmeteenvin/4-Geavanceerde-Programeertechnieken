@@ -73,32 +73,17 @@ public class Game {
     }
 
     /**
-     * execute the game loop.
+     * Initialize all the settings of the game.
      * <p>
-     * 1 Get all the inputs and events.<br>
-     * 2 Call the {@link Entity#update(ArrayList)} method on all {@link #entities Entities}.<br>
-     * 3 Call the {@link Entity#visualize()} method on all {@link #entities Entities}.<br>
-     * 4 Call {@link AbstractFactory#render()} method add the end of the loop.<br>
+     * Makes a call to {@link AbstractFactory#initialize()}.<br>
+     * Gets {@link #gameState} from the {@link #abstractFactory}.<br>
+     * Gets {@link #settings} from the {@link #abstractFactory}.<br>
      */
-    private void gameLoop() {
-        long time;
-        double elapsedTime;
-        double msPerFrame = 1000/settings.getFps();
-        while(gameState.getPlaying()) {
-            time = System.currentTimeMillis();
-            //TODO fetchInputs, nog is even nadenken hoe ik inputs ga passeren
-            entities.forEach(entity -> entity.update(entities));
-            entities.forEach(Entity::visualize);
-            abstractFactory.render();
-            elapsedTime = (double) (System.currentTimeMillis() - time);
-            if (elapsedTime < msPerFrame) {
-                try {
-                    TimeUnit.MILLISECONDS.sleep((long) (msPerFrame-elapsedTime));
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
+    private void initialize() {
+        abstractFactory.initialize();
+        this.entities = new ArrayList<>();
+        this.gameState = abstractFactory.getGameState();
+        this.settings = abstractFactory.getSettings();
     }
 
     /**
@@ -129,16 +114,31 @@ public class Game {
     }
 
     /**
-     * Initialize all the settings of the game.
+     * execute the game loop.
      * <p>
-     * Makes a call to {@link AbstractFactory#initialize()}.<br>
-     * Gets {@link #gameState} from the {@link #abstractFactory}.<br>
-     * Gets {@link #settings} from the {@link #abstractFactory}.<br>
+     * 1 Get all the inputs and events.<br>
+     * 2 Call the {@link Entity#update(ArrayList)} method on all {@link #entities Entities}.<br>
+     * 3 Call the {@link Entity#visualize()} method on all {@link #entities Entities}.<br>
+     * 4 Call {@link AbstractFactory#render()} method add the end of the loop.<br>
      */
-    private void initialize() {
-        abstractFactory.initialize();
-        this.entities = new ArrayList<>();
-        this.gameState = abstractFactory.getGameState();
-        this.settings = abstractFactory.getSettings();
+    private void gameLoop() {
+        long time;
+        double elapsedTime;
+        double msPerFrame = 1000/settings.getFps();
+        while(gameState.getPlaying()) {
+            time = System.currentTimeMillis();
+            //TODO fetchInputs, nog is even nadenken hoe ik inputs ga passeren
+            entities.forEach(entity -> entity.update(entities));
+            entities.forEach(Entity::visualize);
+            abstractFactory.render();
+            elapsedTime = (double) (System.currentTimeMillis() - time);
+            if (elapsedTime < msPerFrame) {
+                try {
+                    TimeUnit.MILLISECONDS.sleep((long) (msPerFrame-elapsedTime));
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 }
