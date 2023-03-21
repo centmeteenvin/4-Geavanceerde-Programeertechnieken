@@ -33,7 +33,7 @@ public class Game {
      * 3 Call the visualize method on all Entities.
      * 4 Call AbstractFactory render method add the end of the loop.
      */
-    public void gameLoop() {
+    private void gameLoop() {
         long time;
         double elapsedTime;
         double timePerFrame = 1.0/settings.getFps();
@@ -85,7 +85,7 @@ public class Game {
      * Makes a call to the AbstractFactory InitializeMethod.
      * Gets the gameState object from the factory.
      */
-    public void initialize() {
+    private void initialize() {
         abstractFactory.initialize();
         this.gameState = abstractFactory.getGameState();
         this.settings = abstractFactory.getSettings();
