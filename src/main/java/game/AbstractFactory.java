@@ -30,8 +30,28 @@ public abstract class AbstractFactory {
      */
     public abstract void render();
 
+    /**
+     * This factory is called when a level is loaded.
+     * This should be overwritten returning an Enemy object.
+     * @param location Point that defines the starting location.
+     * @param health double that defines the starting health.
+     * @param size double that defines the size, needed for collision detection
+     * @param bounds point that defines the maximum movement in the x-axis direction.
+     * @return an Enemy object instantiated with the given parameters.
+     */
     public abstract Enemy enemyCreator(Point location, double health, double size, Point bounds);
+
+    /**
+     * This factory is called when a level is loaded.
+     * This should be overwritten returning a Player object.
+     * @param location Point that defines the starting location.
+     * @param health double that defines the starting health.
+     * @param size double that defines the size, need for collision detection.
+     * @param gameState the gameState object of the abstractFactory, is also passed to the game.
+     * @return a Player object instantiated with the given parameters.
+     */
     public abstract Player playerCreator(Point location, double health, double size, GameState gameState);
+
     /**
      * Is used to create the player.
      * It's mainly used to parse the parameter list into the needed attributes to create a Player object.
