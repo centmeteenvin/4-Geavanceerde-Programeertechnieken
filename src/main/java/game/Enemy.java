@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public abstract class Enemy extends HittableEntity{
     private final Point bounds;
-    private Input currentDirection;
-    public Enemy(Point location, double health, Point size, Point bounds) {
+    private Input currentDirection = Input.LEFT;
+    public Enemy(Point location, double health, double size, Point bounds) {
         super(location, health, size);
         this.bounds = bounds;
     }
