@@ -1,4 +1,4 @@
-package game;
+package game.utilities;
 
 /**
  * Holds the gameState like score and playing.

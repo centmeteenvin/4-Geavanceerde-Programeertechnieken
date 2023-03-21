@@ -1,7 +1,7 @@
 package Debug;
 
-import game.Enemy;
-import game.Entity;
+import game.entity.Enemy;
+import game.entity.Entity;
 
 import java.awt.*;
 import java.util.ArrayList;

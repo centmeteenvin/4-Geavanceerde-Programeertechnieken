@@ -1,7 +1,7 @@
 import Debug.DebugFactory;
 import game.AbstractFactory;
-import game.Entity;
-import game.GameState;
+import game.entity.Entity;
+import game.utilities.GameState;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;

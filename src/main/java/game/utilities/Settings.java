@@ -1,4 +1,4 @@
-package game;
+package game.utilities;
 
 public class Settings {
     private double fps;

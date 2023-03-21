@@ -1,4 +1,7 @@
-package game;
+package game.entity;
+
+import game.utilities.GameState;
+import game.utilities.Input;
 
 import java.awt.*;
 import java.util.ArrayList;

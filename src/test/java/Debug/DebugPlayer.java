@@ -1,7 +1,7 @@
 package Debug;
 
-import game.GameState;
-import game.Player;
+import game.utilities.GameState;
+import game.entity.Player;
 
 import java.awt.*;
 

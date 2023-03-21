@@ -1,5 +1,9 @@
 package game;
 
+import game.entity.Entity;
+import game.utilities.GameState;
+import game.utilities.Settings;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;

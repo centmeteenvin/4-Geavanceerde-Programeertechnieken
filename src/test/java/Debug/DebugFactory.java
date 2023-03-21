@@ -1,9 +1,12 @@
 package Debug;
 
 import game.*;
+import game.entity.Enemy;
+import game.entity.Player;
+import game.utilities.GameState;
+import game.utilities.Settings;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class DebugFactory extends AbstractFactory {
 
