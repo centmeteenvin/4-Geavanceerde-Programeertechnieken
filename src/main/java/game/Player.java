@@ -7,7 +7,7 @@ public abstract class Player extends HittableEntity {
     private final GameState gameState;
     private Input currentInput = Input.LEFT;
 
-    public Player(Point location, double health, Point size, GameState gameState) {
+    public Player(Point location, double health, double size, GameState gameState) {
         super(location, health, size);
         this.gameState = gameState;
     }

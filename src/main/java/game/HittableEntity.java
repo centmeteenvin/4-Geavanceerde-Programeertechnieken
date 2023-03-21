@@ -4,9 +4,9 @@ import java.awt.*;
 
 public abstract class HittableEntity extends Entity {
     protected double health;
-    protected Point size;
+    protected double size;
 
-    public HittableEntity(Point location, double health, Point size) {
+    public HittableEntity(Point location, double health, double size) {
         super(location);
         this.health = health;
         this.size = size;
