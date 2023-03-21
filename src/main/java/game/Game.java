@@ -36,7 +36,7 @@ public class Game {
     private void gameLoop() {
         long time;
         double elapsedTime;
-        double timePerFrame = 1.0/settings.getFps();
+        double msPerFrame = 1000/settings.getFps();
         while(gameState.getPlaying()) {
             time = System.currentTimeMillis();
             //TODO fetchInputs, nog is even nadenken hoe ik inputs ga passeren
@@ -44,9 +44,9 @@ public class Game {
             entities.forEach(Entity::visualize);
             abstractFactory.render();
             elapsedTime = (double) (System.currentTimeMillis() - time);
-            if (elapsedTime < timePerFrame) {
+            if (elapsedTime < msPerFrame) {
                 try {
-                    TimeUnit.MILLISECONDS.sleep((long) (timePerFrame-elapsedTime));
+                    TimeUnit.MILLISECONDS.sleep((long) (msPerFrame-elapsedTime));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -65,13 +65,14 @@ public class Game {
             String line;
             ArrayList<String> list;
             levelReader.readLine(); // read passed the first line, it only contains information about the way the data is formatted.
+            line = levelReader.readLine();
             do {
-                line = levelReader.readLine();
                 list = new ArrayList<>(List.of(line.split(";")));
                 switch (list.get(0)) {
                     case "Enemy" -> entities.add(abstractFactory.createEnemy(list));
                     case "Player" -> entities.add(abstractFactory.createPlayer(list));
                 }
+                line = levelReader.readLine();
             }   while (line != null);
         } catch (FileNotFoundException e) {
             System.out.println("Level does not exist");
@@ -87,6 +88,7 @@ public class Game {
      */
     private void initialize() {
         abstractFactory.initialize();
+        this.entities = new ArrayList<>();
         this.gameState = abstractFactory.getGameState();
         this.settings = abstractFactory.getSettings();
     }
