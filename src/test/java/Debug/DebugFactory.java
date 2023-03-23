@@ -1,7 +1,9 @@
 package Debug;
 
 import SpaceInvaders.*;
+import SpaceInvaders.entities.Bullet;
 import SpaceInvaders.entities.Enemy;
+import SpaceInvaders.entities.HittableEntity;
 import SpaceInvaders.entities.Player;
 import SpaceInvaders.utilities.GameState;
 import SpaceInvaders.utilities.InputController;
@@ -29,13 +31,25 @@ public class DebugFactory extends AbstractFactory {
     }
 
     @Override
-    public Enemy enemyCreator(Point location, double health, double size, Point bounds) {
-        return new DebugEnemy(location, health, size, bounds);
+    public Enemy enemyCreator(Point location, double health, double size, AbstractFactory abstractFactory,Point bounds) {
+        return new DebugEnemy(location, health, size, abstractFactory,bounds);
     }
 
     @Override
-    public Player playerCreator(Point location, double health, double size, GameState gameState, InputController inputController) {
-        return new DebugPlayer(location, health, size, entities, gameState, inputController);
+    public Player playerCreator(Point location, double health, double size, AbstractFactory abstractFactory,GameState gameState, InputController inputController) {
+        return new DebugPlayer(location, health, size,abstractFactory, gameState, inputController);
+    }
+
+    /**
+     * This factory is called when a {@link HittableEntity} Shoots.
+     *
+     * @param location {@link Bullet#coordinate}.
+     * @param entity   {@link Bullet#owner}.
+     * @return a reference to the Bullet object.
+     */
+    @Override
+    public Bullet bulletCreator(Point location, HittableEntity entity) {
+        return null;
     }
 
 }
