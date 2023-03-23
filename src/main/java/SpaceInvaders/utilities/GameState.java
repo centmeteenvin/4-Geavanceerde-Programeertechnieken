@@ -27,26 +27,50 @@ public class GameState {
      */
     private int currentLevel;
 
+    /**
+     * Getter for isPlaying.
+     * @return {@link #isPlaying}
+     */
     public Boolean getPlaying() {
         return isPlaying;
     }
 
+    /**
+     * setter for isPlaying.
+     * @param playing {@link #isPlaying}
+     */
     public void setPlaying(Boolean playing) {
         isPlaying = playing;
     }
 
+    /**
+     * getter for score.
+     * @return {@link #score}
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * setter for score.
+     * @param score {@link #score}
+     */
     public void setScore(int score) {
         this.score = score;
     }
 
+    /**
+     * getter for currentLevel.
+     * @return {@link #currentLevel}
+     */
     public int getCurrentLevel() {
         return currentLevel;
     }
 
+    /**
+     * setter for currentLevel.
+     * @param currentLevel {@link #currentLevel}
+     */
     public void setCurrentLevel(int currentLevel) {
         this.currentLevel = currentLevel;
     }

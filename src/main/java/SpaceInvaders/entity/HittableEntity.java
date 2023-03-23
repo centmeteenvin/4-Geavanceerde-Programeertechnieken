@@ -41,7 +41,11 @@ public abstract class HittableEntity extends Entity {
         this.entities = entities;
     }
 
-    //TODO JavaDoc
+    /**
+     * The method that is activated when a hit happens.<br>
+     * Should be called from {@link HittableEntity#update()}.
+     * //TODO call this method in an implementation of update method here.
+     */
     private void getHit() {
         health--;
     }

@@ -33,10 +33,11 @@ public abstract class Enemy extends HittableEntity{
     /**
      * Default Constructor for Enemies.<br>
      * Is called in {@link SpaceInvaders.AbstractFactory#createEnemy(ArrayList)} during levelLoading.
-     * @param location The enemies location.
-     * @param health The initial health of the Enemy.
-     * @param size  The size of the enemy, important for collision detection.
-     * @param bounds The path of the enemy.
+     * @param location {@link Entity#coordinate}.
+     * @param health {@link HittableEntity#health}.
+     * @param size  {@link HittableEntity#size}.
+     * @param entities {@link HittableEntity#entities}
+     * @param bounds {@link #bounds}.
      */
     public Enemy(Point location, double health, double size, ArrayList<Entity> entities,Point bounds) {
         super(location, health, size, entities);

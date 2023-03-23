@@ -20,10 +20,18 @@ public class Settings {
      */
     private double fps;
 
+    /**
+     * Getter for fps.
+     * @return {@link #fps}
+     */
     public double getFps() {
         return fps;
     }
 
+    /**
+     * Setter for fps
+     * @param fps {@link #fps}
+     */
     public void setFps(double fps) {
         this.fps = fps;
     }

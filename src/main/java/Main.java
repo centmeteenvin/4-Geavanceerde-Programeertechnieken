@@ -1,5 +1,13 @@
 import SpaceInvaders.*;
+
+/**
+ * Main function.
+ */
 public class Main {
+    /**
+     * Start game here.
+     * @param args commandline arguments.
+     */
     public static void main(String args[]) {
         System.out.println("Hello World");
         AbstractFactory abstractFactory = null; //Give a concrete implementation of the AbstractFactory

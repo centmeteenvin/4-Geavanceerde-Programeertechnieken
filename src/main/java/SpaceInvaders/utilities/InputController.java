@@ -26,9 +26,7 @@ public abstract class InputController {
      */
     protected Input shooting = Input.NONE;
 
-    public Input getDirection() {
-        return direction;
-    }
+
 
     /**
      * Fetches the current shooting input.
@@ -45,5 +43,13 @@ public abstract class InputController {
             return Input.SHOOT;
         }
         return Input.NONE;
+    }
+
+    /**
+     * Getter for direction.
+     * @return {@link #direction}
+     */
+    public Input getDirection() {
+        return direction;
     }
 }
