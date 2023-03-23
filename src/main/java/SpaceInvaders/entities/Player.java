@@ -1,4 +1,4 @@
-package SpaceInvaders.entity;
+package SpaceInvaders.entities;
 
 import SpaceInvaders.utilities.GameState;
 import SpaceInvaders.utilities.InputController;

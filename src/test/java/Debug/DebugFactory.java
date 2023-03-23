@@ -1,8 +1,8 @@
 package Debug;
 
 import SpaceInvaders.*;
-import SpaceInvaders.entity.Enemy;
-import SpaceInvaders.entity.Player;
+import SpaceInvaders.entities.Enemy;
+import SpaceInvaders.entities.Player;
 import SpaceInvaders.utilities.GameState;
 import SpaceInvaders.utilities.InputController;
 import SpaceInvaders.utilities.Settings;

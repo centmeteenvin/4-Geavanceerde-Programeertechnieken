@@ -1,6 +1,6 @@
 import Debug.DebugFactory;
 import SpaceInvaders.AbstractFactory;
-import SpaceInvaders.entity.Entity;
+import SpaceInvaders.entities.Entity;
 import SpaceInvaders.utilities.GameState;
 import org.junit.jupiter.api.Test;
 

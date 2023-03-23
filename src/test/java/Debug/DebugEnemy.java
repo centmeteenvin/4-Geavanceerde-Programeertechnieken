@@ -1,10 +1,8 @@
 package Debug;
 
-import SpaceInvaders.entity.Enemy;
-import SpaceInvaders.entity.Entity;
+import SpaceInvaders.entities.Enemy;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class DebugEnemy extends Enemy {
     public DebugEnemy(Point location, double health, double size, Point bounds) {

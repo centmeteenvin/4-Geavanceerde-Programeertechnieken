@@ -1,8 +1,6 @@
 package SpaceInvaders.utilities;
 
-import SpaceInvaders.entity.Player;
-
-import java.util.ArrayList;
+import SpaceInvaders.entities.Player;
 
 /**
  * The abstract InputController.

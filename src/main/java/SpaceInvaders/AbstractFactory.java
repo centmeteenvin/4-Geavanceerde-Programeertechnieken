@@ -1,8 +1,8 @@
 package SpaceInvaders;
 
-import SpaceInvaders.entity.Enemy;
-import SpaceInvaders.entity.Entity;
-import SpaceInvaders.entity.Player;
+import SpaceInvaders.entities.Enemy;
+import SpaceInvaders.entities.Entity;
+import SpaceInvaders.entities.Player;
 import SpaceInvaders.utilities.GameState;
 import SpaceInvaders.utilities.InputController;
 import SpaceInvaders.utilities.Settings;
@@ -172,7 +172,7 @@ public abstract class AbstractFactory {
     }
 
     /**
-     * Getter for the entity list.
+     * Getter for the entities list.
      * @return reference to {@link #entities}
      */
     public ArrayList<Entity> getEntities() {

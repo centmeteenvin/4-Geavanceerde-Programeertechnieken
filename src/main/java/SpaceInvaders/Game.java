@@ -1,6 +1,6 @@
 package SpaceInvaders;
 
-import SpaceInvaders.entity.Entity;
+import SpaceInvaders.entities.Entity;
 import SpaceInvaders.utilities.GameState;
 import SpaceInvaders.utilities.Settings;
 

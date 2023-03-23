@@ -1,7 +1,6 @@
-package SpaceInvaders.entity;
+package SpaceInvaders.entities;
 
 import java.awt.Point;
-import java.util.ArrayList;
 
 /**
  * Base abstract class for all the things that can move and/or be interacted with.

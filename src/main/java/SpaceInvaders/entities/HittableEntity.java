@@ -1,4 +1,4 @@
-package SpaceInvaders.entity;
+package SpaceInvaders.entities;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public abstract class HittableEntity extends Entity {
     /**
-     * The health of an entity.
+     * The health of an entities.
      * Every time a HittableEntity gets hit, the health goes down by one.
      */
     protected double health;

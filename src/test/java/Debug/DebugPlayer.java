@@ -1,8 +1,8 @@
 package Debug;
 
-import SpaceInvaders.entity.Entity;
+import SpaceInvaders.entities.Entity;
 import SpaceInvaders.utilities.GameState;
-import SpaceInvaders.entity.Player;
+import SpaceInvaders.entities.Player;
 import SpaceInvaders.utilities.InputController;
 
 import java.awt.*;
