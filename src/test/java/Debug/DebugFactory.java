@@ -4,6 +4,7 @@ import SpaceInvaders.*;
 import SpaceInvaders.entity.Enemy;
 import SpaceInvaders.entity.Player;
 import SpaceInvaders.utilities.GameState;
+import SpaceInvaders.utilities.InputController;
 import SpaceInvaders.utilities.Settings;
 
 import java.awt.*;
@@ -33,8 +34,8 @@ public class DebugFactory extends AbstractFactory {
     }
 
     @Override
-    public Player playerCreator(Point location, double health, double size, GameState gameState) {
-        return new DebugPlayer(location, health, size, gameState);
+    public Player playerCreator(Point location, double health, double size, GameState gameState, InputController inputController) {
+        return new DebugPlayer(location, health, size, gameState, inputController);
     }
 
 }
