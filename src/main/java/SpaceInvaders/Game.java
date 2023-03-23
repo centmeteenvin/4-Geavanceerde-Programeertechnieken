@@ -82,7 +82,7 @@ public class Game {
      */
     private void initialize() {
         abstractFactory.initialize();
-        this.entities = new ArrayList<>();
+        this.entities = abstractFactory.getEntities();
         this.gameState = abstractFactory.getGameState();
         this.settings = abstractFactory.getSettings();
     }
@@ -118,7 +118,7 @@ public class Game {
      * execute the SpaceInvaders loop.
      * <p>
      * 1 Get all the inputs and events.<br>
-     * 2 Call the {@link Entity#update(ArrayList)} method on all {@link #entities Entities}.<br>
+     * 2 Call the {@link Entity#update()} method on all {@link #entities Entities}.<br>
      * 3 Call the {@link Entity#visualize()} method on all {@link #entities Entities}.<br>
      * 4 Call {@link AbstractFactory#render()} method add the end of the loop.<br>
      */
@@ -128,7 +128,7 @@ public class Game {
         double msPerFrame = 1000/settings.getFps();
         while(gameState.getPlaying()) {
             time = System.currentTimeMillis();
-            entities.forEach(entity -> entity.update(entities));
+            entities.forEach(entity -> entity.update());
             entities.forEach(Entity::visualize);
             abstractFactory.render();
             elapsedTime = (double) (System.currentTimeMillis() - time);

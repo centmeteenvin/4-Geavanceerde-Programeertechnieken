@@ -38,9 +38,19 @@ public abstract class AbstractFactory {
     protected Settings settings;
 
     /**
+     * The entitylist for the game.
+     * <p>
+     * AbstractFactory is responsible for the initialization of this list.<br>
+     * References are passed throughout the game and it objects.<br>
+     * During {@link Game#loadLevel() level loading} and {@link Entity#update() updates} the list can be modified.<br>
+     * </p>
+     */
+    protected ArrayList<Entity> entities;
+
+    /**
      * Handles all user input.
      * <p>
-     *     Should be passed to the {@link #playerCreator(Point, double, double, GameState) Player} object.<br>
+     *     Should be passed to the {@link #playerCreator(Point, double, double, GameState, InputController) Player} object.<br>
      * </p>
      */
     protected InputController inputController;
@@ -53,6 +63,7 @@ public abstract class AbstractFactory {
     public AbstractFactory() {
         this.gameState = new GameState();
         this.settings = new Settings();
+        this.entities = new ArrayList<>();
     }
 
     /**
@@ -103,6 +114,7 @@ public abstract class AbstractFactory {
      * @param health double that defines the starting health.
      * @param size double that defines the size, need for collision detection.
      * @param gameState the gameState object of the abstractFactory, is also passed to the SpaceInvaders.
+     * @param inputController {@link Player#inputController}
      * @return a Player object instantiated with the given parameters.
      */
     public abstract Player playerCreator(Point location, double health, double size, GameState gameState, InputController inputController);
@@ -143,12 +155,27 @@ public abstract class AbstractFactory {
         return enemyCreator(location, health, size, bounds);
     }
 
-
+    /**
+     * Getter for GameState.
+     * @return reference to {@link #gameState}
+     */
     public GameState getGameState() {
         return gameState;
     }
 
+    /**
+     * Getter for Setting.
+     * @return reference to {@link #settings}
+     */
     public Settings getSettings() {
         return settings;
+    }
+
+    /**
+     * Getter for the entity list.
+     * @return reference to {@link #entities}
+     */
+    public ArrayList<Entity> getEntities() {
+        return entities;
     }
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Abstract class for enemy objects.
  * <p>
  * This class defines behaviour for Enemy Objects.<br>
- * It mainly implements {@link Entity#update(ArrayList)} method.
+ * It mainly implements {@link Entity#update()} method.
  * </p>
  */
 public abstract class Enemy extends HittableEntity{
@@ -38,8 +38,8 @@ public abstract class Enemy extends HittableEntity{
      * @param size  The size of the enemy, important for collision detection.
      * @param bounds The path of the enemy.
      */
-    public Enemy(Point location, double health, double size, Point bounds) {
-        super(location, health, size);
+    public Enemy(Point location, double health, double size, ArrayList<Entity> entities,Point bounds) {
+        super(location, health, size, entities);
         this.bounds = bounds;
     }
 
@@ -51,10 +51,9 @@ public abstract class Enemy extends HittableEntity{
      * Inherited classes are not allowed to change the behaviour of the game.<br>
      * Checks health and direction.<br>
      * </p>
-     * @param entities {@link Game#entities entity list} is passed because an Enemy can interact with other {@link Entity entities}.
      */
     @Override
-    public final void update(ArrayList<Entity> entities) {
+    public final void update() {
         if (health <= 0) {
             entities.remove(this);
         }

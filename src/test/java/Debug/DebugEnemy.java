@@ -12,8 +12,7 @@ public class DebugEnemy extends Enemy {
     }
 
     @Override
-    public void update(ArrayList<Entity> entities) {
-        super.update(entities);
+    public void visualize() {
         System.out.println(coordinate);
     }
 }

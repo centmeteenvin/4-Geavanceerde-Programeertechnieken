@@ -12,13 +12,18 @@ public abstract class Entity {
      */
     protected Point coordinate;
 
+    /**
+     * Default Constructor for Entities.
+     * @param location {@link #coordinate}
+     */
     public Entity(Point location) {
         this.coordinate = location;
     }
+
     /**
      * Called after the updates are gathered
      */
-    public abstract void update(ArrayList<Entity> entities);
+    public abstract void update();
 
     /**
      * Called after updates.

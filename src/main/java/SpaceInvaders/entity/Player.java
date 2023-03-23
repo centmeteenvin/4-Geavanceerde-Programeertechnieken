@@ -1,7 +1,6 @@
 package SpaceInvaders.entity;
 
 import SpaceInvaders.utilities.GameState;
-import SpaceInvaders.utilities.Input;
 import SpaceInvaders.utilities.InputController;
 
 import java.awt.*;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 /**
  * The Abstract implementation of the Player.<br>
  * Extends {@link HittableEntity}.<br>
- * It contains the final implementation of {@link Entity#update(ArrayList)}
+ * It contains the final implementation of {@link Entity#update()}
  */
 public abstract class Player extends HittableEntity {
 
@@ -32,26 +31,26 @@ public abstract class Player extends HittableEntity {
      * @param location {@link Entity#coordinate}.
      * @param health {@link HittableEntity#health}.
      * @param size {@link HittableEntity#size}.
+     * @param entities {@link HittableEntity#entities}
      * @param gameState {@link #gameState}.
      * @param inputController {@link #inputController}.
      */
-    public Player(Point location, double health, double size, GameState gameState, InputController inputController) {
-        super(location, health, size);
+    public Player(Point location, double health, double size, ArrayList<Entity> entities, GameState gameState, InputController inputController) {
+        super(location, health, size, entities);
         this.gameState = gameState;
         this.inputController = inputController;
     }
 
     /**
-     * Final Implementation of {@link Entity#update(ArrayList)}.
+     * Final Implementation of {@link Entity#update()}.
      * <p>
      * Checks the health and stops game if necessary.<br>
      * Fetches the Direction and updates location accordingly.<br>
      * //TODO Shoots if indicated.
      * </p>
-     * @param entities
      */
     @Override
-    public final void update(ArrayList<Entity> entities) {
+    public final void update() {
         if (health <= 0) {
             gameState.setPlaying(false);
         }

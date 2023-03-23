@@ -1,6 +1,7 @@
 package SpaceInvaders.entity;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * An Extension of the {@link Entity} class for Object that can be hit.
@@ -21,15 +22,23 @@ public abstract class HittableEntity extends Entity {
     protected double size;
 
     /**
+     * Reference to game's {@link SpaceInvaders.Game#entities entities}.
+     * HittableEntities need this list because they can interact with other entities.
+     */
+    protected ArrayList<Entity> entities;
+
+    /**
      * Default HittableEntity Constructor
      * @param location {@link Entity#coordinate}
      * @param health {@link #health}
      * @param size {@link #size}
+     * @param entities {@link #entities}
      */
-    public HittableEntity(Point location, double health, double size) {
+    public HittableEntity(Point location, double health, double size, ArrayList entities) {
         super(location);
         this.health = health;
         this.size = size;
+        this.entities = entities;
     }
 
     //TODO JavaDoc
