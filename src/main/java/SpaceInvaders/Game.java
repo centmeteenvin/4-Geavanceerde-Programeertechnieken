@@ -128,7 +128,6 @@ public class Game {
         double msPerFrame = 1000/settings.getFps();
         while(gameState.getPlaying()) {
             time = System.currentTimeMillis();
-            //TODO fetchInputs, nog is even nadenken hoe ik inputs ga passeren
             entities.forEach(entity -> entity.update(entities));
             entities.forEach(Entity::visualize);
             abstractFactory.render();
