@@ -1,7 +1,11 @@
 package SpaceInvaders.entities;
 
+import SpaceInvaders.AbstractFactory;
+
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * An Extension of the {@link Entity} class for Object that can be hit.
@@ -25,20 +29,20 @@ public abstract class HittableEntity extends Entity {
      * Reference to game's {@link SpaceInvaders.Game#entities entities}.
      * HittableEntities need this list because they can interact with other entities.
      */
-    protected ArrayList<Entity> entities;
+    protected AbstractFactory abstractFactory;
 
     /**
      * Default HittableEntity Constructor
      * @param location {@link Entity#coordinate}
      * @param health {@link #health}
      * @param size {@link #size}
-     * @param entities {@link #entities}
+     * @param abstractFactory {@link #abstractFactory}
      */
-    public HittableEntity(Point location, double health, double size, ArrayList entities) {
+    public HittableEntity(Point location, double health, double size, AbstractFactory abstractFactory) {
         super(location);
         this.health = health;
         this.size = size;
-        this.entities = entities;
+        this.abstractFactory = abstractFactory;
     }
 
     /**
@@ -48,6 +52,24 @@ public abstract class HittableEntity extends Entity {
      */
     private void getHit() {
         health--;
+    }
+
+    /**
+     * Called after the updates are gathered
+     */
+    @Override
+    public void update() {
+
+        ArrayList<Bullet> bullets = abstractFactory.getEntities().stream() //Get the entity list from the factory.
+                .filter(entity -> !Objects.equals(entity.getClass(), Bullet.class)) //Filter it for bullets.
+                .map(entity -> (Bullet) entity).collect(Collectors.toCollection(ArrayList::new)); //Cast those Entities to Bullets.
+
+        ArrayList<Bullet> damagingBullets = bullets.stream()
+                .filter(bullet -> !Objects.equals(bullet.owner.getClass(), this.getClass())) //Filter the bullets so that the owner class of the bullet is different from ours.
+                .filter(bullet -> bullet.coordinate.distance(this.coordinate) <= size) // Filter the bullets that are inside our size.
+                .collect(Collectors.toCollection(ArrayList::new)); // Collect them in an array
+
+        damagingBullets.forEach(bullet -> getHit()); //For every bullet in this array, call the getHit() method.
     }
 
     //TODO Hitbox detection when bullet class is made

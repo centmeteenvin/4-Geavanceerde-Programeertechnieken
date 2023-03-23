@@ -1,10 +1,11 @@
 package SpaceInvaders.entities;
 
+import SpaceInvaders.AbstractFactory;
 import SpaceInvaders.utilities.GameState;
+import SpaceInvaders.utilities.Input;
 import SpaceInvaders.utilities.InputController;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * The Abstract implementation of the Player.<br>
@@ -31,12 +32,12 @@ public abstract class Player extends HittableEntity {
      * @param location {@link Entity#coordinate}.
      * @param health {@link HittableEntity#health}.
      * @param size {@link HittableEntity#size}.
-     * @param entities {@link HittableEntity#entities}
+     * @param abstractFactory {@link HittableEntity#abstractFactory}
      * @param gameState {@link #gameState}.
      * @param inputController {@link #inputController}.
      */
-    public Player(Point location, double health, double size, ArrayList<Entity> entities, GameState gameState, InputController inputController) {
-        super(location, health, size, entities);
+    public Player(Point location, double health, double size, AbstractFactory abstractFactory, GameState gameState, InputController inputController) {
+        super(location, health, size, abstractFactory);
         this.gameState = gameState;
         this.inputController = inputController;
     }
@@ -51,6 +52,7 @@ public abstract class Player extends HittableEntity {
      */
     @Override
     public final void update() {
+        super.update();
         if (health <= 0) {
             gameState.setPlaying(false);
         }
@@ -58,6 +60,9 @@ public abstract class Player extends HittableEntity {
             switch (inputController.getDirection()) {
                 case LEFT -> coordinate.x++;
                 case RIGHT -> coordinate.x--;
+            }
+            if (inputController.getShooting() == Input.SHOOT) {
+                abstractFactory.getEntities().add(abstractFactory.createBullet(coordinate, this));
             }
         }
     }

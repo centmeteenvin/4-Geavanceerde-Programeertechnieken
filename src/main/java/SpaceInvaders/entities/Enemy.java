@@ -1,5 +1,6 @@
 package SpaceInvaders.entities;
 
+import SpaceInvaders.AbstractFactory;
 import SpaceInvaders.Game;
 import SpaceInvaders.utilities.Input;
 
@@ -36,10 +37,10 @@ public abstract class Enemy extends HittableEntity{
      * @param location {@link Entity#coordinate}.
      * @param health {@link HittableEntity#health}.
      * @param size  {@link HittableEntity#size}.
-     * @param entities {@link HittableEntity#entities}
+     * @param entities {@link HittableEntity#abstractFactory}
      * @param bounds {@link #bounds}.
      */
-    public Enemy(Point location, double health, double size, ArrayList<Entity> entities,Point bounds) {
+    public Enemy(Point location, double health, double size, AbstractFactory entities, Point bounds) {
         super(location, health, size, entities);
         this.bounds = bounds;
     }
@@ -55,8 +56,9 @@ public abstract class Enemy extends HittableEntity{
      */
     @Override
     public final void update() {
+        super.update();
         if (health <= 0) {
-            entities.remove(this);
+            abstractFactory.getEntities();
         }
         else {
             if (coordinate.x < bounds.x) {

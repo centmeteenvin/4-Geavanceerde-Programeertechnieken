@@ -1,8 +1,6 @@
 package SpaceInvaders;
 
-import SpaceInvaders.entities.Enemy;
-import SpaceInvaders.entities.Entity;
-import SpaceInvaders.entities.Player;
+import SpaceInvaders.entities.*;
 import SpaceInvaders.utilities.GameState;
 import SpaceInvaders.utilities.InputController;
 import SpaceInvaders.utilities.Settings;
@@ -50,7 +48,7 @@ public abstract class AbstractFactory {
     /**
      * Handles all user input.
      * <p>
-     *     Should be passed to the {@link #playerCreator(Point, double, double, GameState, InputController) Player} object.<br>
+     *     Should be passed to the {@link #playerCreator(Point, double, double, AbstractFactory, GameState, InputController) Player} object.<br>
      * </p>
      */
     protected InputController inputController;
@@ -105,7 +103,7 @@ public abstract class AbstractFactory {
      * @param bounds point that defines the maximum movement in the x-axis direction.
      * @return an Enemy object instantiated with the given parameters.
      */
-    public abstract Enemy enemyCreator(Point location, double health, double size, Point bounds);
+    public abstract Enemy enemyCreator(Point location, double health, double size, AbstractFactory abstractFactory,Point bounds);
 
     /**
      * This factory is called when a level is loaded.<br>
@@ -114,11 +112,18 @@ public abstract class AbstractFactory {
      * @param health double that defines the starting health.
      * @param size double that defines the size, need for collision detection.
      * @param gameState the gameState object of the abstractFactory, is also passed to the SpaceInvaders.
-     * @param inputController {@link Player#inputController}
+     * @param inputController {@link Player#inputController}.
      * @return a Player object instantiated with the given parameters.
      */
-    public abstract Player playerCreator(Point location, double health, double size, GameState gameState, InputController inputController);
+    public abstract Player playerCreator(Point location, double health, double size, AbstractFactory abstractFactory, GameState gameState, InputController inputController);
 
+    /**
+     * This factory is called when a {@link HittableEntity} Shoots.
+     * @param location {@link Bullet#coordinate}.
+     * @param entity {@link Bullet#owner}.
+     * @return a reference to the Bullet object.
+     */
+    public abstract Bullet bulletCreator(Point location, HittableEntity entity);
     /**
      * Is used to create the player.
      * <p>
@@ -133,7 +138,7 @@ public abstract class AbstractFactory {
         double size = Double.parseDouble(parameters.get(2));
         String[] tempList = parameters.get(3).split(",");
         Point location = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
-        return playerCreator(location, health, size, gameState, inputController);
+        return playerCreator(location, health, size, this, gameState, inputController);
     }
 
     /**
@@ -152,8 +157,20 @@ public abstract class AbstractFactory {
         Point location = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
         tempList = parameters.get(4).split(",");
         Point bounds = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
-        return enemyCreator(location, health, size, bounds);
+        return enemyCreator(location, health, size, this, bounds);
     }
+
+    /**
+     * Used by HittableEntities to shoot a bullet.
+     * c
+     * @param position {@link Bullet#coordinate}
+     * @param owner {@link Bullet#owner}
+     * @return reference To the Bullet
+     */
+    public Bullet createBullet(Point position, HittableEntity owner) {
+        return bulletCreator(position, owner);
+    }
+
 
     /**
      * Getter for GameState.
