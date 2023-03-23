@@ -2,17 +2,19 @@ package SpaceInvaders.entity;
 
 import SpaceInvaders.utilities.GameState;
 import SpaceInvaders.utilities.Input;
+import SpaceInvaders.utilities.InputController;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class Player extends HittableEntity {
     private final GameState gameState;
-    private Input currentInput = Input.LEFT;
+    private InputController inputController;
 
-    public Player(Point location, double health, double size, GameState gameState) {
+    public Player(Point location, double health, double size, GameState gameState, InputController inputController) {
         super(location, health, size);
         this.gameState = gameState;
+        this.inputController = inputController;
     }
 
     @Override
@@ -21,14 +23,10 @@ public abstract class Player extends HittableEntity {
             gameState.setPlaying(false);
         }
         else {
-            switch (currentInput) {
+            switch (inputController.getDirection()) {
                 case LEFT -> coordinate.x++;
                 case RIGHT -> coordinate.x--;
             }
         }
-    }
-
-    public void setCurrentInput(Input currentInput) {
-        this.currentInput = currentInput;
     }
 }

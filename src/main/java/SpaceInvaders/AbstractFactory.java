@@ -4,6 +4,7 @@ import SpaceInvaders.entity.Enemy;
 import SpaceInvaders.entity.Entity;
 import SpaceInvaders.entity.Player;
 import SpaceInvaders.utilities.GameState;
+import SpaceInvaders.utilities.InputController;
 import SpaceInvaders.utilities.Settings;
 
 import java.awt.*;
@@ -35,6 +36,14 @@ public abstract class AbstractFactory {
      * {@link Game} also holds a reference of this object.<br>
      */
     protected Settings settings;
+
+    /**
+     * Handles all user input.
+     * <p>
+     *     Should be passed to the {@link #playerCreator(Point, double, double, GameState) Player} object.<br>
+     * </p>
+     */
+    protected InputController inputController;
 
     /**
      * Default constructor.
@@ -96,7 +105,7 @@ public abstract class AbstractFactory {
      * @param gameState the gameState object of the abstractFactory, is also passed to the SpaceInvaders.
      * @return a Player object instantiated with the given parameters.
      */
-    public abstract Player playerCreator(Point location, double health, double size, GameState gameState);
+    public abstract Player playerCreator(Point location, double health, double size, GameState gameState, InputController inputController);
 
     /**
      * Is used to create the player.
@@ -112,7 +121,7 @@ public abstract class AbstractFactory {
         double size = Double.parseDouble(parameters.get(2));
         String[] tempList = parameters.get(3).split(",");
         Point location = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
-        return playerCreator(location, health, size, gameState);
+        return playerCreator(location, health, size, gameState, inputController);
     }
 
     /**

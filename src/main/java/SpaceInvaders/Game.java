@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  * start the SpaceInvaders with {@link #start() Game.start()} method. </p>
  */
 public class Game {
+
     /**
      * AbstractFactory is an abstract class that defines the factory.
      *
