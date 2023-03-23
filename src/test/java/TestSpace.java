@@ -1,10 +1,11 @@
 
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class TestSpace {
 
@@ -24,5 +25,15 @@ public class TestSpace {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        ArrayList<SuperClass> list = new ArrayList<>();
+        list.add(new SuperClass());
+        list.add(new class1());
+        list.add(new class2());
+
+        System.out.println(list);
+        System.out.println(list.stream().map(SuperClass::getClass).collect(Collectors.toList()));
+        System.out.println(list.stream().map(superClass -> superClass.getClass().equals(class1.class)).collect(Collectors.toList()));
+        System.out.println(list.stream().filter(superClass -> superClass.getClass().equals(class1.class)).collect(Collectors.toList()));
+        System.out.println(list.stream().filter(superClass -> Objects.equals(superClass.getClass(), class1.class)).map(superClass -> (class1) superClass).collect(Collectors.toList()));
     }
 }
