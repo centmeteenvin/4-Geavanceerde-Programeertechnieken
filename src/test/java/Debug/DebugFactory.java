@@ -6,7 +6,6 @@ import SpaceInvaders.entities.Enemy;
 import SpaceInvaders.entities.HittableEntity;
 import SpaceInvaders.entities.Player;
 import SpaceInvaders.utilities.GameState;
-import SpaceInvaders.utilities.InputController;
 import SpaceInvaders.utilities.Settings;
 
 import java.awt.*;
@@ -31,12 +30,12 @@ public class DebugFactory extends AbstractFactory {
     }
 
     @Override
-    public Enemy enemyCreator(Point location, double health, double size, AbstractFactory abstractFactory,Point bounds) {
+    public Enemy enemyCreator(Point location, double health, double size, Point bounds) {
         return new DebugEnemy(location, health, size, abstractFactory,bounds);
     }
 
     @Override
-    public Player playerCreator(Point location, double health, double size, AbstractFactory abstractFactory,GameState gameState, InputController inputController) {
+    public Player playerCreator(Point location, double health, double size) {
         return new DebugPlayer(location, health, size,abstractFactory, gameState, inputController);
     }
 

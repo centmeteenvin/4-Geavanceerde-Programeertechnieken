@@ -48,7 +48,7 @@ public abstract class AbstractFactory {
     /**
      * Handles all user input.
      * <p>
-     *     Should be passed to the {@link #playerCreator(Point, double, double, AbstractFactory, GameState, InputController) Player} object.<br>
+     *     Should be passed to the {@link #playerCreator(Point, double, double) Player} object.<br>
      * </p>
      */
     protected InputController inputController;
@@ -56,7 +56,7 @@ public abstract class AbstractFactory {
     /**
      * Default constructor.
      * <p>
-     * {@link #gameState} and {@link #settings} are initialized empty.<br>
+     * {@link #gameState}, {@link #settings} and {@link #entities} are initialized empty.<br>
      */
     public AbstractFactory() {
         this.gameState = new GameState();
@@ -97,25 +97,25 @@ public abstract class AbstractFactory {
     /**
      * This factory is called when a level is loaded.<br>
      * This should be overwritten returning an Enemy object.
+     *
      * @param location Point that defines the starting location.
-     * @param health double that defines the starting health.
-     * @param size double that defines the size, needed for collision detection
-     * @param bounds point that defines the maximum movement in the x-axis direction.
+     * @param health   double that defines the starting health.
+     * @param size     double that defines the size, needed for collision detection.
+     * @param bounds   point that defines the maximum movement in the x-axis direction.
      * @return an Enemy object instantiated with the given parameters.
      */
-    public abstract Enemy enemyCreator(Point location, double health, double size, AbstractFactory abstractFactory,Point bounds);
+    public abstract Enemy enemyCreator(Point location, double health, double size, Point bounds);
 
     /**
      * This factory is called when a level is loaded.<br>
      * This should be overwritten returning a Player object.
+     *
      * @param location Point that defines the starting location.
-     * @param health double that defines the starting health.
-     * @param size double that defines the size, need for collision detection.
-     * @param gameState the gameState object of the abstractFactory, is also passed to the SpaceInvaders.
-     * @param inputController {@link Player#inputController}.
+     * @param health   double that defines the starting health.
+     * @param size     double that defines the size, need for collision detection.
      * @return a Player object instantiated with the given parameters.
      */
-    public abstract Player playerCreator(Point location, double health, double size, AbstractFactory abstractFactory, GameState gameState, InputController inputController);
+    public abstract Player playerCreator(Point location, double health, double size);
 
     /**
      * This factory is called when a {@link HittableEntity} Shoots.
@@ -138,7 +138,7 @@ public abstract class AbstractFactory {
         double size = Double.parseDouble(parameters.get(2));
         String[] tempList = parameters.get(3).split(",");
         Point location = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
-        return playerCreator(location, health, size, this, gameState, inputController);
+        return playerCreator(location, health, size);
     }
 
     /**
@@ -157,7 +157,7 @@ public abstract class AbstractFactory {
         Point location = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
         tempList = parameters.get(4).split(",");
         Point bounds = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
-        return enemyCreator(location, health, size, this, bounds);
+        return enemyCreator(location, health, size, bounds);
     }
 
     /**
