@@ -195,4 +195,12 @@ public abstract class AbstractFactory {
     public ArrayList<Entity> getEntities() {
         return entities;
     }
+
+    /**
+     * Getter for the inputController.
+     * @return reference to {@link #inputController}
+     */
+    public InputController getInputController() {
+        return inputController;
+    }
 }

@@ -29,17 +29,16 @@ public abstract class Player extends HittableEntity {
 
     /**
      * Default constructor for a Player.
-     * @param location {@link Entity#coordinate}.
-     * @param health {@link HittableEntity#health}.
-     * @param size {@link HittableEntity#size}.
+     *
+     * @param location        {@link Entity#coordinate}.
+     * @param health          {@link HittableEntity#health}.
+     * @param size            {@link HittableEntity#size}.
      * @param abstractFactory {@link HittableEntity#abstractFactory}
-     * @param gameState {@link #gameState}.
-     * @param inputController {@link #inputController}.
      */
-    public Player(Point location, double health, double size, AbstractFactory abstractFactory, GameState gameState, InputController inputController) {
+    public Player(Point location, double health, double size, AbstractFactory abstractFactory) {
         super(location, health, size, abstractFactory);
-        this.gameState = gameState;
-        this.inputController = inputController;
+        this.gameState = abstractFactory.getGameState();
+        this.inputController = abstractFactory.getInputController();
     }
 
     /**
@@ -47,7 +46,6 @@ public abstract class Player extends HittableEntity {
      * <p>
      * Checks the health and stops game if necessary.<br>
      * Fetches the Direction and updates location accordingly.<br>
-     * //TODO Shoots if indicated.
      * </p>
      */
     @Override

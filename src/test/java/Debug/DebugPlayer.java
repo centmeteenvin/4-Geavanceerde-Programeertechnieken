@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class DebugPlayer extends Player {
     public DebugPlayer(Point location, double health, double size, AbstractFactory entities, GameState gameState, InputController inputController) {
-        super(location, health, size, entities, gameState, inputController);
+        super(location, health, size, entities);
     }
 
     @Override
