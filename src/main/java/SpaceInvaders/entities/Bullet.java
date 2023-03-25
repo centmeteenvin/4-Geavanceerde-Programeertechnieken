@@ -27,7 +27,7 @@ public abstract class Bullet extends Entity{
      */
     @Override
     public final void update() {
-        if (owner.getClass().equals(Enemy.class)) {
+        if (owner instanceof Enemy) {
             coordinate.y--;
         }
         else {

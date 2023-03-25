@@ -48,7 +48,6 @@ public abstract class HittableEntity extends Entity {
     /**
      * The method that is activated when a hit happens.<br>
      * Should be called from {@link HittableEntity#update()}.
-     * //TODO call this method in an implementation of doHittableEntityUpdate method here.
      */
     private void getHit() {
         health--;
@@ -57,10 +56,7 @@ public abstract class HittableEntity extends Entity {
     /**
      * Called after the updates are gathered.
      * <p>
-     * This code implements collisionDetection. <br>
-     * Is always called.<br>
-     * Calls {@link #doHittableEntityUpdate()} at the end.
-     * Put Implementations in this abstract method.
+     * This code implements collisionDetection.
      * </p>
      */
     @Override
@@ -70,7 +66,7 @@ public abstract class HittableEntity extends Entity {
                 .map(entity -> (Bullet) entity).collect(Collectors.toCollection(ArrayList::new)); //Cast those Entities to Bullets.
 
         ArrayList<Bullet> damagingBullets = bullets.stream()
-                .filter(bullet -> !Objects.equals(bullet.owner.getClass(), this.getClass())) //Filter the bullets so that the owner class of the bullet is different from ours.
+                .filter(bullet -> !(bullet.owner.getClass().isInstance(this))) //Filter the bullets so that the owner class of the bullet is different from ours.
                 .filter(bullet -> bullet.coordinate.distance(this.coordinate) <= size) // Filter the bullets that are inside our size.
                 .collect(Collectors.toCollection(ArrayList::new)); // Collect them in an array
 
