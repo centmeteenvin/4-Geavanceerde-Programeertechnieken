@@ -29,7 +29,7 @@ public class Game {
     /**
      * An ArrayList of all the entities currently in the SpaceInvaders.
      *
-     * <p>In the gameLoop the update and visualize method is called on all elements of this list.
+     * <p>In the gameLoop the doHittableEntityUpdate and visualize method is called on all elements of this list.
      * <p>Is initialized in the constructor and assigned in the {@link #loadLevel() loadLevel} method.
      */
     private ArrayList<Entity> entities;

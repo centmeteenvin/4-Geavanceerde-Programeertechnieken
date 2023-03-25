@@ -51,8 +51,7 @@ public abstract class Player extends HittableEntity {
      * </p>
      */
     @Override
-    public final void update() {
-        super.update();
+    public final void doHittableEntityUpdate() {
         if (health <= 0) {
             gameState.setPlaying(false);
         }

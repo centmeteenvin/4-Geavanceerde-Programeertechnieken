@@ -46,7 +46,7 @@ public abstract class Enemy extends HittableEntity{
     }
 
     /**
-     * The update method for an enemy.
+     * The doHittableEntityUpdate method for an enemy.
      * <p>
      * This method is called every frame in {@link Game#gameLoop() gameLoop()}.<br>
      * This method is final because it defines the behaviour of an Enemy.<br>
@@ -55,8 +55,7 @@ public abstract class Enemy extends HittableEntity{
      * </p>
      */
     @Override
-    public final void update() {
-        super.update();
+    public final void doHittableEntityUpdate() {
         if (health <= 0) {
             abstractFactory.getEntities();
         }

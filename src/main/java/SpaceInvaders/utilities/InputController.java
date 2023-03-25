@@ -29,7 +29,7 @@ public abstract class InputController {
     /**
      * Fetches the current shooting input.
      * <p>
-     *  This method is called every frame by {@link Player#update()}.<br>
+     *  This method is called every frame by {@link Player#doHittableEntityUpdate()}.<br>
      *  Fetching the shooting command always reset its state to {@link Input#NONE}.<br>
      * </p>
      *

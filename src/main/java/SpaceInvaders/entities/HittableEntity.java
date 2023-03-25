@@ -20,7 +20,7 @@ public abstract class HittableEntity extends Entity {
 
     /**
      * The size of An Entity
-     * If the distance to the position of //TODO link to bullet is is smaller than the size.<br>
+     * If the distance to the position of {@link Bullet}  is smaller than the size.<br>
      * The HittableEntity gets hit.
      */
     protected double size;
@@ -48,7 +48,7 @@ public abstract class HittableEntity extends Entity {
     /**
      * The method that is activated when a hit happens.<br>
      * Should be called from {@link HittableEntity#update()}.
-     * //TODO call this method in an implementation of update method here.
+     * //TODO call this method in an implementation of doHittableEntityUpdate method here.
      */
     private void getHit() {
         health--;
@@ -57,11 +57,14 @@ public abstract class HittableEntity extends Entity {
     /**
      * Called after the updates are gathered.
      * <p>
-     * This code implements collisionDetection.
+     * This code implements collisionDetection. <br>
+     * Is always called.<br>
+     * Calls {@link #doHittableEntityUpdate()} at the end.
+     * Put Implementations in this abstract method.
      * </p>
      */
     @Override
-    public void update() {
+    public final void update() {
         ArrayList<Bullet> bullets = abstractFactory.getEntities().stream() //Get the entity list from the factory.
                 .filter(entity -> entity instanceof Bullet) //Filter it for bullets.
                 .map(entity -> (Bullet) entity).collect(Collectors.toCollection(ArrayList::new)); //Cast those Entities to Bullets.
@@ -72,5 +75,11 @@ public abstract class HittableEntity extends Entity {
                 .collect(Collectors.toCollection(ArrayList::new)); // Collect them in an array
 
         damagingBullets.forEach(bullet -> getHit()); //For every bullet in this array, call the getHit() method.
+        doHittableEntityUpdate();
     }
+
+    /**
+     * Use this to implement the doHittableEntityUpdate methods in HittableEntity Objects.
+     */
+    public abstract void doHittableEntityUpdate();
 }
