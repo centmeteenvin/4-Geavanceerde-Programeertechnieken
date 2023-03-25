@@ -55,13 +55,15 @@ public abstract class HittableEntity extends Entity {
     }
 
     /**
-     * Called after the updates are gathered
+     * Called after the updates are gathered.
+     * <p>
+     * This code implements collisionDetection.
+     * </p>
      */
     @Override
     public void update() {
-
         ArrayList<Bullet> bullets = abstractFactory.getEntities().stream() //Get the entity list from the factory.
-                .filter(entity -> !Objects.equals(entity.getClass(), Bullet.class)) //Filter it for bullets.
+                .filter(entity -> entity instanceof Bullet) //Filter it for bullets.
                 .map(entity -> (Bullet) entity).collect(Collectors.toCollection(ArrayList::new)); //Cast those Entities to Bullets.
 
         ArrayList<Bullet> damagingBullets = bullets.stream()
@@ -71,6 +73,4 @@ public abstract class HittableEntity extends Entity {
 
         damagingBullets.forEach(bullet -> getHit()); //For every bullet in this array, call the getHit() method.
     }
-
-    //TODO Hitbox detection when bullet class is made
 }

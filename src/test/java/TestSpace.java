@@ -34,6 +34,7 @@ public class TestSpace {
         System.out.println(list.stream().map(SuperClass::getClass).collect(Collectors.toList()));
         System.out.println(list.stream().map(superClass -> superClass.getClass().equals(class1.class)).collect(Collectors.toList()));
         System.out.println(list.stream().filter(superClass -> superClass.getClass().equals(class1.class)).collect(Collectors.toList()));
+        System.out.println(list.stream().filter(superClass -> superClass instanceof class1).collect(Collectors.toList()));
         System.out.println(list.stream().filter(superClass -> Objects.equals(superClass.getClass(), class1.class)).map(superClass -> (class1) superClass).collect(Collectors.toList()));
     }
 }
