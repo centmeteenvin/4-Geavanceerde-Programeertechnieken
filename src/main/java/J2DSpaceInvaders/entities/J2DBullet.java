@@ -8,6 +8,12 @@ import SpaceInvaders.utilities.Settings;
 
 import java.awt.*;
 
+/**
+ * The J2D implementation of a bullet.
+ * <p>
+ * Implements {@link Bullet#visualize()}.
+ * </p>
+ */
 public class J2DBullet extends Bullet {
     /**
      * {@link J2DSpaceInvaders.J2DFactory#graphicsContext}.
@@ -19,6 +25,8 @@ public class J2DBullet extends Bullet {
      *
      * @param location {@link Entity#coordinate}
      * @param owner    {@link #owner}
+     * @param settings Used as a getter for {@link #speed}
+     * @param graphicsContext {@link #graphicsContext}
      */
     public J2DBullet(Point location, HittableEntity owner, Settings settings, GraphicsContext graphicsContext) {
         super(location, owner, settings);

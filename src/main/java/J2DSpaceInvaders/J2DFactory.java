@@ -15,6 +15,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Concrete implementation of {@link AbstractFactory}.
+ * <p>
+ * Implements the {@link GraphicsContext}.<br>
+ * Handles Object creation for concrete j2d {@link Entity entities}.<br>
+ * Also gives objects access to the {@link GameState} and {@link Settings}<br>
+ * </p>
+ */
 public class J2DFactory extends AbstractFactory {
 
     /**
@@ -26,6 +34,9 @@ public class J2DFactory extends AbstractFactory {
      */
     private GraphicsContext graphicsContext;
 
+    /**
+     * The File containing the J2D settings such as screensize.
+     */
     private final File J2DSettingsFile = new File("src/main/resources/J2Dsetting.properties");
 
     /**
@@ -57,7 +68,7 @@ public class J2DFactory extends AbstractFactory {
      * <p>
      * Called once when Game.start() is called.<br>
      * Use this to initialize {@link #gameState} and {@link #settings}.<br>
-     * Calls {@link #graphicsContext#initialize()};
+     * Calls {@link GraphicsContext#initialize(Properties)};
      */
     @Override
     public void initialize() {
@@ -78,7 +89,7 @@ public class J2DFactory extends AbstractFactory {
      * Use this when implementing a buffer draw scheme.
      * Draw to the buffer with the {@link Entity#visualize()} method.
      * Push the frame to the screen with this method.<br>
-     * Calls {@link #graphicsContext#render()}.<br>
+     * Calls {@link GraphicsContext#render()}.<br>
      */
     @Override
     public void render() {

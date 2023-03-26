@@ -4,6 +4,11 @@ import SpaceInvaders.utilities.Settings;
 
 import java.awt.*;
 
+
+/**
+ * Abstract Class Template for bullets.
+ * These objects should be created in {@link SpaceInvaders.AbstractFactory#bulletCreator(Point, HittableEntity)}.
+ */
 public abstract class Bullet extends Entity{
 
     /**

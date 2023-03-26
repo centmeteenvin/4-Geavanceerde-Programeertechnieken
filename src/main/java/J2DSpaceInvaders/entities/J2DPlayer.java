@@ -9,6 +9,12 @@ import SpaceInvaders.entities.Player;
 
 import java.awt.*;
 
+/**
+ * Concrete Implementation of {@link Player}.
+ * <p>
+ * Implements the {@link Player#visualize()} method.
+ * </p>
+ */
 public class J2DPlayer extends Player {
 
     /**

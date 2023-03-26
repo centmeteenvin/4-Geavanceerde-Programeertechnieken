@@ -27,6 +27,12 @@ public class GameState {
      */
     private int currentLevel;
 
+    /**
+     * Initialisation of the gamestate.
+     * <p>
+     * Is called during {@link Game#initialize()}.
+     * </p>
+     */
     public void initialize() {
         isPlaying = true;
         score = 0;

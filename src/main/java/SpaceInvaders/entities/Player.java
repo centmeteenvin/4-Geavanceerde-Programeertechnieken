@@ -33,6 +33,10 @@ public abstract class Player extends HittableEntity {
      */
     private final int speed = 10;
 
+    /**
+     * Time since last shot in milliseconds.
+     * Used to prevent machineGunning.
+     */
     private long lastShot = System.currentTimeMillis();
 
     /**

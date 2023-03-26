@@ -5,6 +5,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Properties;
 
+/**
+ * The GraphicsContext of the J2D visualisation.
+ * <p>
+ * Contains the logic for rendering along with accessors for its resources.
+ * </p>
+ */
 public class GraphicsContext {
 
     /**
@@ -121,7 +127,7 @@ public class GraphicsContext {
     }
 
     /**
-     * Extending the logic of {@link #panel#paint(Graphics)} to enable double buffering.<br>
+     * Extending the logic of {@link #panel} to enable double buffering.<br>
      * @param g the graphics context.
      */
     private void doPainting(Graphics g) {

@@ -44,6 +44,9 @@ public class Settings {
      */
     private int bulletSpeed;
 
+    /**
+     * Load the gamesetting from the properties file at src/main/resources/gamesetting.properties.
+     */
     public void loadFromProperties() {
         properties = new Properties();
         File propertiesFile = new File("src/main/resources/gamesetting.properties");

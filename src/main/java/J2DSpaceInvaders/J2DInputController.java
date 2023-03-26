@@ -22,6 +22,9 @@ public class J2DInputController extends InputController {
 //        shooting = Input.SHOOT;
     }
 
+    /**
+     * KeyInputAdapter class used to handle keyEvents and passing them to the {@link InputController}.
+     */
     class KeyInputAdapter extends KeyAdapter {
 
         /**

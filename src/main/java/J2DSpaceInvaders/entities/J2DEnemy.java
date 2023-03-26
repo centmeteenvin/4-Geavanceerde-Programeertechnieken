@@ -10,6 +10,12 @@ import SpaceInvaders.entities.HittableEntity;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * J2D Concrete implementation of {@link Enemy}.
+ * <p>
+ * Implements the {@link Enemy#visualize()} method.
+ * </p>
+ */
 public class J2DEnemy extends Enemy {
     /**
      * {@link J2DFactory#graphicsContext}
