@@ -45,6 +45,16 @@ public class Settings {
     private int bulletSpeed;
 
     /**
+     * The speed of the {@link SpaceInvaders.entities.Player}.
+     */
+    private int playerSpeed;
+
+    /**
+     * The speed of the {@link SpaceInvaders.entities.Enemy}.
+     */
+    private int enemySpeed;
+
+    /**
      * Load the gamesetting from the properties file at src/main/resources/gamesetting.properties.
      */
     public void loadFromProperties() {
@@ -55,6 +65,8 @@ public class Settings {
             fps = Integer.parseInt(properties.getProperty("fps"));
             playerShootingDelay = Long.parseLong(properties.getProperty("playerShootingDelay"));
             bulletSpeed = Integer.parseInt(properties.getProperty("bulletSpeed"));
+            playerSpeed = Integer.parseInt(properties.getProperty("playerSpeed"));
+            enemySpeed = Integer.parseInt(properties.getProperty("enemySpeed"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -106,5 +118,37 @@ public class Settings {
      */
     public void setBulletSpeed(int bulletSpeed) {
         this.bulletSpeed = bulletSpeed;
+    }
+
+    /**
+     * Getter for playerSpeed.
+     * @return {@link #playerSpeed}.
+     */
+    public int getPlayerSpeed() {
+        return playerSpeed;
+    }
+
+    /**
+     * Setter for playerSpeed.
+     * @param playerSpeed {@link #playerSpeed}
+     */
+    public void setPlayerSpeed(int playerSpeed) {
+        this.playerSpeed = playerSpeed;
+    }
+
+    /**
+     * Getter for enemySpeed.
+     * @return {@link #enemySpeed}.
+     */
+    public int getEnemySpeed() {
+        return enemySpeed;
+    }
+
+    /**
+     * Setter for enemySpeed
+     * @param enemySpeed {@link #enemySpeed}.
+     */
+    public void setEnemySpeed(int enemySpeed) {
+        this.enemySpeed = enemySpeed;
     }
 }

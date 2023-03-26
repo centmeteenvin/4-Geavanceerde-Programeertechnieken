@@ -41,6 +41,6 @@ public class J2DBullet extends Bullet {
         Graphics2D graphics2D = graphicsContext.getGraphics2D();
         graphics2D.setColor(new Color(255, 255, 255));
         Point screenCoordinates = graphicsContext.coordinateTranslation(coordinate);
-        graphics2D.fillRect(screenCoordinates.x,screenCoordinates.y, 3, 10);
+        graphics2D.fillRect(screenCoordinates.x-2,screenCoordinates.y-5, 4, 10);
     }
 }

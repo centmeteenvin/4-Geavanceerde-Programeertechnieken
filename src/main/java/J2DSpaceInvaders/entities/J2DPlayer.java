@@ -25,9 +25,10 @@ public class J2DPlayer extends Player {
     /**
      * Default constructor for a Player.
      * Loads graphicsContext from J2DFactory.
-     * @param location        {@link Entity#coordinate}.
-     * @param health          {@link HittableEntity#health}.
-     * @param size            {@link HittableEntity#size}.
+     *
+     * @param location   {@link Entity#coordinate}.
+     * @param health     {@link HittableEntity#health}.
+     * @param size       {@link HittableEntity#size}.
      * @param j2dFactory {@link HittableEntity#abstractFactory}
      */
     public J2DPlayer(Point location, int health, double size, J2DFactory j2dFactory) {
@@ -44,6 +45,6 @@ public class J2DPlayer extends Player {
         graphics2D.setColor(new Color(0x01019A));
         Point screenCoordinate = graphicsContext.coordinateTranslation(coordinate);
         int screenSize = graphicsContext.sizeTranslation(size);
-        graphics2D.fillRect(screenCoordinate.x, screenCoordinate.y, screenSize, screenSize);
+        graphics2D.fillRect(screenCoordinate.x - screenSize / 2, screenCoordinate.y - screenSize / 2, screenSize, screenSize);
     }
 }

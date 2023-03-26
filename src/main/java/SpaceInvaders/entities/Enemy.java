@@ -35,7 +35,7 @@ public abstract class Enemy extends HittableEntity{
      * The speed of the object.
      * This is the amount of displacement added every frame.
      */
-    private final int speed = 10;
+    private final int speed;
 
     /**
      * Default Constructor for Enemies.<br>
@@ -49,6 +49,7 @@ public abstract class Enemy extends HittableEntity{
     public Enemy(Point location, int health, double size, AbstractFactory abstractFactory, Point bounds) {
         super(location, health, size, abstractFactory);
         this.bounds = bounds;
+        this.speed = abstractFactory.getSettings().getEnemySpeed();
     }
 
     /**

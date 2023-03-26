@@ -31,7 +31,7 @@ public abstract class Player extends HittableEntity {
      * The speed of the object.
      * This is the amount of displacement added every frame.
      */
-    private final int speed = 10;
+    private final int speed;
 
     /**
      * Time since last shot in milliseconds.
@@ -50,6 +50,7 @@ public abstract class Player extends HittableEntity {
     public Player(Point location, int health, double size, AbstractFactory abstractFactory) {
         super(location, health, size, abstractFactory);
         this.inputController = abstractFactory.getInputController();
+        this.speed = abstractFactory.getSettings().getPlayerSpeed();
     }
 
     /**
@@ -73,6 +74,7 @@ public abstract class Player extends HittableEntity {
             long shootingDelay = abstractFactory.getSettings().getPlayerShootingDelay();
             if (inputController.getShooting() == Input.SHOOT && (System.currentTimeMillis() - lastShot) >=  shootingDelay) {
                 lastShot = System.currentTimeMillis();
+                Point bulletCoordinate = new Point(coordinate.x,  coordinate.y - (int) (size/2));
                 abstractFactory.getEntities().add(abstractFactory.createBullet((Point) coordinate.clone(), this));
             }
         }

@@ -25,11 +25,12 @@ public class J2DEnemy extends Enemy {
     /**
      * Default Constructor for Enemies.<br>
      * Is called in {@link AbstractFactory#createEnemy(ArrayList)} during levelLoading.
-     * @param location {@link Entity#coordinate}.
-     * @param health   {@link HittableEntity#health}.
-     * @param size     {@link HittableEntity#size}.
+     *
+     * @param location   {@link Entity#coordinate}.
+     * @param health     {@link HittableEntity#health}.
+     * @param size       {@link HittableEntity#size}.
      * @param j2DFactory {@link HittableEntity#abstractFactory}
-     * @param bounds   {@link #bounds}.
+     * @param bounds     {@link #bounds}.
      */
     public J2DEnemy(Point location, int health, double size, J2DFactory j2DFactory, Point bounds) {
         super(location, health, size, j2DFactory, bounds);
@@ -45,6 +46,6 @@ public class J2DEnemy extends Enemy {
         graphics2D.setColor(new Color(0xA70101));
         Point screenCoordinate = graphicsContext.coordinateTranslation(coordinate);
         int screenSize = graphicsContext.sizeTranslation(size);
-        graphics2D.fillRect(screenCoordinate.x, screenCoordinate.y, screenSize, screenSize);
+        graphics2D.fillRect(screenCoordinate.x - screenSize / 2, screenCoordinate.y - screenSize / 2, screenSize, screenSize);
     }
 }
