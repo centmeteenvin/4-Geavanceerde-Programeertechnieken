@@ -6,6 +6,7 @@ import SpaceInvaders.utilities.Input;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Abstract class for enemy objects.
@@ -36,6 +37,11 @@ public abstract class Enemy extends HittableEntity{
      * This is the amount of displacement added every frame.
      */
     private final int speed;
+
+    /**
+     * The average time before a shot is fired.
+     */
+    private final double averageTimeToShoot = 2.5;
 
     /**
      * Default Constructor for Enemies.<br>
@@ -76,6 +82,13 @@ public abstract class Enemy extends HittableEntity{
             switch (currentDirection) {
                 case RIGHT -> coordinate.x = coordinate.x + speed;
                 case LEFT -> coordinate.x = coordinate.x - speed;
+            }
+            if (Math.random() <= Math.abs(1.0-Math.pow(20.0/3.0,1.0/(abstractFactory.getSettings().getFps()*averageTimeToShoot)))) //Using a geometric distribution to determine the trigger chance.
+            {
+                System.out.println("Shooting");
+                abstractFactory.getEntities().add(
+                        abstractFactory.createBullet((Point) coordinate.clone(), this)
+                );
             }
         }
     }
