@@ -39,7 +39,7 @@ public class J2DBullet extends Bullet {
     @Override
     public void visualize() {
         Graphics2D graphics2D = graphicsContext.getGraphics2D();
-        graphics2D.setColor(new Color(0));
+        graphics2D.setColor(new Color(255, 255, 255));
         Point screenCoordinates = graphicsContext.coordinateTranslation(coordinate);
         graphics2D.fillRect(screenCoordinates.x,screenCoordinates.y, 3, 10);
     }

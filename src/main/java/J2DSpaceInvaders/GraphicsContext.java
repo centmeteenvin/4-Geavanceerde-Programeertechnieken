@@ -1,8 +1,12 @@
 package J2DSpaceInvaders;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -38,6 +42,9 @@ public class GraphicsContext {
      */
     private Size size;
 
+    private BufferedImage background;
+
+
     /**
      * Default constructor for GraphicsContext.
      * <p>
@@ -61,6 +68,15 @@ public class GraphicsContext {
             }
         };
         frame.add(panel);
+
+        try {
+            File imageFile = new File("src/main/resources/background.png");
+            background = ImageIO.read(imageFile);
+        } catch (IOException e) {
+            System.out.println("Background Image Not Found");
+            throw new RuntimeException(e);
+        }
+
     }
 
     /**
@@ -72,14 +88,15 @@ public class GraphicsContext {
 
     /**
      * Initialize the frame and size for and all related settings using a Properties object.
+     *
      * @param properties properties object.
      */
     public void initialize(Properties properties) {
         size = new Size(Integer.parseInt(properties.getProperty("width")), Integer.parseInt(properties.getProperty("height")));
-        bufferedImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
+        bufferedImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
         graphics2D = bufferedImage.createGraphics(); //link graphics2D to the bufferedImage.
-        graphics2D.setBackground(new Color(255,255,255));
-        graphics2D.clearRect(0,0, frame.getWidth(), frame.getHeight());
+        graphics2D.setBackground(new Color(255, 255, 255));
+        graphics2D.clearRect(0, 0, frame.getWidth(), frame.getHeight());
         frame.setSize(size.width, size.height);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -90,28 +107,31 @@ public class GraphicsContext {
 
     /**
      * Translates the Games coordinates to screen coordinates.
+     *
      * @param gamePoint game coordinates.
      * @return screen coordinates.
      */
     public Point coordinateTranslation(Point gamePoint) {
         Point screenPoint = new Point();
         screenPoint.x = (int) ((gamePoint.x + 500.0) / 1000 * size.width);
-        screenPoint.y = (size.height - 100) - (int) ( 1.0* gamePoint.y / 1000 * (size.height - 100));
+        screenPoint.y = (size.height - 100) - (int) (1.0 * gamePoint.y / 1000 * (size.height - 100));
         return screenPoint;
     }
 
     /**
      * Translates the game's sizes to screen sizes.
      * //TODO Could be improved.
+     *
      * @param gameSize gameSize
      * @return screenSize
      */
     public int sizeTranslation(double gameSize) {
-        return (int) (gameSize/1000 * size.width);
+        return (int) (gameSize / 1000 * size.width);
     }
 
     /**
      * Getter for graphics2D.
+     *
      * @return reference to {@link #graphics2D}
      */
     public Graphics2D getGraphics2D() {
@@ -120,6 +140,7 @@ public class GraphicsContext {
 
     /**
      * Getter for frame.
+     *
      * @return reference to {@link #frame}
      */
     public JFrame getFrame() {
@@ -128,6 +149,7 @@ public class GraphicsContext {
 
     /**
      * Extending the logic of {@link #panel} to enable double buffering.<br>
+     *
      * @param g the graphics context.
      */
     private void doPainting(Graphics g) {
@@ -136,8 +158,10 @@ public class GraphicsContext {
         graph2d.drawImage(bufferedImage, 0, 0, null); //Draw the bufferedImage to the current screen.
         graph2d.dispose(); //Release resources concerned with buffering.
         //Cleanup the normal buffered graphics.
-        if (graphics2D != null)
+        if (graphics2D != null) {
             graphics2D.clearRect(0, 0, frame.getWidth(), frame.getHeight());
+            graphics2D.drawImage(background, 0, 0, null);
+        }
     }
 
 }

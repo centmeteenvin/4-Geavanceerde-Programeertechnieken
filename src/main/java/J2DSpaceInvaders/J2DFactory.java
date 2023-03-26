@@ -143,7 +143,7 @@ public class J2DFactory extends AbstractFactory {
      */
     @Override
     public void levelCleared() {
-
+        //TODO
     }
 
     /**
@@ -152,7 +152,7 @@ public class J2DFactory extends AbstractFactory {
      */
     @Override
     public void gameOver() {
-
+        //TODO
     }
 
     /**

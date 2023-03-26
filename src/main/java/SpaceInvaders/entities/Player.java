@@ -14,12 +14,12 @@ import java.awt.*;
  */
 public abstract class Player extends HittableEntity {
 
-    /**
-     * The Gamestate.
-     * The player can interact with the gameState, that's why its here.<br>
-     * //TODO might be for reconsideration.
-     */
-    private final GameState gameState;
+//    /**
+//     * The Gamestate.
+//     * The player can interact with the gameState, that's why its here.<br>
+//     * //TODO might be for reconsideration.
+//     */
+//    private final GameState gameState;
 
     /**
      * The InputController.
@@ -49,7 +49,6 @@ public abstract class Player extends HittableEntity {
      */
     public Player(Point location, int health, double size, AbstractFactory abstractFactory) {
         super(location, health, size, abstractFactory);
-        this.gameState = abstractFactory.getGameState();
         this.inputController = abstractFactory.getInputController();
     }
 
