@@ -59,7 +59,7 @@ public abstract class Player extends HittableEntity {
     @Override
     public final void doHittableEntityUpdate() {
         if (health <= 0) {
-            gameState.setPlaying(false);
+            abstractFactory.getEntities().remove(this);
         }
         else {
             switch (inputController.getDirection()) {

@@ -4,6 +4,7 @@ import J2DSpaceInvaders.entities.J2DBullet;
 import J2DSpaceInvaders.entities.J2DEnemy;
 import J2DSpaceInvaders.entities.J2DPlayer;
 import SpaceInvaders.AbstractFactory;
+import SpaceInvaders.Game;
 import SpaceInvaders.entities.*;
 import SpaceInvaders.utilities.GameState;
 import SpaceInvaders.utilities.Settings;
@@ -26,6 +27,7 @@ public class J2DFactory extends AbstractFactory {
     private GraphicsContext graphicsContext;
 
     private final File J2DSettingsFile = new File("src/main/resources/J2Dsetting.properties");
+
     /**
      * Default constructor.
      * <p>
@@ -41,6 +43,7 @@ public class J2DFactory extends AbstractFactory {
      * Overloaded constructor with parameters.
      * <p>
      * {@link #gameState} and {@link #settings} are passed by reference from the parameters.<br>
+     *
      * @param gameState reference to a GameState object.
      * @param settings  reference to a Settings object.
      */
@@ -61,17 +64,11 @@ public class J2DFactory extends AbstractFactory {
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream(J2DSettingsFile));
+            graphicsContext.initialize(properties);
         } catch (IOException e) {
             System.out.println("Properties file not found for J2D");
             throw new RuntimeException(e);
         }
-        graphicsContext.initialize(properties);
-        gameState.setCurrentLevel(1);
-        gameState.setScore(0);
-        gameState.setPlaying(true);
-
-        settings.setFps(60);
-        //TODO settings init
     }
 
     /**
@@ -121,16 +118,35 @@ public class J2DFactory extends AbstractFactory {
      * This factory is called when a {@link HittableEntity} Shoots.
      *
      * @param location {@link Bullet#coordinate}.
-     * @param entity   {@link Bullet#owner}.
+     * @param owner    {@link Bullet#owner}.
      * @return a reference to the Bullet object.
      */
     @Override
     public Bullet bulletCreator(Point location, HittableEntity owner) {
-        return new J2DBullet(location, owner, graphicsContext);
+        return new J2DBullet(location, owner, settings,graphicsContext);
+    }
+
+    /**
+     * Called by the game when a level is cleared {@link Game#levelCleared()}.
+     * Use this as a hook to detect cleared levels.
+     */
+    @Override
+    public void levelCleared() {
+
+    }
+
+    /**
+     * Called by the game when the game is over {@link Game#gameOver()}.
+     * Use this as a hook te detect game Over state.
+     */
+    @Override
+    public void gameOver() {
+
     }
 
     /**
      * Getter for graphicsContext/
+     *
      * @return reference to {@link #graphicsContext}
      */
     public GraphicsContext getGraphicsContext() {

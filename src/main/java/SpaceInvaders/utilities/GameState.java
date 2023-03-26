@@ -27,6 +27,12 @@ public class GameState {
      */
     private int currentLevel;
 
+    public void initialize() {
+        isPlaying = true;
+        score = 0;
+        currentLevel = 1;
+    }
+
     /**
      * Getter for isPlaying.
      * @return {@link #isPlaying}

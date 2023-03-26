@@ -203,4 +203,16 @@ public abstract class AbstractFactory {
     public InputController getInputController() {
         return inputController;
     }
+
+    /**
+     * Called by the game when a level is cleared {@link Game#levelCleared()}.
+     * Use this as a hook to detect cleared levels.
+     */
+    public abstract void levelCleared();
+
+    /**
+     * Called by the game when the game is over {@link Game#gameOver()}.
+     * Use this as a hook te detect game Over state.
+     */
+    public abstract void gameOver();
 }

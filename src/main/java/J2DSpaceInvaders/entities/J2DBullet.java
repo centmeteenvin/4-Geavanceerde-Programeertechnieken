@@ -4,6 +4,7 @@ import J2DSpaceInvaders.GraphicsContext;
 import SpaceInvaders.entities.Bullet;
 import SpaceInvaders.entities.Entity;
 import SpaceInvaders.entities.HittableEntity;
+import SpaceInvaders.utilities.Settings;
 
 import java.awt.*;
 
@@ -19,8 +20,8 @@ public class J2DBullet extends Bullet {
      * @param location {@link Entity#coordinate}
      * @param owner    {@link #owner}
      */
-    public J2DBullet(Point location, HittableEntity owner, GraphicsContext graphicsContext) {
-        super(location, owner);
+    public J2DBullet(Point location, HittableEntity owner, Settings settings, GraphicsContext graphicsContext) {
+        super(location, owner, settings);
         this.graphicsContext = graphicsContext;
     }
 

@@ -38,6 +38,12 @@ public class Settings {
      */
     private long playerShootingDelay;
 
+    /**
+     * The Speed of bullets.
+     * {@link SpaceInvaders.entities.Bullet#speed}
+     */
+    private int bulletSpeed;
+
     public void loadFromProperties() {
         properties = new Properties();
         File propertiesFile = new File("src/main/resources/gamesetting.properties");
@@ -45,6 +51,7 @@ public class Settings {
             properties.load(new FileReader(propertiesFile));
             fps = Integer.parseInt(properties.getProperty("fps"));
             playerShootingDelay = Long.parseLong(properties.getProperty("playerShootingDelay"));
+            bulletSpeed = Integer.parseInt(properties.getProperty("bulletSpeed"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -80,5 +87,21 @@ public class Settings {
      */
     public void setPlayerShootingDelay(long playerShootingDelay) {
         this.playerShootingDelay = playerShootingDelay;
+    }
+
+    /**
+     * Getter for bulletSpeed.
+     * @return {@link #bulletSpeed}
+     */
+    public int getBulletSpeed() {
+        return bulletSpeed;
+    }
+
+    /**
+     * Setter for bulletSpeed.
+     * @param bulletSpeed {@link #bulletSpeed}
+     */
+    public void setBulletSpeed(int bulletSpeed) {
+        this.bulletSpeed = bulletSpeed;
     }
 }

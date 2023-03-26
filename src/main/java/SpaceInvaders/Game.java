@@ -2,6 +2,7 @@ package SpaceInvaders;
 
 import SpaceInvaders.entities.Enemy;
 import SpaceInvaders.entities.Entity;
+import SpaceInvaders.entities.Player;
 import SpaceInvaders.utilities.GameState;
 import SpaceInvaders.utilities.Settings;
 
@@ -84,7 +85,10 @@ public class Game {
     private void initialize() {
         abstractFactory.initialize();
         this.entities = abstractFactory.getEntities();
+
         this.gameState = abstractFactory.getGameState();
+        this.gameState.initialize();
+
         this.settings = abstractFactory.getSettings();
         this.settings.loadFromProperties();
     }
@@ -110,6 +114,7 @@ public class Game {
                 line = levelReader.readLine();
             }   while (line != null);
         } catch (FileNotFoundException e) {
+            gameOver();
             System.out.println("Level does not exist");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -133,7 +138,8 @@ public class Game {
             for (int i = 0; i < entities.size(); i++) { //for loop instead of for each to prevent concurrency.
                 entities.get(i).update();
             }
-            if (entities.stream().noneMatch(entity -> entity instanceof Enemy)) gameState.setPlaying(false);
+            if (entities.stream().noneMatch(entity -> entity instanceof Enemy)) levelCleared();
+            if (entities.stream().noneMatch(entity -> entity instanceof Player)) gameOver();
             entities.forEach(Entity::visualize);
             abstractFactory.render();
             elapsedTime = (double) (System.currentTimeMillis() - time);
@@ -145,5 +151,34 @@ public class Game {
                 }
             }
         }
+    }
+
+    /**
+     * Called when a level is cleared.
+     * <p>
+     * Starts with a call to {@link AbstractFactory#levelCleared()}.<br>
+     * Clears {@link #entities}.<br>
+     * Increments the {@link GameState#currentLevel} and loads next Level.<br>
+     * Starts {@link #gameLoop()} Again.<br>
+     * </p>
+     */
+    private void levelCleared() {
+        abstractFactory.levelCleared();
+        entities.clear();
+        int currentLevel = gameState.getCurrentLevel();
+        gameState.setCurrentLevel(currentLevel + 1);
+        loadLevel();
+        gameLoop();
+    }
+
+    /**
+     * Stops the game.
+     * <p>
+     * Pauses Game and then calls {@link AbstractFactory#gameOver()}.
+     * </p>
+     */
+    private void gameOver() {
+        gameState.setPlaying(false);
+        abstractFactory.gameOver();
     }
 }

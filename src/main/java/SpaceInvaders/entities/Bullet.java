@@ -1,5 +1,7 @@
 package SpaceInvaders.entities;
 
+import SpaceInvaders.utilities.Settings;
+
 import java.awt.*;
 
 public abstract class Bullet extends Entity{
@@ -14,17 +16,19 @@ public abstract class Bullet extends Entity{
      * The speed of the object.
      * This is the amount of displacement added every frame.
      */
-    private final int speed = 10;
+    private final int speed;
 
     /**
      * Default Constructor for Entities.
      *
      * @param location {@link Entity#coordinate}
-     * @param owner {@link #owner}
+     * @param owner    {@link #owner}
+     * @param settings {@link SpaceInvaders.Game#settings}. Used for the bulletspeed
      */
-    public Bullet(Point location, HittableEntity owner) {
+    public Bullet(Point location, HittableEntity owner, Settings settings) {
         super(location);
         this.owner = owner;
+        this.speed = settings.getBulletSpeed();
     }
 
     /**
