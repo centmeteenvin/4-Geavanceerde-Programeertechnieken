@@ -2,6 +2,12 @@ package SpaceInvaders.utilities;
 
 import SpaceInvaders.AbstractFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
 /**
  * Holds all the settings for the game.
  * <p>
@@ -10,6 +16,12 @@ import SpaceInvaders.AbstractFactory;
  * The {@link SpaceInvaders.AbstractFactory} passes it to the {@link SpaceInvaders.Game} during initializing.
  */
 public class Settings {
+
+    /**
+     * The property file/object of the gamesettings.
+     * Is read from /resources/gamesetting.properties.
+     */
+    private Properties properties;
 
     /**
      * The Amount of Frames per seconds.
@@ -25,6 +37,18 @@ public class Settings {
      * Expressed in Milliseconds.
      */
     private long playerShootingDelay;
+
+    public void loadFromProperties() {
+        properties = new Properties();
+        File propertiesFile = new File("src/main/resources/gamesetting.properties");
+        try {
+            properties.load(new FileReader(propertiesFile));
+            fps = Integer.parseInt(properties.getProperty("fps"));
+            playerShootingDelay = Long.parseLong(properties.getProperty("playerShootingDelay"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Getter for fps.

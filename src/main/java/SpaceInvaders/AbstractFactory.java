@@ -80,7 +80,7 @@ public abstract class AbstractFactory {
      * Initializes the fields and settings of the factory.
      * <p>
      * Called once when Game.start() is called.<br>
-     * Use this to initialize {@link #gameState} and {@link #settings}.<br>
+     * Use this as a hook for concrete implementations.
      */
     public abstract void initialize();
 

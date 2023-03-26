@@ -86,6 +86,7 @@ public class Game {
         this.entities = abstractFactory.getEntities();
         this.gameState = abstractFactory.getGameState();
         this.settings = abstractFactory.getSettings();
+        this.settings.loadFromProperties();
     }
 
     /**
