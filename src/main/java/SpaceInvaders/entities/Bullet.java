@@ -28,10 +28,10 @@ public abstract class Bullet extends Entity{
     @Override
     public final void update() {
         if (owner instanceof Enemy) {
-            coordinate.y--;
+            this.coordinate.y--;
         }
         else {
-            coordinate.y++;
+            this.coordinate.y++;
         }
     }
 }

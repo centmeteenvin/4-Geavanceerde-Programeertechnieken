@@ -1,5 +1,6 @@
 package SpaceInvaders;
 
+import SpaceInvaders.entities.Enemy;
 import SpaceInvaders.entities.Entity;
 import SpaceInvaders.utilities.GameState;
 import SpaceInvaders.utilities.Settings;
@@ -128,7 +129,10 @@ public class Game {
         double msPerFrame = 1000/settings.getFps();
         while(gameState.getPlaying()) {
             time = System.currentTimeMillis();
-            entities.forEach(entity -> entity.update());
+            for (int i = 0; i < entities.size(); i++) { //for loop instead of for each to prevent concurrency.
+                entities.get(i).update();
+            }
+            if (entities.stream().noneMatch(entity -> entity instanceof Enemy)) gameState.setPlaying(false);
             entities.forEach(Entity::visualize);
             abstractFactory.render();
             elapsedTime = (double) (System.currentTimeMillis() - time);

@@ -55,11 +55,11 @@ public abstract class Player extends HittableEntity {
         }
         else {
             switch (inputController.getDirection()) {
-                case LEFT -> coordinate.x++;
-                case RIGHT -> coordinate.x--;
+                case LEFT -> coordinate.x--;
+                case RIGHT -> coordinate.x++;
             }
             if (inputController.getShooting() == Input.SHOOT) {
-                abstractFactory.getEntities().add(abstractFactory.createBullet(coordinate, this));
+                abstractFactory.getEntities().add(abstractFactory.createBullet((Point) coordinate.clone(), this));
             }
         }
     }

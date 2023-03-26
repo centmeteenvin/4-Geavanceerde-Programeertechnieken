@@ -1,5 +1,8 @@
 package J2DSpaceInvaders;
 
+import J2DSpaceInvaders.entities.J2DBullet;
+import J2DSpaceInvaders.entities.J2DEnemy;
+import J2DSpaceInvaders.entities.J2DPlayer;
 import SpaceInvaders.AbstractFactory;
 import SpaceInvaders.entities.*;
 import SpaceInvaders.utilities.GameState;
@@ -9,13 +12,20 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 public class J2DFactory extends AbstractFactory {
-    private GraphicsContext graphicsContext;
-    private File J2DSettingsFile = new File("src/main/resources/J2Dsetting.properties");
 
+    /**
+     * The GraphicsContext of the J2DGame.
+     * <p>
+     * Used to show a visualisation of the game using J2D.
+     * It also uses a double buffered scheme.
+     * </p>
+     */
+    private GraphicsContext graphicsContext;
+
+    private final File J2DSettingsFile = new File("src/main/resources/J2Dsetting.properties");
     /**
      * Default constructor.
      * <p>
@@ -24,6 +34,7 @@ public class J2DFactory extends AbstractFactory {
     public J2DFactory() {
         super();
         this.graphicsContext = new GraphicsContext();
+        this.inputController = new J2DInputController(graphicsContext);
     }
 
     /**
@@ -59,7 +70,7 @@ public class J2DFactory extends AbstractFactory {
         gameState.setScore(0);
         gameState.setPlaying(true);
 
-        settings.setFps(15);
+        settings.setFps(60);
         //TODO settings init
     }
 
@@ -89,8 +100,7 @@ public class J2DFactory extends AbstractFactory {
      */
     @Override
     public Enemy enemyCreator(Point location, double health, double size, Point bounds) {
-        //TODO
-        return null;
+        return new J2DEnemy(location, health, size, this, bounds);
     }
 
     /**
@@ -104,8 +114,7 @@ public class J2DFactory extends AbstractFactory {
      */
     @Override
     public Player playerCreator(Point location, double health, double size) {
-        //TODO
-        return null;
+        return new J2DPlayer(location, health, size, this);
     }
 
     /**
@@ -116,9 +125,16 @@ public class J2DFactory extends AbstractFactory {
      * @return a reference to the Bullet object.
      */
     @Override
-    public Bullet bulletCreator(Point location, HittableEntity entity) {
-        //TODO
-        return null;
+    public Bullet bulletCreator(Point location, HittableEntity owner) {
+        return new J2DBullet(location, owner, graphicsContext);
+    }
+
+    /**
+     * Getter for graphicsContext/
+     * @return reference to {@link #graphicsContext}
+     */
+    public GraphicsContext getGraphicsContext() {
+        return graphicsContext;
     }
 
 }

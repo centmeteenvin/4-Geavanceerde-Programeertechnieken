@@ -49,8 +49,8 @@ public class GraphicsContext {
              * @see Component#paintAll
              */
             @Override
-            public void paintComponents(Graphics g) {
-                super.paintComponents(g);
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
                 doPainting(g);
             }
         };
@@ -69,9 +69,11 @@ public class GraphicsContext {
      * @param properties properties object.
      */
     public void initialize(Properties properties) {
-        size = new Size(Integer.parseInt(properties.getProperty("width")), Integer.parseInt(properties.getProperty("width")));
+        size = new Size(Integer.parseInt(properties.getProperty("width")), Integer.parseInt(properties.getProperty("height")));
         bufferedImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
         graphics2D = bufferedImage.createGraphics(); //link graphics2D to the bufferedImage.
+        graphics2D.setBackground(new Color(255,255,255));
+        graphics2D.clearRect(0,0, frame.getWidth(), frame.getHeight());
         frame.setSize(size.width, size.height);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -80,7 +82,43 @@ public class GraphicsContext {
         frame.setTitle(properties.getProperty("title"));
     }
 
+    /**
+     * Translates the Games coordinates to screen coordinates.
+     * @param gamePoint game coordinates.
+     * @return screen coordinates.
+     */
+    public Point coordinateTranslation(Point gamePoint) {
+        Point screenPoint = new Point();
+        screenPoint.x = (int) ((gamePoint.x + 500.0) / 1000 * size.width);
+        screenPoint.y = (size.height - 100) - (int) ( 1.0* gamePoint.y / 1000 * (size.height - 100));
+        return screenPoint;
+    }
 
+    /**
+     * Translates the game's sizes to screen sizes.
+     * //TODO Could be improved.
+     * @param gameSize gameSize
+     * @return screenSize
+     */
+    public int sizeTranslation(double gameSize) {
+        return (int) (gameSize/1000 * size.width);
+    }
+
+    /**
+     * Getter for graphics2D.
+     * @return reference to {@link #graphics2D}
+     */
+    public Graphics2D getGraphics2D() {
+        return graphics2D;
+    }
+
+    /**
+     * Getter for frame.
+     * @return reference to {@link #frame}
+     */
+    public JFrame getFrame() {
+        return frame;
+    }
 
     /**
      * Extending the logic of {@link #panel#paint(Graphics)} to enable double buffering.<br>
@@ -95,4 +133,5 @@ public class GraphicsContext {
         if (graphics2D != null)
             graphics2D.clearRect(0, 0, frame.getWidth(), frame.getHeight());
     }
+
 }
