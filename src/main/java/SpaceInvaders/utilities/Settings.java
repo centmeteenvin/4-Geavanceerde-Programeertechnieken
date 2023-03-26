@@ -21,6 +21,12 @@ public class Settings {
     private double fps;
 
     /**
+     * The Delay for shooting Player.
+     * Expressed in Milliseconds.
+     */
+    private long playerShootingDelay;
+
+    /**
      * Getter for fps.
      * @return {@link #fps}
      */
@@ -34,5 +40,21 @@ public class Settings {
      */
     public void setFps(double fps) {
         this.fps = fps;
+    }
+
+    /**
+     * Getter for shootingDelay.
+     * @return {@link #playerShootingDelay}
+     */
+    public long getPlayerShootingDelay() {
+        return playerShootingDelay;
+    }
+
+    /**
+     * Setter for shootingDelay.
+     * @param playerShootingDelay {@link #playerShootingDelay}
+     */
+    public void setPlayerShootingDelay(long playerShootingDelay) {
+        this.playerShootingDelay = playerShootingDelay;
     }
 }

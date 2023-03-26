@@ -15,7 +15,7 @@ public abstract class HittableEntity extends Entity {
      * The health of an entities.
      * Every time a HittableEntity gets hit, the health goes down by one.
      */
-    protected double health;
+    protected int health;
 
     /**
      * The size of An Entity
@@ -37,7 +37,7 @@ public abstract class HittableEntity extends Entity {
      * @param size {@link #size}
      * @param abstractFactory {@link #abstractFactory}
      */
-    public HittableEntity(Point location, double health, double size, AbstractFactory abstractFactory) {
+    public HittableEntity(Point location, int health, double size, AbstractFactory abstractFactory) {
         super(location);
         this.health = health;
         this.size = size;
@@ -49,6 +49,7 @@ public abstract class HittableEntity extends Entity {
      * Should be called from {@link HittableEntity#update()}.
      */
     private void getHit() {
+        System.out.println(health);
         health--;
     }
 
@@ -70,6 +71,11 @@ public abstract class HittableEntity extends Entity {
                 .collect(Collectors.toCollection(ArrayList::new)); // Collect them in an array
 
         damagingBullets.forEach(bullet -> getHit()); //For every bullet in this array, call the getHit() method.
+
+        //Remove the bullets that are hitting the targets, using for loop to prevent concurrency
+        for (int i = 0; i < damagingBullets.size(); i++) {
+            abstractFactory.getEntities().remove(damagingBullets.get(i));
+        }
         doHittableEntityUpdate();
     }
 

@@ -11,6 +11,12 @@ public abstract class Bullet extends Entity{
     protected HittableEntity owner;
 
     /**
+     * The speed of the object.
+     * This is the amount of displacement added every frame.
+     */
+    private final int speed = 10;
+
+    /**
      * Default Constructor for Entities.
      *
      * @param location {@link Entity#coordinate}
@@ -28,10 +34,10 @@ public abstract class Bullet extends Entity{
     @Override
     public final void update() {
         if (owner instanceof Enemy) {
-            this.coordinate.y--;
+            this.coordinate.y = coordinate.y - speed;
         }
         else {
-            this.coordinate.y++;
+            this.coordinate.y = coordinate.y + speed;
         }
     }
 }

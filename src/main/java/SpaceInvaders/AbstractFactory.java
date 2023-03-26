@@ -48,7 +48,7 @@ public abstract class AbstractFactory {
     /**
      * Handles all user input.
      * <p>
-     *     Should be passed to the {@link #playerCreator(Point, double, double) Player} object.<br>
+     *     Should be passed to the {@link #playerCreator(Point, int, double) Player} object.<br>
      * </p>
      */
     protected InputController inputController;
@@ -104,7 +104,7 @@ public abstract class AbstractFactory {
      * @param bounds   point that defines the maximum movement in the x-axis direction.
      * @return an Enemy object instantiated with the given parameters.
      */
-    public abstract Enemy enemyCreator(Point location, double health, double size, Point bounds);
+    public abstract Enemy enemyCreator(Point location, int health, double size, Point bounds);
 
     /**
      * This factory is called when a level is loaded.<br>
@@ -115,7 +115,7 @@ public abstract class AbstractFactory {
      * @param size     double that defines the size, need for collision detection.
      * @return a Player object instantiated with the given parameters.
      */
-    public abstract Player playerCreator(Point location, double health, double size);
+    public abstract Player playerCreator(Point location, int health, double size);
 
     /**
      * This factory is called when a {@link HittableEntity} Shoots.
@@ -134,7 +134,7 @@ public abstract class AbstractFactory {
      */
     public Player createPlayer(ArrayList<String> parameters) {
         //Type;Health;Size;Location;bounds
-        double health = Double.parseDouble(parameters.get(1));
+        int health = Integer.parseInt(parameters.get(1));
         double size = Double.parseDouble(parameters.get(2));
         String[] tempList = parameters.get(3).split(",");
         Point location = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
@@ -151,7 +151,7 @@ public abstract class AbstractFactory {
      */
     public  Enemy createEnemy(ArrayList<String> parameters) {
         //Type;Health;Size;Location;bounds
-        double health = Double.parseDouble(parameters.get(1));
+        int health = Integer.parseInt(parameters.get(1));
         double size = Double.parseDouble(parameters.get(2));
         String[] tempList = parameters.get(3).split(",");
         Point location = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));

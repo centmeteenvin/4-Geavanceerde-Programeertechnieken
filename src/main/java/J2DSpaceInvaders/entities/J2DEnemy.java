@@ -25,7 +25,7 @@ public class J2DEnemy extends Enemy {
      * @param j2DFactory {@link HittableEntity#abstractFactory}
      * @param bounds   {@link #bounds}.
      */
-    public J2DEnemy(Point location, double health, double size, J2DFactory j2DFactory, Point bounds) {
+    public J2DEnemy(Point location, int health, double size, J2DFactory j2DFactory, Point bounds) {
         super(location, health, size, j2DFactory, bounds);
         this.graphicsContext = j2DFactory.getGraphicsContext();
     }

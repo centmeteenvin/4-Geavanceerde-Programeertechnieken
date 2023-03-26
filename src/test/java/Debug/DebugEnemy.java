@@ -6,7 +6,7 @@ import SpaceInvaders.entities.Enemy;
 import java.awt.*;
 
 public class DebugEnemy extends Enemy {
-    public DebugEnemy(Point location, double health, double size, AbstractFactory abstractFactory,Point bounds) {
+    public DebugEnemy(Point location, int health, double size, AbstractFactory abstractFactory, Point bounds) {
         super(location, health, size, abstractFactory, bounds);
     }
 

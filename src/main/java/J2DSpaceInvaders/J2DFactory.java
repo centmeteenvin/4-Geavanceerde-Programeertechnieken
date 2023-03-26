@@ -99,7 +99,7 @@ public class J2DFactory extends AbstractFactory {
      * @return an Enemy object instantiated with the given parameters.
      */
     @Override
-    public Enemy enemyCreator(Point location, double health, double size, Point bounds) {
+    public Enemy enemyCreator(Point location, int health, double size, Point bounds) {
         return new J2DEnemy(location, health, size, this, bounds);
     }
 
@@ -113,7 +113,7 @@ public class J2DFactory extends AbstractFactory {
      * @return a Player object instantiated with the given parameters.
      */
     @Override
-    public Player playerCreator(Point location, double health, double size) {
+    public Player playerCreator(Point location, int health, double size) {
         return new J2DPlayer(location, health, size, this);
     }
 

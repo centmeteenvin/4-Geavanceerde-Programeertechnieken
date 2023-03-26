@@ -30,12 +30,12 @@ public class DebugFactory extends AbstractFactory {
     }
 
     @Override
-    public Enemy enemyCreator(Point location, double health, double size, Point bounds) {
+    public Enemy enemyCreator(Point location, int health, double size, Point bounds) {
         return new DebugEnemy(location, health, size, abstractFactory,bounds);
     }
 
     @Override
-    public Player playerCreator(Point location, double health, double size) {
+    public Player playerCreator(Point location, int health, double size) {
         return new DebugPlayer(location, health, size,abstractFactory, gameState, inputController);
     }
 

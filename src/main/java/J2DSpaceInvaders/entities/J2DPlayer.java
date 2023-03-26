@@ -24,7 +24,7 @@ public class J2DPlayer extends Player {
      * @param size            {@link HittableEntity#size}.
      * @param j2dFactory {@link HittableEntity#abstractFactory}
      */
-    public J2DPlayer(Point location, double health, double size, J2DFactory j2dFactory) {
+    public J2DPlayer(Point location, int health, double size, J2DFactory j2dFactory) {
         super(location, health, size, j2dFactory);
         this.graphicsContext = j2dFactory.getGraphicsContext();
     }

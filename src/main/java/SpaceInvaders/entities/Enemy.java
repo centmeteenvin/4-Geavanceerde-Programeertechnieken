@@ -32,6 +32,12 @@ public abstract class Enemy extends HittableEntity{
     private Input currentDirection = Input.LEFT;
 
     /**
+     * The speed of the object.
+     * This is the amount of displacement added every frame.
+     */
+    private final int speed = 10;
+
+    /**
      * Default Constructor for Enemies.<br>
      * Is called in {@link SpaceInvaders.AbstractFactory#createEnemy(ArrayList)} during levelLoading.
      * @param location {@link Entity#coordinate}.
@@ -40,7 +46,7 @@ public abstract class Enemy extends HittableEntity{
      * @param abstractFactory {@link HittableEntity#abstractFactory}
      * @param bounds {@link #bounds}.
      */
-    public Enemy(Point location, double health, double size, AbstractFactory abstractFactory, Point bounds) {
+    public Enemy(Point location, int health, double size, AbstractFactory abstractFactory, Point bounds) {
         super(location, health, size, abstractFactory);
         this.bounds = bounds;
     }
@@ -67,8 +73,8 @@ public abstract class Enemy extends HittableEntity{
                 currentDirection = Input.LEFT;
             }
             switch (currentDirection) {
-                case RIGHT -> coordinate.x++;
-                case LEFT -> coordinate.x--;
+                case RIGHT -> coordinate.x = coordinate.x + speed;
+                case LEFT -> coordinate.x = coordinate.x - speed;
             }
         }
     }

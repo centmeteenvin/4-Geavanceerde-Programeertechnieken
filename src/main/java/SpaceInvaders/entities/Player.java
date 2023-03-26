@@ -28,6 +28,14 @@ public abstract class Player extends HittableEntity {
     private InputController inputController;
 
     /**
+     * The speed of the object.
+     * This is the amount of displacement added every frame.
+     */
+    private final int speed = 10;
+
+    private long lastShot = System.currentTimeMillis();
+
+    /**
      * Default constructor for a Player.
      *
      * @param location        {@link Entity#coordinate}.
@@ -35,7 +43,7 @@ public abstract class Player extends HittableEntity {
      * @param size            {@link HittableEntity#size}.
      * @param abstractFactory {@link HittableEntity#abstractFactory}
      */
-    public Player(Point location, double health, double size, AbstractFactory abstractFactory) {
+    public Player(Point location, int health, double size, AbstractFactory abstractFactory) {
         super(location, health, size, abstractFactory);
         this.gameState = abstractFactory.getGameState();
         this.inputController = abstractFactory.getInputController();
@@ -55,10 +63,13 @@ public abstract class Player extends HittableEntity {
         }
         else {
             switch (inputController.getDirection()) {
-                case LEFT -> coordinate.x--;
-                case RIGHT -> coordinate.x++;
+                case LEFT -> coordinate.x = coordinate.x - speed;
+                case RIGHT -> coordinate.x = coordinate.x + speed;
             }
-            if (inputController.getShooting() == Input.SHOOT) {
+
+            long shootingDelay = abstractFactory.getSettings().getPlayerShootingDelay();
+            if (inputController.getShooting() == Input.SHOOT && (System.currentTimeMillis() - lastShot) >=  shootingDelay) {
+                lastShot = System.currentTimeMillis();
                 abstractFactory.getEntities().add(abstractFactory.createBullet((Point) coordinate.clone(), this));
             }
         }
