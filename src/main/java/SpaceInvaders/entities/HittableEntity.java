@@ -18,6 +18,12 @@ public abstract class HittableEntity extends Entity {
     protected int health;
 
     /**
+     * The maximum value of {@link #health}.
+     * Used to calculate percentage health if needed.
+     */
+    protected final int maxHealth;
+
+    /**
      * The size of An Entity
      * If the distance to the position of {@link Bullet}  is smaller than the size.<br>
      * The HittableEntity gets hit.
@@ -39,6 +45,7 @@ public abstract class HittableEntity extends Entity {
      */
     public HittableEntity(Point location, int health, double size, AbstractFactory abstractFactory) {
         super(location);
+        this.maxHealth = health;
         this.health = health;
         this.size = size;
         this.abstractFactory = abstractFactory;
