@@ -1,7 +1,7 @@
 package SpaceInvaders.utilities;
 
 import SpaceInvaders.AbstractFactory;
-import SpaceInvaders.entities.Enemy;
+import SpaceInvaders.entities.enemies.DefaultEnemy;
 import SpaceInvaders.entities.Entity;
 import SpaceInvaders.entities.Player;
 
@@ -29,7 +29,7 @@ public class LevelLoader {
             do {
                 list = new ArrayList<>(List.of(line.split(";")));
                 switch (list.get(0)) {
-                    case "Enemy" -> entities.add(createEnemy(list));
+                    case "DefaultEnemy" -> entities.add(createDefaultEnemy(list));
                     case "Player" -> entities.add(createPlayer(list));
                     case "ShootingEnemy" -> entities.add(createShootingEnemy(list));
                 }
@@ -49,11 +49,11 @@ public class LevelLoader {
      * Is used to create the enemy.
      * <p>
      * It's mainly used to parse the parameter list into the needed attributes to create an Enemy.<br>
-     * The generated parameters are passed to the enemyCreator;
+     * The generated parameters are passed to the defaultEnemyCreator;
      * @param parameters Is the list of parameters that is read from the level file.
      * @return An instance of Enemy that has the given parameters.
      */
-    public Enemy createEnemy(ArrayList<String> parameters) {
+    private DefaultEnemy createDefaultEnemy(ArrayList<String> parameters) {
         //Type;Health;Size;Location;bounds
         int health = Integer.parseInt(parameters.get(1));
         double size = Double.parseDouble(parameters.get(2));
@@ -61,7 +61,7 @@ public class LevelLoader {
         Point location = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
         tempList = parameters.get(4).split(",");
         Point bounds = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
-        return abstractFactory.enemyCreator(location, health, size, bounds);
+        return abstractFactory.defaultEnemyCreator(location, health, size, bounds);
     }
 
     /**
@@ -72,7 +72,7 @@ public class LevelLoader {
      * @param parameters Is the list of parameters that is read from the level file.
      * @return An instance of Enemy that has the given parameters.
      */
-    public Player createPlayer(ArrayList<String> parameters) {
+    private Player createPlayer(ArrayList<String> parameters) {
         //Type;Health;Size;Location;bounds
         int health = Integer.parseInt(parameters.get(1));
         double size = Double.parseDouble(parameters.get(2));
@@ -90,7 +90,7 @@ public class LevelLoader {
      * @param parameters Is the list of parameters received from the level file.
      * @return An instance of enemy
      */
-    public Entity createShootingEnemy(ArrayList<String> parameters) {
+    private Entity createShootingEnemy(ArrayList<String> parameters) {
         //Type;Health;Size;Location;bounds;averageTimeToShoot
         int health = Integer.parseInt(parameters.get(1));
         double size = Double.parseDouble(parameters.get(2));

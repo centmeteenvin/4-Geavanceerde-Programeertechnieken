@@ -1,6 +1,6 @@
 package SpaceInvaders;
 
-import SpaceInvaders.entities.Enemy;
+import SpaceInvaders.entities.enemies.Enemy;
 import SpaceInvaders.entities.Entity;
 import SpaceInvaders.entities.Player;
 import SpaceInvaders.utilities.GameState;
@@ -9,7 +9,6 @@ import SpaceInvaders.utilities.Settings;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -102,7 +101,9 @@ public class Game {
         LevelLoader levelLoader = new LevelLoader(abstractFactory);
         File currentLevelFile = new File("src/main/resources/levels/level_" + gameState.getCurrentLevel());
         try {
-            entities = levelLoader.LoadLevel(currentLevelFile);
+            // first cleared the list and then added the new one to retain the same reference as abstractfactory
+            entities.clear();
+            entities.addAll(levelLoader.LoadLevel((currentLevelFile)));
         } catch (FileNotFoundException e) {
            gameOver();
            System.out.println("Level Not Found");

@@ -56,7 +56,6 @@ public abstract class HittableEntity extends Entity {
      * Should be called from {@link HittableEntity#update()}.
      */
     private void getHit() {
-        System.out.println(health);
         health--;
     }
 
@@ -80,10 +79,17 @@ public abstract class HittableEntity extends Entity {
         damagingBullets.forEach(bullet -> getHit()); //For every bullet in this array, call the getHit() method.
 
         //Remove the bullets that are hitting the targets, using for loop to prevent concurrency
-        for (int i = 0; i < damagingBullets.size(); i++) {
-            abstractFactory.getEntities().remove(damagingBullets.get(i));
+        for (Bullet damagingBullet : damagingBullets) {
+            abstractFactory.getEntities().remove(damagingBullet);
         }
-        doHittableEntityUpdate();
+
+        //Health check otherwise call the subclasses' update function.
+        if (health <= 0) {
+            abstractFactory.getEntities().remove(this);
+        }
+        else {
+            doHittableEntityUpdate();
+        }
     }
 
     /**

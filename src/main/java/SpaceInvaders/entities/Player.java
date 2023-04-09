@@ -62,10 +62,6 @@ public abstract class Player extends HittableEntity {
      */
     @Override
     public final void doHittableEntityUpdate() {
-        if (health <= 0) {
-            abstractFactory.getEntities().remove(this);
-        }
-        else {
             switch (inputController.getDirection()) {
                 case LEFT -> coordinate.x = coordinate.x - speed;
                 case RIGHT -> coordinate.x = coordinate.x + speed;
@@ -75,8 +71,7 @@ public abstract class Player extends HittableEntity {
             if (inputController.getShooting() == Input.SHOOT && (System.currentTimeMillis() - lastShot) >=  shootingDelay) {
                 lastShot = System.currentTimeMillis();
                 Point bulletCoordinate = new Point(coordinate.x,  coordinate.y - (int) (size/2));
-                abstractFactory.getEntities().add(abstractFactory.createBullet((Point) coordinate.clone(), this));
+                abstractFactory.getEntities().add(abstractFactory.bulletCreator((Point) coordinate.clone(), this));
             }
-        }
     }
 }

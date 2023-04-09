@@ -1,9 +1,9 @@
 package SpaceInvaders.utilities;
 
 import SpaceInvaders.AbstractFactory;
+import SpaceInvaders.entities.enemies.Enemy;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
@@ -50,7 +50,7 @@ public class Settings {
     private int playerSpeed;
 
     /**
-     * The speed of the {@link SpaceInvaders.entities.Enemy}.
+     * The speed of the {@link Enemy}.
      */
     private int enemySpeed;
 

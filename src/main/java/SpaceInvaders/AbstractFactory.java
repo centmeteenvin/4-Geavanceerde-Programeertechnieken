@@ -1,6 +1,8 @@
 package SpaceInvaders;
 
 import SpaceInvaders.entities.*;
+import SpaceInvaders.entities.enemies.DefaultEnemy;
+import SpaceInvaders.entities.enemies.ShootingEnemy;
 import SpaceInvaders.utilities.GameState;
 import SpaceInvaders.utilities.InputController;
 import SpaceInvaders.utilities.Settings;
@@ -104,9 +106,20 @@ public abstract class AbstractFactory {
      * @param bounds   point that defines the maximum movement in the x-axis direction.
      * @return an Enemy object instantiated with the given parameters.
      */
-    public abstract Enemy enemyCreator(Point location, int health, double size, Point bounds);
+    public abstract DefaultEnemy defaultEnemyCreator(Point location, int health, double size, Point bounds);
 
-    public abstract Entity shootingEnemyCreator(Point location, int health, double size, Point bounds, double averageTimeToShoot);
+    /**
+     * This factory is called when a level is loaded.<br>
+     * This should be overwritten returning an Enemy object.
+     *
+     * @param location Point that defines the starting location.
+     * @param health double that defines the starting health.
+     * @param size double thate defines the sie, needed for collision detection.
+     * @param bounds point that defines the maximum movement in x-axis direction.
+     * @param averageTimeToShoot The average time between shots.
+     * @return a ShootingEnemy object with the given parameters.
+     */
+    public abstract ShootingEnemy shootingEnemyCreator(Point location, int health, double size, Point bounds, double averageTimeToShoot);
 
     /**
      * This factory is called when a level is loaded.<br>
@@ -125,22 +138,6 @@ public abstract class AbstractFactory {
      * @return a reference to the Bullet object.
      */
     public abstract Bullet bulletCreator(Point location, HittableEntity entity);
-
-
-
-
-
-    /**
-     * Used by HittableEntities to shoot a bullet.
-     * c
-     * @param position {@link Bullet#coordinate}
-     * @param owner {@link Bullet#owner}
-     * @return reference To the Bullet
-     */
-    public Bullet createBullet(Point position, HittableEntity owner) {
-        return bulletCreator(position, owner);
-    }
-
 
     /**
      * Getter for GameState.

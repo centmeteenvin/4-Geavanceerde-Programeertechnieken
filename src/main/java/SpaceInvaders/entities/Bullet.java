@@ -1,5 +1,6 @@
 package SpaceInvaders.entities;
 
+import SpaceInvaders.entities.enemies.Enemy;
 import SpaceInvaders.utilities.Settings;
 
 import java.awt.*;
