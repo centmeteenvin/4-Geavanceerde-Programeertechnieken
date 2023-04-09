@@ -1,0 +1,105 @@
+package SpaceInvaders.utilities;
+
+import SpaceInvaders.AbstractFactory;
+import SpaceInvaders.entities.Enemy;
+import SpaceInvaders.entities.Entity;
+import SpaceInvaders.entities.Player;
+
+import java.awt.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class LevelLoader {
+    private AbstractFactory abstractFactory;
+
+    public LevelLoader(AbstractFactory abstractFactory) {
+        this.abstractFactory = abstractFactory;
+    }
+
+    public ArrayList<Entity> LoadLevel(File levelFile ) throws FileNotFoundException {
+        ArrayList<Entity> entities = new ArrayList<>();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(levelFile));
+            reader.readLine(); //read passed the first line because it contains the formatting info
+
+            String line;
+            ArrayList<String> list;
+            line = reader.readLine();
+            do {
+                list = new ArrayList<>(List.of(line.split(";")));
+                switch (list.get(0)) {
+                    case "Enemy" -> entities.add(createEnemy(list));
+                    case "Player" -> entities.add(createPlayer(list));
+                    case "ShootingEnemy" -> entities.add(createShootingEnemy(list));
+                }
+                line = reader.readLine();
+            } while (line != null);
+
+        } catch (IOException e) {
+            if (e instanceof FileNotFoundException) { //filter out file not found errors indicating that the level does not exist, error should be handled by the game
+                throw new FileNotFoundException();
+            }
+            throw new RuntimeException(e);
+        }
+        return entities;
+    }
+
+    /**
+     * Is used to create the enemy.
+     * <p>
+     * It's mainly used to parse the parameter list into the needed attributes to create an Enemy.<br>
+     * The generated parameters are passed to the enemyCreator;
+     * @param parameters Is the list of parameters that is read from the level file.
+     * @return An instance of Enemy that has the given parameters.
+     */
+    public Enemy createEnemy(ArrayList<String> parameters) {
+        //Type;Health;Size;Location;bounds
+        int health = Integer.parseInt(parameters.get(1));
+        double size = Double.parseDouble(parameters.get(2));
+        String[] tempList = parameters.get(3).split(",");
+        Point location = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
+        tempList = parameters.get(4).split(",");
+        Point bounds = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
+        return abstractFactory.enemyCreator(location, health, size, bounds);
+    }
+
+    /**
+     * Is used to create the player.
+     * <p>
+     * It's mainly used to parse the parameter list into the needed attributes to create a Player object.<br>
+     * The generated parameters are passed to the playerCreator.<br>
+     * @param parameters Is the list of parameters that is read from the level file.
+     * @return An instance of Enemy that has the given parameters.
+     */
+    public Player createPlayer(ArrayList<String> parameters) {
+        //Type;Health;Size;Location;bounds
+        int health = Integer.parseInt(parameters.get(1));
+        double size = Double.parseDouble(parameters.get(2));
+        String[] tempList = parameters.get(3).split(",");
+        Point location = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
+        return abstractFactory.playerCreator(location, health, size);
+    }
+
+    /**
+     * Is used to create a ShootingEnemy.
+     * <p>
+     *     Main function is parsing the parameters list into its component attributes.<br>
+     *     Than it call {@link AbstractFactory#shootingEnemyCreator(Point, int, double, Point, double)} to make the object.<br>
+     * </p>
+     * @param parameters Is the list of parameters received from the level file.
+     * @return An instance of enemy
+     */
+    public Entity createShootingEnemy(ArrayList<String> parameters) {
+        //Type;Health;Size;Location;bounds;averageTimeToShoot
+        int health = Integer.parseInt(parameters.get(1));
+        double size = Double.parseDouble(parameters.get(2));
+        String[] tempList = parameters.get(3).split(",");
+        Point location = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
+        tempList = parameters.get(4).split(",");
+        Point bounds = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
+        double averageTimeToShoot = Double.parseDouble(parameters.get(5));
+        return abstractFactory.shootingEnemyCreator(location, health, size, bounds, averageTimeToShoot);
+    }
+
+}

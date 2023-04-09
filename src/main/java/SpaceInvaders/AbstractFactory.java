@@ -106,6 +106,8 @@ public abstract class AbstractFactory {
      */
     public abstract Enemy enemyCreator(Point location, int health, double size, Point bounds);
 
+    public abstract Entity shootingEnemyCreator(Point location, int health, double size, Point bounds, double averageTimeToShoot);
+
     /**
      * This factory is called when a level is loaded.<br>
      * This should be overwritten returning a Player object.
@@ -116,7 +118,6 @@ public abstract class AbstractFactory {
      * @return a Player object instantiated with the given parameters.
      */
     public abstract Player playerCreator(Point location, int health, double size);
-
     /**
      * This factory is called when a {@link HittableEntity} Shoots.
      * @param location {@link Bullet#coordinate}.
@@ -124,41 +125,10 @@ public abstract class AbstractFactory {
      * @return a reference to the Bullet object.
      */
     public abstract Bullet bulletCreator(Point location, HittableEntity entity);
-    /**
-     * Is used to create the player.
-     * <p>
-     * It's mainly used to parse the parameter list into the needed attributes to create a Player object.<br>
-     * The generated parameters are passed to the playerCreator.<br>
-     * @param parameters Is the list of parameters that is read from the level file.
-     * @return An instance of Enemy that has the given parameters.
-     */
-    public Player createPlayer(ArrayList<String> parameters) {
-        //Type;Health;Size;Location;bounds
-        int health = Integer.parseInt(parameters.get(1));
-        double size = Double.parseDouble(parameters.get(2));
-        String[] tempList = parameters.get(3).split(",");
-        Point location = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
-        return playerCreator(location, health, size);
-    }
 
-    /**
-     * Is used to create the enemy.
-     * <p>
-     * It's mainly used to parse the parameter list into the needed attributes to create an Enemy.<br>
-     * The generated parameters are passed to the enemyCreator;
-     * @param parameters Is the list of parameters that is read from the level file.
-     * @return An instance of Enemy that has the given parameters.
-     */
-    public  Enemy createEnemy(ArrayList<String> parameters) {
-        //Type;Health;Size;Location;bounds
-        int health = Integer.parseInt(parameters.get(1));
-        double size = Double.parseDouble(parameters.get(2));
-        String[] tempList = parameters.get(3).split(",");
-        Point location = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
-        tempList = parameters.get(4).split(",");
-        Point bounds = new Point(Integer.parseInt(tempList[0]), Integer.parseInt(tempList[1]));
-        return enemyCreator(location, health, size, bounds);
-    }
+
+
+
 
     /**
      * Used by HittableEntities to shoot a bullet.

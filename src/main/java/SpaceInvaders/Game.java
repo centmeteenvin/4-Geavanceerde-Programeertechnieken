@@ -4,6 +4,7 @@ import SpaceInvaders.entities.Enemy;
 import SpaceInvaders.entities.Entity;
 import SpaceInvaders.entities.Player;
 import SpaceInvaders.utilities.GameState;
+import SpaceInvaders.utilities.LevelLoader;
 import SpaceInvaders.utilities.Settings;
 
 import java.io.*;
@@ -98,26 +99,13 @@ public class Game {
      * The level that is opened depends on the SpaceInvaders-state's currentLevel Field.
      */
     private void loadLevel() {
+        LevelLoader levelLoader = new LevelLoader(abstractFactory);
         File currentLevelFile = new File("src/main/resources/levels/level_" + gameState.getCurrentLevel());
         try {
-            BufferedReader levelReader = new BufferedReader(new FileReader(currentLevelFile));
-            String line;
-            ArrayList<String> list;
-            levelReader.readLine(); // read passed the first line, it only contains information about the way the data is formatted.
-            line = levelReader.readLine();
-            do {
-                list = new ArrayList<>(List.of(line.split(";")));
-                switch (list.get(0)) {
-                    case "Enemy" -> entities.add(abstractFactory.createEnemy(list));
-                    case "Player" -> entities.add(abstractFactory.createPlayer(list));
-                }
-                line = levelReader.readLine();
-            }   while (line != null);
+            entities = levelLoader.LoadLevel(currentLevelFile);
         } catch (FileNotFoundException e) {
-            gameOver();
-            System.out.println("Level does not exist");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+           gameOver();
+           System.out.println("Level Not Found");
         }
     }
 
