@@ -70,7 +70,7 @@ public class GraphicsContext {
         frame.add(panel);
 
         try {
-            File imageFile = new File("src/main/resources/background.png");
+            File imageFile = new File("src/main/resources/J2D/background.png");
             background = ImageIO.read(imageFile);
         } catch (IOException e) {
             System.out.println("Background Image Not Found");

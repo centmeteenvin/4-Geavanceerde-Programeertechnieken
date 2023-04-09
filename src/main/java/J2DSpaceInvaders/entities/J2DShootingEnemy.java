@@ -8,7 +8,11 @@ import SpaceInvaders.entities.HittableEntity;
 import SpaceInvaders.entities.enemies.Enemy;
 import SpaceInvaders.entities.enemies.ShootingEnemy;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * J2D Concrete implementation of {@link SpaceInvaders.entities.enemies.ShootingEnemy}.
@@ -21,6 +25,21 @@ public class J2DShootingEnemy extends ShootingEnemy {
      * {@link J2DFactory#graphicsContext}
      */
     private GraphicsContext graphicsContext;
+
+    /**
+     * Buffered image containing the sprite that needs to be drawn.
+     * Sprite is located @ resources/J2D/shooting_enemy.png
+     */
+    private final BufferedImage sprite;
+
+    {
+        try {
+            sprite = ImageIO.read(new File("src/main/resources/J2D/shooting_enemy.png"));
+        } catch (IOException e) {
+            System.out.println("Sprite for ShootingEnemy Not found");
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Default Constructor for ShootingEnemies.<br>
@@ -47,6 +66,7 @@ public class J2DShootingEnemy extends ShootingEnemy {
         Point screenCoordinate = graphicsContext.coordinateTranslation(coordinate);
         int screenSize = graphicsContext.sizeTranslation(size);
         graphics2D.fillRect(screenCoordinate.x - screenSize / 2, screenCoordinate.y - screenSize / 2, screenSize, screenSize);
+        graphics2D.drawImage(sprite, screenCoordinate.x - screenSize / 2, screenCoordinate.y - screenSize / 2, screenSize, screenSize, null);
     }
 
 }

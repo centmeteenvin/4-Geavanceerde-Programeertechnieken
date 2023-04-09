@@ -43,7 +43,10 @@ public abstract class Bullet extends Entity{
      */
     @Override
     public final void update() {
-        if (owner instanceof Enemy) {
+        if (this.coordinate.y > 1000 || this.coordinate.y < 0) {
+           owner.abstractFactory.getEntities().remove(this);
+        }
+        else if (owner instanceof Enemy) {
             this.coordinate.y = coordinate.y - speed;
         }
         else {

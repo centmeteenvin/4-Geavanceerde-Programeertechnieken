@@ -40,7 +40,7 @@ public class J2DFactory extends AbstractFactory {
     /**
      * The File containing the J2D settings such as screensize.
      */
-    private final File J2DSettingsFile = new File("src/main/resources/J2Dsetting.properties");
+    private final File J2DSettingsFile = new File("src/main/resources/J2D/J2Dsetting.properties");
 
     /**
      * Default constructor.
@@ -97,7 +97,7 @@ public class J2DFactory extends AbstractFactory {
     @Override
     public void render() {
         graphicsContext.render();
-        System.out.println(entities);
+        System.out.println(entities.size());
     }
 
     /**
