@@ -28,13 +28,13 @@ public class J2DShootingEnemy extends ShootingEnemy {
 
     /**
      * Buffered image containing the sprite that needs to be drawn.
-     * Sprite is located @ resources/J2D/shooting_enemy.png
+     * Sprite is located @ resources/J2D/enemy_shooting.png
      */
     private final BufferedImage sprite;
 
     {
         try {
-            sprite = ImageIO.read(new File("src/main/resources/J2D/shooting_enemy.png"));
+            sprite = ImageIO.read(new File("src/main/resources/J2D/enemy_shooting.png"));
         } catch (IOException e) {
             System.out.println("Sprite for ShootingEnemy Not found");
             throw new RuntimeException(e);
@@ -50,6 +50,7 @@ public class J2DShootingEnemy extends ShootingEnemy {
      * @param size       {@link HittableEntity#size}.
      * @param j2DFactory {@link HittableEntity#abstractFactory}
      * @param bounds     {@link #bounds}.
+     * @param averageTimeToShoot {@link #averageTimeToShoot}.
      */
     public J2DShootingEnemy(Point location, int health, double size, J2DFactory j2DFactory, Point bounds, double averageTimeToShoot) {
         super(location, health, size, j2DFactory, bounds, averageTimeToShoot);
@@ -65,7 +66,6 @@ public class J2DShootingEnemy extends ShootingEnemy {
         graphics2D.setColor(new Color((int) 255.0 * health / maxHealth, 0, 0));
         Point screenCoordinate = graphicsContext.coordinateTranslation(coordinate);
         int screenSize = graphicsContext.sizeTranslation(size);
-        graphics2D.fillRect(screenCoordinate.x - screenSize / 2, screenCoordinate.y - screenSize / 2, screenSize, screenSize);
         graphics2D.drawImage(sprite, screenCoordinate.x - screenSize / 2, screenCoordinate.y - screenSize / 2, screenSize, screenSize, null);
     }
 

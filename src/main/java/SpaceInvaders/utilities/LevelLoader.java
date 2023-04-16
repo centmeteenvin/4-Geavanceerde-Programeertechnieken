@@ -10,13 +10,31 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handle all the level loading logic.
+ * Mainly reading a levelFile and retrieving the params.
+ */
 public class LevelLoader {
+    /**
+     * Reference to {@link AbstractFactory} to make the correct calls.
+     */
     private AbstractFactory abstractFactory;
 
+    /**
+     * The constructor.
+     * Mainly used to access the methods and get an abstractFactory reference.
+     * @param abstractFactory {@link #abstractFactory}
+     */
     public LevelLoader(AbstractFactory abstractFactory) {
         this.abstractFactory = abstractFactory;
     }
 
+    /**
+     * Handles Parsing of levelFile to the correct AbstractFactory calls with the correct parameters.
+     * @param levelFile The file of the current level.
+     * @return an ArrayList with all the level entities.
+     * @throws FileNotFoundException If the file doesn't exist.
+     */
     public ArrayList<Entity> LoadLevel(File levelFile ) throws FileNotFoundException {
         ArrayList<Entity> entities = new ArrayList<>();
         try {

@@ -19,7 +19,6 @@ public abstract class ShootingEnemy extends Enemy {
 
     /**
      * Default Constructor for Enemies.<br>
-     * Is called in {@link AbstractFactory#createEnemy(ArrayList)} during levelLoading.
      *
      * @param location        {@link Entity#coordinate}.
      * @param health          {@link HittableEntity#health}.

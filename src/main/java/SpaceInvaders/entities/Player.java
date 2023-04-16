@@ -62,16 +62,18 @@ public abstract class Player extends HittableEntity {
      */
     @Override
     public final void doHittableEntityUpdate() {
+        if (coordinate.x <= 500 && coordinate.x >= -500) {
             switch (inputController.getDirection()) {
                 case LEFT -> coordinate.x = coordinate.x - speed;
                 case RIGHT -> coordinate.x = coordinate.x + speed;
             }
+        }
 
-            long shootingDelay = abstractFactory.getSettings().getPlayerShootingDelay();
-            if (inputController.getShooting() == Input.SHOOT && (System.currentTimeMillis() - lastShot) >=  shootingDelay) {
-                lastShot = System.currentTimeMillis();
-                Point bulletCoordinate = new Point(coordinate.x,  coordinate.y - (int) (size/2));
-                abstractFactory.getEntities().add(abstractFactory.bulletCreator((Point) coordinate.clone(), this));
-            }
+        long shootingDelay = abstractFactory.getSettings().getPlayerShootingDelay();
+        if (inputController.getShooting() == Input.SHOOT && (System.currentTimeMillis() - lastShot) >= shootingDelay) {
+            lastShot = System.currentTimeMillis();
+            Point bulletCoordinate = new Point(coordinate.x, coordinate.y - (int) (size / 2));
+            abstractFactory.getEntities().add(abstractFactory.bulletCreator((Point) coordinate.clone(), this));
+        }
     }
 }

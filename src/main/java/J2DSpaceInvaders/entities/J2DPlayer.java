@@ -7,7 +7,11 @@ import SpaceInvaders.entities.Entity;
 import SpaceInvaders.entities.HittableEntity;
 import SpaceInvaders.entities.Player;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Concrete Implementation of {@link Player}.
@@ -22,6 +26,20 @@ public class J2DPlayer extends Player {
      */
     private GraphicsContext graphicsContext;
 
+    /**
+     * Buffered image containing the sprite that needs to be drawn.
+     * Sprite is located @ resources/J2D/player.png
+     */
+    private final BufferedImage sprite;
+
+    {
+        try {
+            sprite = ImageIO.read(new File("src/main/resources/J2D/player.png"));
+        } catch (IOException e) {
+            System.out.println("Sprite for ShootingEnemy Not found");
+            throw new RuntimeException(e);
+        }
+    }
     /**
      * Default constructor for a Player.
      * Loads graphicsContext from J2DFactory.
@@ -45,6 +63,6 @@ public class J2DPlayer extends Player {
         graphics2D.setColor(new Color(0x01019A));
         Point screenCoordinate = graphicsContext.coordinateTranslation(coordinate);
         int screenSize = graphicsContext.sizeTranslation(size);
-        graphics2D.fillRect(screenCoordinate.x - screenSize / 2, screenCoordinate.y - screenSize / 2, screenSize, screenSize);
+        graphics2D.drawImage(sprite, screenCoordinate.x - screenSize / 2, screenCoordinate.y - screenSize / 2, screenSize, screenSize, null);
     }
 }

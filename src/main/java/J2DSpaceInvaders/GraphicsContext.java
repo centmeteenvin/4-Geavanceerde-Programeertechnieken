@@ -42,6 +42,9 @@ public class GraphicsContext {
      */
     private Size size;
 
+    /**
+     * An image containing the background of the game.
+     */
     private BufferedImage background;
 
 

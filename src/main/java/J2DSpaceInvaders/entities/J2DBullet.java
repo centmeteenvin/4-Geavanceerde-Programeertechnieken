@@ -6,7 +6,11 @@ import SpaceInvaders.entities.Entity;
 import SpaceInvaders.entities.HittableEntity;
 import SpaceInvaders.utilities.Settings;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * The J2D implementation of a bullet.
@@ -20,6 +24,20 @@ public class J2DBullet extends Bullet {
      */
     private GraphicsContext graphicsContext;
 
+    /**
+     * Buffered image containing the sprite that needs to be drawn.
+     * Sprite is located @ resources/J2D/bullet.png
+     */
+    private final BufferedImage sprite;
+
+    {
+        try {
+            sprite = ImageIO.read(new File("src/main/resources/J2D/bullet.png"));
+        } catch (IOException e) {
+            System.out.println("Sprite for ShootingEnemy Not found");
+            throw new RuntimeException(e);
+        }
+    }
     /**
      * Default Constructor for Entities.
      *
@@ -41,6 +59,6 @@ public class J2DBullet extends Bullet {
         Graphics2D graphics2D = graphicsContext.getGraphics2D();
         graphics2D.setColor(new Color(255, 255, 255));
         Point screenCoordinates = graphicsContext.coordinateTranslation(coordinate);
-        graphics2D.fillRect(screenCoordinates.x-2,screenCoordinates.y-5, 4, 10);
+        graphics2D.drawImage(sprite, screenCoordinates.x-2,screenCoordinates.y-5, 4, 10, null);
     }
 }

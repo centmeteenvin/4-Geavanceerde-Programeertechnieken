@@ -8,7 +8,11 @@ import SpaceInvaders.entities.enemies.Enemy;
 import SpaceInvaders.entities.Entity;
 import SpaceInvaders.entities.HittableEntity;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * J2D Concrete implementation of {@link DefaultEnemy}.
@@ -22,6 +26,20 @@ public class J2DDefaultEnemy extends DefaultEnemy {
      */
     private GraphicsContext graphicsContext;
 
+    /**
+     * Buffered image containing the sprite that needs to be drawn.
+     * Sprite is located @ resources/J2D/enemy_default.png
+     */
+    private final BufferedImage sprite;
+
+    {
+        try {
+            sprite = ImageIO.read(new File("src/main/resources/J2D/enemy_default.png"));
+        } catch (IOException e) {
+            System.out.println("Sprite for DefaultEnemy Not found");
+            throw new RuntimeException(e);
+        }
+    }
     /**
      * Default Constructor for Enemies.<br>
      * Is called in {@link AbstractFactory#defaultEnemyCreator(Point, int, double, Point)} during levelLoading.
@@ -46,6 +64,6 @@ public class J2DDefaultEnemy extends DefaultEnemy {
         graphics2D.setColor(new Color((int) 255.0 * health / maxHealth, 0, 0));
         Point screenCoordinate = graphicsContext.coordinateTranslation(coordinate);
         int screenSize = graphicsContext.sizeTranslation(size);
-        graphics2D.fillRect(screenCoordinate.x - screenSize / 2, screenCoordinate.y - screenSize / 2, screenSize, screenSize);
+        graphics2D.drawImage(sprite, screenCoordinate.x - screenSize / 2, screenCoordinate.y - screenSize / 2, screenSize, screenSize, null);
     }
 }
