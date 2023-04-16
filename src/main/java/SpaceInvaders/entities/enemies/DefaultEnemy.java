@@ -27,6 +27,7 @@ public abstract class DefaultEnemy extends Enemy{
      */
     public DefaultEnemy(Point location, int health, double size, AbstractFactory abstractFactory, Point bounds) {
         super(location, health, size, abstractFactory, bounds);
+        isFriendly = false;
     }
 
     /**

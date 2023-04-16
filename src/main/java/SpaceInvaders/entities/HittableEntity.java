@@ -37,6 +37,12 @@ public abstract class HittableEntity extends Entity {
     protected AbstractFactory abstractFactory;
 
     /**
+     * Determine if an entity is friendly or not.
+     * Used to determine if a bullet should hit or not.
+     */
+    protected boolean isFriendly;
+
+    /**
      * Default HittableEntity Constructor
      * @param location {@link Entity#coordinate}
      * @param health {@link #health}
@@ -67,12 +73,15 @@ public abstract class HittableEntity extends Entity {
      */
     @Override
     public final void update() {
+
+        //Get a list of all the current bullets in the game
         ArrayList<Bullet> bullets = abstractFactory.getEntities().stream() //Get the entity list from the factory.
                 .filter(entity -> entity instanceof Bullet) //Filter it for bullets.
                 .map(entity -> (Bullet) entity).collect(Collectors.toCollection(ArrayList::new)); //Cast those Entities to Bullets.
 
+        //Get a list of all the bullets in the game that could hurt the current entity and are close enough
         ArrayList<Bullet> damagingBullets = bullets.stream()
-                .filter(bullet -> !(bullet.owner.getClass().isInstance(this))) //Filter the bullets so that the owner class of the bullet is different from ours.
+                .filter(bullet -> bullet.owner.isFriendly != this.isFriendly) //Filter the bullets so that the owner class of the bullet is different from ours.
                 .filter(bullet -> bullet.coordinate.distance(this.coordinate) <= size) // Filter the bullets that are inside our size.
                 .collect(Collectors.toCollection(ArrayList::new)); // Collect them in an array
 

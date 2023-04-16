@@ -51,6 +51,7 @@ public abstract class Player extends HittableEntity {
         super(location, health, size, abstractFactory);
         this.inputController = abstractFactory.getInputController();
         this.speed = abstractFactory.getSettings().getPlayerSpeed();
+        isFriendly = true;
     }
 
     /**
