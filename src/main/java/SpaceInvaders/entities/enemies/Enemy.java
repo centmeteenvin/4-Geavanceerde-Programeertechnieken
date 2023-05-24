@@ -4,10 +4,12 @@ import SpaceInvaders.AbstractFactory;
 import SpaceInvaders.Game;
 import SpaceInvaders.entities.Entity;
 import SpaceInvaders.entities.HittableEntity;
+import SpaceInvaders.utilities.Constants;
 import SpaceInvaders.utilities.Input;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Abstract class for enemy objects.
@@ -20,17 +22,8 @@ import java.util.ArrayList;
 public abstract class Enemy extends HittableEntity {
 
     /**
-     * This Point object defines the path of the Enemy.
-     * <p>
-     * bounds.x indicates the leftmost coordinate of an Enemy.<br>
-     * bound.y indicate the rightmost coordinate of an Enemy.<br>
-     * </p>
-     */
-    private final Point bounds;
-
-    /**
      * Holds the currentDirection.<br>
-     * Depends on the Enemies current {@link #coordinate} in function of it's {@link #bounds}.<br>
+     * Depends on the Enemies current {@link #coordinate}.<br>
      */
     private Input currentDirection = Input.LEFT;
 
@@ -49,11 +42,9 @@ public abstract class Enemy extends HittableEntity {
      * @param health          {@link HittableEntity#health}.
      * @param size            {@link HittableEntity#size}.
      * @param abstractFactory {@link HittableEntity#abstractFactory}
-     * @param bounds          {@link #bounds}.
      */
-    public Enemy(Point location, int health, double size, AbstractFactory abstractFactory, Point bounds) {
+    public Enemy(Point location, int health, double size, AbstractFactory abstractFactory) {
         super(location, health, size, abstractFactory);
-        this.bounds = bounds;
         this.speed = abstractFactory.getSettings().getEnemySpeed();
     }
 
@@ -74,14 +65,18 @@ public abstract class Enemy extends HittableEntity {
      */
     @Override
     public final void doHittableEntityUpdate() {
-        if (coordinate.x < bounds.x) {
+        ArrayList<Enemy> enemies = abstractFactory.getEntities().stream().filter(entity -> entity instanceof Enemy).map(entity -> (Enemy) entity).collect(Collectors.toCollection(ArrayList::new));
+        if (enemies.stream().anyMatch(enemy -> enemy.coordinate.x - enemy.size/2 <= Constants.FIELD_X_LOWER)) {
             currentDirection = Input.RIGHT;
-        } else if (coordinate.x > bounds.y) {
+            coordinate.y -= 10;
+        }
+        else if (enemies.stream().anyMatch(enemy -> enemy.coordinate.x + enemy.size/2 >= Constants.FIELD_X_UPPER)) {
             currentDirection = Input.LEFT;
+            coordinate.y -= 10;
         }
         switch (currentDirection) {
-            case RIGHT -> coordinate.x = coordinate.x + speed;
-            case LEFT -> coordinate.x = coordinate.x - speed;
+            case RIGHT -> coordinate.x += speed;
+            case LEFT -> coordinate.x -= speed;
         }
         doEnemyUpdate();
     }

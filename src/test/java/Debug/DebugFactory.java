@@ -31,8 +31,8 @@ public class DebugFactory extends AbstractFactory {
     }
 
     @Override
-    public DefaultEnemy defaultEnemyCreator(Point location, int health, double size, Point bounds) {
-        return new DebugDefaultEnemy(location, health, size, this,bounds);
+    public DefaultEnemy defaultEnemyCreator(Point location, int health, double size) {
+        return new DebugDefaultEnemy(location, health, size, this);
     }
 
     /**
@@ -42,12 +42,11 @@ public class DebugFactory extends AbstractFactory {
      * @param location           Point that defines the starting location.
      * @param health             double that defines the starting health.
      * @param size               double thate defines the sie, needed for collision detection.
-     * @param bounds             point that defines the maximum movement in x-axis direction.
      * @param averageTimeToShoot The average time between shots.
      * @return a ShootingEnemy object with the given parameters.
      */
     @Override
-    public ShootingEnemy shootingEnemyCreator(Point location, int health, double size, Point bounds, double averageTimeToShoot) {
+    public ShootingEnemy shootingEnemyCreator(Point location, int health, double size, double averageTimeToShoot) {
         return null;
     }
 

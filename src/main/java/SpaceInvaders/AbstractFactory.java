@@ -103,10 +103,9 @@ public abstract class AbstractFactory {
      * @param location Point that defines the starting location.
      * @param health   double that defines the starting health.
      * @param size     double that defines the size, needed for collision detection.
-     * @param bounds   point that defines the maximum movement in the x-axis direction.
      * @return an Enemy object instantiated with the given parameters.
      */
-    public abstract DefaultEnemy defaultEnemyCreator(Point location, int health, double size, Point bounds);
+    public abstract DefaultEnemy defaultEnemyCreator(Point location, int health, double size);
 
     /**
      * This factory is called when a level is loaded.<br>
@@ -115,11 +114,10 @@ public abstract class AbstractFactory {
      * @param location Point that defines the starting location.
      * @param health double that defines the starting health.
      * @param size double thate defines the sie, needed for collision detection.
-     * @param bounds point that defines the maximum movement in x-axis direction.
      * @param averageTimeToShoot The average time between shots.
      * @return a ShootingEnemy object with the given parameters.
      */
-    public abstract ShootingEnemy shootingEnemyCreator(Point location, int health, double size, Point bounds, double averageTimeToShoot);
+    public abstract ShootingEnemy shootingEnemyCreator(Point location, int health, double size, double averageTimeToShoot);
 
     /**
      * This factory is called when a level is loaded.<br>
@@ -138,6 +136,18 @@ public abstract class AbstractFactory {
      * @return a reference to the Bullet object.
      */
     public abstract Bullet bulletCreator(Point location, HittableEntity entity);
+
+
+    /**
+     * This factory is called when a level is loaded.<br>
+     * This should be overwritten returning a Wall object.
+     *
+     * @param location Point that defines the starting location.
+     * @param health   double that defines the starting health.
+     * @param size     double that defines the size, need for collision detection.
+     * @return a Wall object instantiated with the given parameters.
+     */
+    public abstract Wall wallCreator(Point location, int health, double size);
 
     /**
      * Getter for GameState.

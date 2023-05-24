@@ -1,11 +1,13 @@
 package J2DSpaceInvaders;
 
+import J2DSpaceInvaders.panels.GamePanel;
+import J2DSpaceInvaders.panels.UIPanel;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -16,19 +18,8 @@ import java.util.Properties;
  * </p>
  */
 public class GraphicsContext {
-
     /**
-     * The Window/frame that is displayed to the user.
-     */
-    private JFrame frame;
-
-    /**
-     * The panel added to the {@link #frame} where the game is drawn on.
-     */
-    private JPanel panel;
-
-    /**
-     * The graphic that is shown in the {@link #panel}.
+     * The graphic that is shown in the
      */
     private Graphics2D graphics2D;
 
@@ -38,15 +29,23 @@ public class GraphicsContext {
     private BufferedImage bufferedImage;
 
     /**
+     * The Window/frame that is displayed to the user.
+     */
+    private JFrame frame;
+
+    /**
+     * The panel added to the {@link #frame} where the game is drawn on.
+     */
+    private GamePanel gamePanel;
+
+
+    /**
      * The screen size.
      */
     private Size size;
 
-    /**
-     * An image containing the background of the game.
-     */
-    private BufferedImage background;
 
+    private JPanel UIPanel;
 
     /**
      * Default constructor for GraphicsContext.
@@ -57,36 +56,19 @@ public class GraphicsContext {
      */
     public GraphicsContext() {
         frame = new JFrame();
-        panel = new JPanel(true) {
-            /**
-             * Paints each of the components in this container.
-             * @param g the graphics context.
-             * @see Component#paint
-             * @see Component#paintAll
-             */
-            @Override
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                doPainting(g);
-            }
-        };
-        frame.add(panel);
-
-        try {
-            File imageFile = new File("src/main/resources/J2D/background.png");
-            background = ImageIO.read(imageFile);
-        } catch (IOException e) {
-            System.out.println("Background Image Not Found");
-            throw new RuntimeException(e);
-        }
+        JLayeredPane mainPanel = frame.getLayeredPane();
+        gamePanel = new GamePanel(null, true, this);
+        UIPanel = new UIPanel(new BorderLayout(), true);
+        mainPanel.add(gamePanel, Integer.valueOf(1));
+        mainPanel.add(UIPanel, Integer.valueOf(2));
 
     }
 
     /**
-     * Render {@link #bufferedImage} to {@link #panel}.
+     * Render {@link #bufferedImage} to {@link #gamePanel}.
      */
     public void render() {
-        panel.repaint();
+        gamePanel.repaint();
     }
 
     /**
@@ -96,11 +78,11 @@ public class GraphicsContext {
      */
     public void initialize(Properties properties) {
         size = new Size(Integer.parseInt(properties.getProperty("width")), Integer.parseInt(properties.getProperty("height")));
-        bufferedImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
-        graphics2D = bufferedImage.createGraphics(); //link graphics2D to the bufferedImage.
-        graphics2D.setBackground(new Color(255, 255, 255));
-        graphics2D.clearRect(0, 0, frame.getWidth(), frame.getHeight());
+        bufferedImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
+        graphics2D = (Graphics2D) bufferedImage.getGraphics();
         frame.setSize(size.width, size.height);
+
+        gamePanel.initialize();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setFocusable(true);
@@ -150,21 +132,8 @@ public class GraphicsContext {
         return frame;
     }
 
-    /**
-     * Extending the logic of {@link #panel} to enable double buffering.<br>
-     *
-     * @param g the graphics context.
-     */
-    private void doPainting(Graphics g) {
-        Graphics2D graph2d = (Graphics2D) g; //convert the graphics context to a 2d graphics context.
-        Toolkit.getDefaultToolkit().sync(); //Black magic.
-        graph2d.drawImage(bufferedImage, 0, 0, null); //Draw the bufferedImage to the current screen.
-        graph2d.dispose(); //Release resources concerned with buffering.
-        //Cleanup the normal buffered graphics.
-        if (graphics2D != null) {
-            graphics2D.clearRect(0, 0, frame.getWidth(), frame.getHeight());
-            graphics2D.drawImage(background, 0, 0, null);
-        }
+    public BufferedImage getBufferedImage() {
+        return bufferedImage;
     }
 
 }

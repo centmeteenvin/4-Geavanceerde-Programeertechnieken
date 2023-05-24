@@ -1,3 +1,4 @@
 #Type;Health;Size;Location;(bounds)#
 Player;20;100;0,0
-ShootingEnemy;20;50;0,900;-100,100;3
+ShootingEnemy;1;50;0,900;3
+Wall;10;100;0,200

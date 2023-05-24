@@ -49,11 +49,10 @@ public class J2DShootingEnemy extends ShootingEnemy {
      * @param health     {@link HittableEntity#health}.
      * @param size       {@link HittableEntity#size}.
      * @param j2DFactory {@link HittableEntity#abstractFactory}
-     * @param bounds     {@link #bounds}.
      * @param averageTimeToShoot {@link #averageTimeToShoot}.
      */
-    public J2DShootingEnemy(Point location, int health, double size, J2DFactory j2DFactory, Point bounds, double averageTimeToShoot) {
-        super(location, health, size, j2DFactory, bounds, averageTimeToShoot);
+    public J2DShootingEnemy(Point location, int health, double size, J2DFactory j2DFactory, double averageTimeToShoot) {
+        super(location, health, size, j2DFactory , averageTimeToShoot);
         this.graphicsContext = j2DFactory.getGraphicsContext();
     }
 

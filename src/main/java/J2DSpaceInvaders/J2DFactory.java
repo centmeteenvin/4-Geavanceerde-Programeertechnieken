@@ -1,9 +1,6 @@
 package J2DSpaceInvaders;
 
-import J2DSpaceInvaders.entities.J2DBullet;
-import J2DSpaceInvaders.entities.J2DDefaultEnemy;
-import J2DSpaceInvaders.entities.J2DPlayer;
-import J2DSpaceInvaders.entities.J2DShootingEnemy;
+import J2DSpaceInvaders.entities.*;
 import SpaceInvaders.AbstractFactory;
 import SpaceInvaders.Game;
 import SpaceInvaders.entities.*;
@@ -97,7 +94,7 @@ public class J2DFactory extends AbstractFactory {
     @Override
     public void render() {
         graphicsContext.render();
-        System.out.println(entities.size());
+//        System.out.println(entities.size());
     }
 
     /**
@@ -111,8 +108,8 @@ public class J2DFactory extends AbstractFactory {
      * @return an Enemy object instantiated with the given parameters.
      */
     @Override
-    public DefaultEnemy defaultEnemyCreator(Point location, int health, double size, Point bounds) {
-        return new J2DDefaultEnemy(location, health, size, this, bounds);
+    public DefaultEnemy defaultEnemyCreator(Point location, int health, double size) {
+        return new J2DDefaultEnemy(location, health, size, this );
     }
 
     /**
@@ -122,13 +119,12 @@ public class J2DFactory extends AbstractFactory {
      * @param location           Point that defines the starting location.
      * @param health             double that defines the starting health.
      * @param size               double thate defines the sie, needed for collision detection.
-     * @param bounds             point that defines the maximum movement in x-axis direction.
      * @param averageTimeToShoot The average time between shots.
      * @return a ShootingEnemy object with the given parameters.
      */
     @Override
-    public ShootingEnemy shootingEnemyCreator(Point location, int health, double size, Point bounds, double averageTimeToShoot) {
-        return new J2DShootingEnemy(location, health, size, this, bounds, averageTimeToShoot);
+    public ShootingEnemy shootingEnemyCreator(Point location, int health, double size, double averageTimeToShoot) {
+        return new J2DShootingEnemy(location, health, size, this , averageTimeToShoot);
     }
 
     /**
@@ -155,6 +151,20 @@ public class J2DFactory extends AbstractFactory {
     @Override
     public Bullet bulletCreator(Point location, HittableEntity owner) {
         return new J2DBullet(location, owner, settings,graphicsContext);
+    }
+
+    /**
+     * This factory is called when a level is loaded.<br>
+     * This should be overwritten returning a Wall object.
+     *
+     * @param location Point that defines the starting location.
+     * @param health   double that defines the starting health.
+     * @param size     double that defines the size, need for collision detection.
+     * @return a Wall object instantiated with the given parameters.
+     */
+    @Override
+    public Wall wallCreator(Point location, int health, double size) {
+        return new J2DWall(location, health, size, this);
     }
 
     /**

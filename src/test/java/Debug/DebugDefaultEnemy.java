@@ -6,8 +6,8 @@ import SpaceInvaders.entities.enemies.DefaultEnemy;
 import java.awt.*;
 
 public class DebugDefaultEnemy extends DefaultEnemy {
-    public DebugDefaultEnemy(Point location, int health, double size, AbstractFactory abstractFactory, Point bounds) {
-        super(location, health, size, abstractFactory, bounds);
+    public DebugDefaultEnemy(Point location, int health, double size, AbstractFactory abstractFactory) {
+        super(location, health, size, abstractFactory);
     }
 
     @Override

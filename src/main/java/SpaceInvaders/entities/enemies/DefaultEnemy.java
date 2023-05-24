@@ -23,10 +23,9 @@ public abstract class DefaultEnemy extends Enemy{
      * @param health          {@link HittableEntity#health}.
      * @param size            {@link HittableEntity#size}.
      * @param abstractFactory {@link HittableEntity#abstractFactory}
-     * @param bounds          {@link #bounds}.
      */
-    public DefaultEnemy(Point location, int health, double size, AbstractFactory abstractFactory, Point bounds) {
-        super(location, health, size, abstractFactory, bounds);
+    public DefaultEnemy(Point location, int health, double size, AbstractFactory abstractFactory) {
+        super(location, health, size, abstractFactory);
         isFriendly = false;
     }
 

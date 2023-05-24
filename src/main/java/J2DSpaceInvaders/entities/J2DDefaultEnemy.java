@@ -48,10 +48,9 @@ public class J2DDefaultEnemy extends DefaultEnemy {
      * @param health     {@link HittableEntity#health}.
      * @param size       {@link HittableEntity#size}.
      * @param j2DFactory {@link HittableEntity#abstractFactory}
-     * @param bounds     {@link #bounds}.
      */
-    public J2DDefaultEnemy(Point location, int health, double size, J2DFactory j2DFactory, Point bounds) {
-        super(location, health, size, j2DFactory, bounds);
+    public J2DDefaultEnemy(Point location, int health, double size, J2DFactory j2DFactory) {
+        super(location, health, size, j2DFactory );
         this.graphicsContext = j2DFactory.getGraphicsContext();
     }
 

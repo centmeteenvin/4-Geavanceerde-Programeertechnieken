@@ -24,11 +24,10 @@ public abstract class ShootingEnemy extends Enemy {
      * @param health          {@link HittableEntity#health}.
      * @param size            {@link HittableEntity#size}.
      * @param abstractFactory {@link HittableEntity#abstractFactory}
-     * @param bounds          {@link Enemy#bounds}.
      * @param averageTimeToShoot {@link #averageTimeToShoot}
      */
-    public ShootingEnemy(Point location, int health, double size, AbstractFactory abstractFactory, Point bounds, double averageTimeToShoot) {
-        super(location, health, size, abstractFactory, bounds);
+    public ShootingEnemy(Point location, int health, double size, AbstractFactory abstractFactory, double averageTimeToShoot) {
+        super(location, health, size, abstractFactory);
         this.averageTimeToShoot = averageTimeToShoot;
     }
 
