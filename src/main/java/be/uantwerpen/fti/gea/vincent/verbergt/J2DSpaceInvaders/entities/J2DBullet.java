@@ -1,0 +1,70 @@
+package be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities;
+
+import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.J2DFactory;
+import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Props;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Entity;
+import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.GraphicsContext;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Bullet;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.HittableEntity;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Settings;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+/**
+ * The J2D implementation of a bullet.
+ * <p>
+ * Implements {@link Bullet#visualize()}.
+ * </p>
+ */
+public class J2DBullet extends Bullet {
+    /**
+     * {@link J2DFactory#graphicsContext}.
+     */
+    private GraphicsContext graphicsContext;
+
+    /**
+     * Buffered image containing the sprite that needs to be drawn.
+     * Depends the eventual sprite depends on {@link #owner}
+     */
+    private final BufferedImage sprite;
+
+    /**
+     * Default Constructor for Entities.
+     *
+     * @param location {@link Entity#coordinate}
+     * @param owner    {@link #owner}
+     * @param settings Used as a getter for {@link #speed}
+     * @param factory  used to retrieve {@link #graphicsContext} and {@link J2DFactory#properties}.
+     */
+    public J2DBullet(Point location, HittableEntity owner, Settings settings, J2DFactory factory) {
+        super(location, owner, settings);
+        this.graphicsContext = factory.getGraphicsContext();
+        Props props = factory.properties;
+        try {
+            if (owner.isFriendly()) {
+                sprite = ImageIO.read(new File(props.friendlyBulletSprite));
+            }
+            else {
+               sprite = ImageIO.read(new File(props.hostileBulletSprite));
+            }
+        } catch (IOException e) {
+            System.out.println("Sprite for ShootingEnemy Not found");
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Called after updates.
+     */
+    @Override
+    public void visualize() {
+        Graphics2D graphics2D = graphicsContext.getGraphics2D();
+        graphics2D.setColor(new Color(255, 255, 255));
+        Point screenCoordinates = graphicsContext.coordinateTranslation(coordinate);
+        graphics2D.drawImage(sprite, screenCoordinates.x - 2, screenCoordinates.y - 5, 4, 25, null);
+    }
+}

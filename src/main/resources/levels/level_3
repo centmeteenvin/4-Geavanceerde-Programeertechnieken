@@ -1,0 +1,16 @@
+#Type;Health;Size;Location;(bounds)#
+Player;3;100;0,0
+DefaultEnemy;1;50;50,800;
+DefaultEnemy;1;50;-50,800;
+DefaultEnemy;1;50;150,800;
+DefaultEnemy;1;50;-150,800;
+DefaultEnemy;1;50;250,800;
+DefaultEnemy;1;50;-250,800;
+DefaultEnemy;1;50;50,700;
+DefaultEnemy;1;50;-50,700;
+DefaultEnemy;1;50;150,700;
+DefaultEnemy;1;50;-150,700;
+DefaultEnemy;1;50;250,700;
+DefaultEnemy;1;50;-250,700;
+Exterminator;0,900
+

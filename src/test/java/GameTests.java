@@ -1,12 +1,4 @@
-import Debug.DebugFactory;
-import SpaceInvaders.AbstractFactory;
-import SpaceInvaders.entities.Entity;
-import SpaceInvaders.utilities.GameState;
 import org.junit.jupiter.api.Test;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameTests {
 

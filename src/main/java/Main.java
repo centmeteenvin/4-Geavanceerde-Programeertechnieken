@@ -1,5 +1,6 @@
-import J2DSpaceInvaders.J2DFactory;
-import SpaceInvaders.*;
+import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.J2DFactory;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.AbstractFactory;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.Game;
 
 /**
  * Main function.

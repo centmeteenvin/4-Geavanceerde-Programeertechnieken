@@ -1,5 +1,5 @@
 #Type;Health;Size;Location;(bounds)#
-Player;20;100;0,0
+Player;3;100;0,0
 DefaultEnemy;1;50;50,900;
 DefaultEnemy;1;50;-50,900;
 DefaultEnemy;1;50;150,900;
