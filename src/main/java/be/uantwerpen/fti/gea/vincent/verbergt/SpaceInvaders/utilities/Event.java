@@ -26,6 +26,11 @@ public class Event {
         SHOOT,
 
         /**
+         * Created when an {@link be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.HittableEntity Hittable entity} is hit
+         */
+        GOT_HIT,
+
+        /**
          * Created when a level is cleared.
          */
         LEVEL_CLEARED,

@@ -6,18 +6,16 @@ import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities.*;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities.bosses.J2DExterminator;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Props;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.AbstractFactory;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.Game;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.*;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.DefaultEnemy;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.Enemy;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.ShootingEnemy;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.bosses.Exterminator;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.projectiles.Bullet;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Event;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.GameState;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Settings;
 
 import java.awt.*;
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -107,7 +105,6 @@ public class J2DFactory extends AbstractFactory {
         graphicsContext.render();
         soundEngine.playSounds(soundComponents);
         soundComponents.clear();
-//        System.out.println(entities.size());
     }
 
     /**
@@ -147,7 +144,7 @@ public class J2DFactory extends AbstractFactory {
      */
     @Override
     public Bullet bulletCreator(Point location, HittableEntity owner) {
-        return new J2DBullet(location, owner, settings, this);
+        return new J2DBullet(location, owner , this);
     }
 
     /**
@@ -208,8 +205,13 @@ public class J2DFactory extends AbstractFactory {
                     queueSound(new SoundComponent(properties.playerShootingSound, -25));
                 }
             }
+            case GOT_HIT -> {
+               queueSound(new SoundComponent(properties.hitSound, -25));
+               graphicsContext.spark(((Entity) event.getSource()).coordinate);
+            }
+
             case DEATH -> {
-                //TODO 1
+                graphicsContext.explosion(((Entity) event.getSource()).coordinate);
             }
             case LEVEL_CLEARED -> {
                 int currentLevel = gameState.getCurrentLevel();

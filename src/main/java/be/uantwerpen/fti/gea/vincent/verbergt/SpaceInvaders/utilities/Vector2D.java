@@ -99,6 +99,15 @@ public class Vector2D {
     }
 
     /**
+     * Rescales {@link #x} and {@link #y} so that the size of the vector is 1 while maintaining the same angle.
+     */
+    public void normalize() {
+        double sizeInverted = 1/getSize(); //multiplication is more efficient.
+        x = x*sizeInverted;
+        y = y*sizeInverted;
+    }
+
+    /**
      * Get the rounded x base.
      * @return {@link #x}
      */

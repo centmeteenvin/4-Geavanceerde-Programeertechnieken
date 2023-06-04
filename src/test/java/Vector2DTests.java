@@ -77,4 +77,15 @@ public class Vector2DTests {
             Assertions.assertEquals((direction + angle)%(Math.PI*2), vector.getDirection(), 0.001);
         }
     }
+
+    @Test
+    public void normalizeTest() {
+        for (int i = 0; i < 100; i++) {
+            Vector2D vector = new Vector2D(Math.random() - 0.5, Math.random() - 0.5);
+            double direction = vector.getDirection();
+            vector.normalize();
+            Assertions.assertEquals(1, vector.getSize(), 0.001);
+            Assertions.assertEquals(direction, vector.getDirection(), 0.001);
+        }
+    }
 }

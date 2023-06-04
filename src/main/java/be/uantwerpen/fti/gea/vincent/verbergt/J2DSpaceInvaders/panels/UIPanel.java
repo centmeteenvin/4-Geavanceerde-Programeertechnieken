@@ -143,9 +143,9 @@ public class UIPanel extends JPanel {
         startButton.setLocation(getWidth() / 2 - startButton.getWidth()/2, getHeight() / 2 - 150);
         startButton.setFont(new Font("Helvetica", Font.BOLD, 30));
 
-        quitButton.setSize(startButton.getSize());
-        quitButton.setLocation(getWidth() / 2 - quitButton.getWidth()/2, getHeight() / 2  + 20);
-        quitButton.setFont(new Font("Helvetica", Font.BOLD, 30));
+        levelSelectorButton.setSize(startButton.getSize());
+        levelSelectorButton.setLocation(getWidth() / 2 - levelSelectorButton.getWidth()/2, getHeight() / 2  + 20);
+        levelSelectorButton.setFont(new Font("Helvetica", Font.BOLD, 30));
 
         title.setVisible(true);
         title.setFont(new Font("Helvetica", Font.BOLD, 80));
@@ -154,9 +154,9 @@ public class UIPanel extends JPanel {
         title.setSize(getWidth(), 100);
         title.setLocation(getWidth()/2 - title.getWidth()/2, 100);
 
-        levelSelectorButton.setSize(startButton.getSize());
-        levelSelectorButton.setLocation(getWidth() / 2 - levelSelectorButton.getWidth()/2, getHeight() / 2  + 190);
-        levelSelectorButton.setFont(new Font("Helvetica", Font.BOLD, 30));
+        quitButton.setSize(startButton.getSize());
+        quitButton.setLocation(getWidth() / 2 - quitButton.getWidth()/2, getHeight() / 2  + 190);
+        quitButton.setFont(new Font("Helvetica", Font.BOLD, 30));
 
         //Level selector
         levelSelector.setSize(getSize());

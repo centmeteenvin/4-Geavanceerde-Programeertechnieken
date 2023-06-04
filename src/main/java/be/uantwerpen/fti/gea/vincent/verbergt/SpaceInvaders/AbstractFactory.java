@@ -2,8 +2,8 @@ package be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders;
 
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.*;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.DefaultEnemy;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.ShootingEnemy;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.bosses.Exterminator;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.projectiles.Bullet;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Event;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.GameState;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.InputController;

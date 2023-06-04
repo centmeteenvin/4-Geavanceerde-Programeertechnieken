@@ -12,6 +12,11 @@ import java.awt.*;
  * They have a size of 100
  */
 public abstract class Exterminator extends ShootingEnemy {
+    /**
+     * The constructor for this
+     * @param location starting location
+     * @param abstractFactory {@link #abstractFactory}
+     */
     public Exterminator(Point location, AbstractFactory abstractFactory) {
         super(location, 10, 100, abstractFactory, 5);
     }

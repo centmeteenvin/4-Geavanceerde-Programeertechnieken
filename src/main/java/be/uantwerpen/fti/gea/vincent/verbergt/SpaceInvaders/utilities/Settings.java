@@ -3,7 +3,7 @@ package be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.AbstractFactory;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.Game;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.Enemy;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Bullet;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.projectiles.Bullet;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Player;
 
 import java.io.File;
@@ -43,9 +43,14 @@ public class Settings {
 
     /**
      * The Speed of bullets.
-     * {@link Bullet#speed}
+     * {@link Bullet#direction}
      */
     private int bulletSpeed;
+
+    /**
+     * The damage of a {@link Bullet}.
+     */
+    public int bulletDamage;
 
     /**
      * The speed of the {@link Player}.
@@ -70,6 +75,7 @@ public class Settings {
             bulletSpeed = Integer.parseInt(properties.getProperty("bulletSpeed"));
             playerSpeed = Integer.parseInt(properties.getProperty("playerSpeed"));
             enemySpeed = Integer.parseInt(properties.getProperty("enemySpeed"));
+            bulletDamage = Integer.parseInt(properties.getProperty("bulletDamage"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

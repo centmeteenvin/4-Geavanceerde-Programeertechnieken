@@ -81,19 +81,13 @@ public class InformationPanel extends JPanel {
     }
 
     /**
-     * Update the scoreboard.
-     */
-    public void update() {
-        scoreLabel.setText("SCORE: " + gameState.getScore());
-    }
-
-    /**
      * Paint the  amount of hearts on the screen.
      * @param g the graphic we are drawing on.
      */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        scoreLabel.setText("SCORE: " + gameState.getScore());
         int margin = 20;
         Point anchor = new Point(getWidth() - margin, margin);
         for(int i = 0; i < gameState.getHealth(); i++) {
@@ -101,8 +95,6 @@ public class InformationPanel extends JPanel {
             g.drawImage(healthSprite, anchor.x, anchor.y, hearthIconSize, hearthIconSize, this);
             anchor.x = anchor.x - margin;
         }
-//        g.clearRect(0, 0, getWidth(), getHeight());
-        Toolkit.getDefaultToolkit().sync();
     }
 
 

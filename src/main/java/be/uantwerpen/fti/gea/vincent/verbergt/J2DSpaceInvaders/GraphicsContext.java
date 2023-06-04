@@ -2,14 +2,17 @@ package be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders;
 
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.panels.GamePanel;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.panels.InformationPanel;
-import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Props;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.AbstractFactory;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.panels.UIPanel;
+import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Explosion;
+import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Props;
+import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Spark;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.AbstractFactory;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.GameState;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  * The GraphicsContext of the J2D visualisation.
@@ -65,6 +68,16 @@ public class GraphicsContext {
     private InformationPanel informationPanel;
 
     /**
+     * A list containing all explosions that need to be rendered.
+     */
+    public final ArrayList<Explosion> explosions = new ArrayList<>();
+
+    /**
+     * A list containing all sparks that need to be rendered.
+     */
+    public final ArrayList<Spark> sparks = new ArrayList<>();
+
+    /**
      * Default constructor for GraphicsContext.
      * <p>
      * Creates the necessary objects and structure.<br>
@@ -78,11 +91,11 @@ public class GraphicsContext {
         JLayeredPane mainPanel = frame.getLayeredPane();
         gamePanel = new GamePanel(null, true, this);
         uiPanel = new UIPanel(null, true, this);
-        informationPanel = new InformationPanel(null, false, this);
+        informationPanel = new InformationPanel(null, true, this);
 
-        mainPanel.add(gamePanel, Integer.valueOf(1));
-        mainPanel.add(informationPanel, Integer.valueOf(2));
-        mainPanel.add(uiPanel, Integer.valueOf(3));
+        mainPanel.add(uiPanel, Integer.valueOf(2));
+        mainPanel.add(informationPanel, Integer.valueOf(1));
+        mainPanel.add(gamePanel, Integer.valueOf(0));
 
     }
 
@@ -90,8 +103,37 @@ public class GraphicsContext {
      * Render {@link #bufferedImage} to {@link #gamePanel}.
      */
     public void render() {
-        gamePanel.repaint();
-        informationPanel.update();
+        renderExplosions();
+        //renders sparks on top of explosions.
+        renderSparks();
+        gamePanel.drawingPanel.repaint();
+
+    }
+
+    /**
+     * Loops through {@link #explosions} and draws than on top of the game.
+     */
+    private void renderExplosions() {
+        ArrayList<Explosion> clonedExplosions = (ArrayList<Explosion>) explosions.clone();
+        for(Explosion explosion: clonedExplosions) {
+            explosion.visualize();
+            if (explosion.numberOfFrames - 1 < explosion.frameNumber) {
+                explosions.remove(explosion);
+            }
+        }
+    }
+
+    /**
+     * Loops through {@link #sparks} and draws than on top of the game.
+     */
+    private void renderSparks() {
+        ArrayList<Spark> clonedSparks = (ArrayList<Spark>) sparks.clone();
+        for (Spark spark : clonedSparks) {
+            spark.visualize();
+            if (spark.numberOfFrames -1 < spark.frameNumber) {
+                sparks.remove(spark);
+            }
+        }
     }
 
     /**
@@ -200,5 +242,22 @@ public class GraphicsContext {
      */
     public Props getProps() {
         return factory.properties;
+    }
+
+    /**
+     * Displays an explosion gif on {@link #gamePanel} at the give coordinate.
+     * {@link Explosion}.
+     * @param coordinate the coordinate where the animation should be drawn.
+     */
+    public void explosion(Point coordinate) {
+        explosions.add(new Explosion((Point) coordinate.clone(), factory));
+    }
+
+    /**
+     * Add a new {@link Spark} to {@link #sparks}.
+     * @param coordinate The location of the spark.
+     */
+    public void spark(Point coordinate) {
+        sparks.add(new Spark((Point) coordinate.clone(), factory));
     }
 }

@@ -9,7 +9,7 @@ public abstract class Entity {
     /**
      * All Entities have a coordinate field to track its position.
      */
-    protected Point coordinate;
+    public Point coordinate;
 
     /**
      * Default Constructor for Entities.

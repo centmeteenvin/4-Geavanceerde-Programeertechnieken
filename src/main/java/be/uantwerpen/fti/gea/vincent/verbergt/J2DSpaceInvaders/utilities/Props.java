@@ -2,6 +2,7 @@ package be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities;
 
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.AbstractFactory;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.Properties;
 import java.io.*;
@@ -41,12 +42,15 @@ public class Props {
         title = properties.getProperty("title");
         playerShootingSound = properties.getProperty("playerShootingSound");
         enemyShootingSound = properties.getProperty("enemyShootingSound");
+        hitSound = properties.getProperty("hitSound");
         returnIcon = properties.getProperty("returnIcon");
         exterminatorSprite = properties.getProperty("exterminatorSprite");
         playerSprite = properties.getProperty("playerSprite");
         defaultEnemySprite = properties.getProperty("defaultEnemySprite");
         friendlyBulletSprite = properties.getProperty("friendlyBulletSprite");
         hostileBulletSprite = properties.getProperty("hostileBulletSprite");
+        explosionSprite = properties.getProperty("explosionSprite");
+        sparkSprite = properties.getProperty("sparkSprite");
     }
 
     /**
@@ -73,6 +77,11 @@ public class Props {
      * File path to the shooting sound for an enemy.
      */
     public String enemyShootingSound;
+
+    /**
+     * {@link be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Event.Type#GOT_HIT}.
+     */
+    public String hitSound;
 
     /**
      * The return Icon;
@@ -103,4 +112,15 @@ public class Props {
      * {@link be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities.J2DBullet#sprite}
      */
     public String hostileBulletSprite;
+
+    /**
+     * {@link Explosion}.
+     */
+    public String explosionSprite;
+
+    /**
+     * {@link Spark}.
+     */
+    public String sparkSprite;
+
 }

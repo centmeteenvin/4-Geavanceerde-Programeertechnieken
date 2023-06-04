@@ -4,7 +4,7 @@ import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.J2DFactory;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Props;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Entity;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.GraphicsContext;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Bullet;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.projectiles.Bullet;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.HittableEntity;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Settings;
 
@@ -24,7 +24,7 @@ public class J2DBullet extends Bullet {
     /**
      * {@link J2DFactory#graphicsContext}.
      */
-    private GraphicsContext graphicsContext;
+    private final GraphicsContext graphicsContext;
 
     /**
      * Buffered image containing the sprite that needs to be drawn.
@@ -37,11 +37,10 @@ public class J2DBullet extends Bullet {
      *
      * @param location {@link Entity#coordinate}
      * @param owner    {@link #owner}
-     * @param settings Used as a getter for {@link #speed}
      * @param factory  used to retrieve {@link #graphicsContext} and {@link J2DFactory#properties}.
      */
-    public J2DBullet(Point location, HittableEntity owner, Settings settings, J2DFactory factory) {
-        super(location, owner, settings);
+    public J2DBullet(Point location, HittableEntity owner, J2DFactory factory) {
+        super(location, owner, factory);
         this.graphicsContext = factory.getGraphicsContext();
         Props props = factory.properties;
         try {
@@ -65,6 +64,6 @@ public class J2DBullet extends Bullet {
         Graphics2D graphics2D = graphicsContext.getGraphics2D();
         graphics2D.setColor(new Color(255, 255, 255));
         Point screenCoordinates = graphicsContext.coordinateTranslation(coordinate);
-        graphics2D.drawImage(sprite, screenCoordinates.x - 2, screenCoordinates.y - 5, 4, 25, null);
+        graphics2D.drawImage(sprite, screenCoordinates.x - 2, screenCoordinates.y - 5, 8, 45, null);
     }
 }
