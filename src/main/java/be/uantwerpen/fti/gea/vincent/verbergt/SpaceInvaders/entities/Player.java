@@ -39,6 +39,11 @@ public abstract class Player extends HittableEntity {
     private boolean doubleDamage = false;
 
     /**
+     * The thread that keeps track of the double damage time.
+     */
+    private Thread doubleDamgeTrackerThread = new Thread();
+
+    /**
      * Default constructor for a Player.
      *
      * @param location        {@link Entity#coordinate}.
@@ -118,16 +123,18 @@ public abstract class Player extends HittableEntity {
      */
     public void doubleDamage() {
         doubleDamage = true;
-        new Thread(() -> {
+        doubleDamgeTrackerThread.interrupt();
+        doubleDamgeTrackerThread = new Thread(() -> {
             try {
                 Thread.sleep(5000);
                 synchronized (this) {
                     doubleDamage = false;
                 }
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            } catch (InterruptedException ignored) {
+
             }
-        }).start();
+        });
+        doubleDamgeTrackerThread.start();
     }
 
     /**
