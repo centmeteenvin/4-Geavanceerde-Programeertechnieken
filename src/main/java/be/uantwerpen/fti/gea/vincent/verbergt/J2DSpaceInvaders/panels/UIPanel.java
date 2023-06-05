@@ -4,11 +4,11 @@ import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.GraphicsContext;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Props;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Constants;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.GameState;
+import javafx.util.Pair;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  * The panel containing all UI element. Is displayed on top of {@link GamePanel}
@@ -53,6 +53,10 @@ public class UIPanel extends JPanel {
      */
     private final JButton levelSelectorButton = new JButton("Select Level");
 
+    /**
+     * Button shows all the systemScores.
+     */
+    private final JButton scoresButton = new JButton("Scores");
 
 
     /**
@@ -109,6 +113,16 @@ public class UIPanel extends JPanel {
             levelSelector.setVisible(true);
         });
 
+        mainMenu.add(scoresButton);
+        scoresButton.addActionListener(e -> {
+            String message = "";
+            ArrayList<Pair<String, Integer>> scores = graphicsContext.getScores();
+            for (Pair<String, Integer> score : scores) {
+                message += score.getKey() + ": " + score.getValue() + "\n";
+            }
+            JOptionPane.showMessageDialog(null, message);
+        });
+
         mainMenu.add(title);
 
         add(mainMenu);
@@ -140,11 +154,11 @@ public class UIPanel extends JPanel {
         mainMenu.setSize(getSize());
 
         startButton.setSize(300, 100);
-        startButton.setLocation(getWidth() / 2 - startButton.getWidth()/2, getHeight() / 2 - 150);
+        startButton.setLocation(getWidth() / 2 - startButton.getWidth()/2, getHeight() / 2 - 190);
         startButton.setFont(new Font("Helvetica", Font.BOLD, 30));
 
         levelSelectorButton.setSize(startButton.getSize());
-        levelSelectorButton.setLocation(getWidth() / 2 - levelSelectorButton.getWidth()/2, getHeight() / 2  + 20);
+        levelSelectorButton.setLocation(getWidth() / 2 - levelSelectorButton.getWidth()/2, getHeight() / 2  - 40);
         levelSelectorButton.setFont(new Font("Helvetica", Font.BOLD, 30));
 
         title.setVisible(true);
@@ -154,9 +168,14 @@ public class UIPanel extends JPanel {
         title.setSize(getWidth(), 100);
         title.setLocation(getWidth()/2 - title.getWidth()/2, 100);
 
+        scoresButton.setSize(startButton.getSize());
+        scoresButton.setLocation(getWidth() / 2 - scoresButton.getWidth()/2, getHeight() / 2  + 110);
+        scoresButton.setFont(new Font("Helvetica", Font.BOLD, 30));
+
         quitButton.setSize(startButton.getSize());
-        quitButton.setLocation(getWidth() / 2 - quitButton.getWidth()/2, getHeight() / 2  + 190);
+        quitButton.setLocation(getWidth()/2 - quitButton.getWidth()/2, getHeight()/2 + 260);
         quitButton.setFont(new Font("Helvetica", Font.BOLD, 30));
+
 
         //Level selector
         levelSelector.setSize(getSize());

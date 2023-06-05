@@ -4,11 +4,14 @@ import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.AbstractFactory;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.Game;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Entity;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.HittableEntity;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Player;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.PowerUp;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Constants;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Input;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -33,6 +36,11 @@ public abstract class Enemy extends HittableEntity {
      */
     private final int speed;
 
+    /**
+     * The chance a bonus drops on death.
+     */
+    protected double dropChance = 0.25;
+
 
     /**
      * Default Constructor for Enemies.<br>
@@ -46,6 +54,7 @@ public abstract class Enemy extends HittableEntity {
     public Enemy(Point location, int health, double size, AbstractFactory abstractFactory) {
         super(location, health, size, abstractFactory);
         this.speed = abstractFactory.getSettings().getEnemySpeed();
+        this.dropChance = 0.50;
     }
 
     /**
@@ -71,6 +80,11 @@ public abstract class Enemy extends HittableEntity {
             case RIGHT -> coordinate.x += speed;
             case LEFT -> coordinate.x -= speed;
         }
+
+        //End the game if an enemy touches the bottom of the field.
+        if (coordinate.y <= Constants.FIELD_Y_LOWER) {
+            abstractFactory.getEntities().remove(fetchPlayer());
+        }
         doEnemyUpdate();
     }
 
@@ -86,10 +100,45 @@ public abstract class Enemy extends HittableEntity {
         // check if any of the enemies will collide with the wall
         if (enemies.stream().anyMatch(enemy -> enemy.coordinate.x - enemy.size / 2 <= Constants.FIELD_X_LOWER)) {
             currentDirection = Input.RIGHT;
-            coordinate.y -= 10;
+            coordinate.y -= 30;
         } else if (enemies.stream().anyMatch(enemy -> enemy.coordinate.x + enemy.size / 2 >= Constants.FIELD_X_UPPER)) {
             currentDirection = Input.LEFT;
-            coordinate.y -= 10;
+            coordinate.y -= 30;
         }
+    }
+
+    /**
+     * Chance to drop powerUp.
+     */
+    @Override
+    protected final void death() {
+        if (Math.random() < dropChance) {
+            PowerUp.Type[] types = PowerUp.Type.values();
+            int randomIndex = new Random().nextInt(types.length);
+            PowerUp.Type type = types[randomIndex];
+            abstractFactory.getEntities().add(
+                    abstractFactory.powerUpCreator((Point) coordinate.clone(), type)
+            );
+        }
+        doEnemyDeath();
+    }
+
+    /**
+     * Ensure the {@link #death()} is Always called.
+     */
+    protected abstract void doEnemyDeath();
+
+    /**
+     * Get the player from the entity list.
+     *
+     * @return null if the players wasn't found.
+     */
+    private Player fetchPlayer() {
+        ArrayList<Entity> entities = abstractFactory.getEntities();
+        return entities.stream()
+                .filter(entity -> entity instanceof Player)
+                .map(entity -> (Player) entity)
+                .findFirst()
+                .orElse(null);
     }
 }

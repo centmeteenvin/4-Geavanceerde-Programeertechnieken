@@ -41,7 +41,7 @@ public abstract class DefaultEnemy extends Enemy{
      * Adds 1 point to the player score.
      */
     @Override
-    protected final void death() {
+    protected final void doEnemyDeath() {
         gameState.addScore(1);
     }
 

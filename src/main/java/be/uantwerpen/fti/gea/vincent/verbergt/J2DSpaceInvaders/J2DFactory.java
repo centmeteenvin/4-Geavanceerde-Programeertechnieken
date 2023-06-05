@@ -4,19 +4,27 @@ import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.dataOriented.Soun
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.dataOriented.SoundEngine;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities.*;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities.bosses.J2DExterminator;
+import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities.bosses.J2DNabula;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Props;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.AbstractFactory;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.*;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.DefaultEnemy;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.Enemy;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.bosses.Exterminator;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.bosses.Nabula;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.projectiles.Bullet;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.projectiles.Torpedo;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Event;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.GameState;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Settings;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Vector2D;
+import javafx.util.Pair;
 
+import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Concrete implementation of {@link AbstractFactory}.
@@ -35,22 +43,29 @@ public class J2DFactory extends AbstractFactory {
      * It also uses a double buffered scheme.
      * </p>
      */
-    private GraphicsContext graphicsContext;
+    private final GraphicsContext graphicsContext;
 
 
     /**
      * The controller for all the {@link be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.dataOriented.SoundComponent Soundcomponents}.
      */
-    private final SoundEngine soundEngine = new SoundEngine();
+    private final SoundEngine soundEngine;
 
     /**
      * The list containing all {@link SoundComponent} that need to be played.
      */
     private final ArrayList<SoundComponent> soundComponents = new ArrayList<>();
+
+    /**
+     * A ArrayList containing all scores.
+     */
+    public ArrayList<Pair<String, Integer>> scores = new ArrayList<>();
+
     /**
      * A {@link Props} object to easily reach constants.
      */
     public final Props properties;
+
 
     /**
      * Default constructor.
@@ -62,6 +77,7 @@ public class J2DFactory extends AbstractFactory {
         this.properties = new Props();
         this.graphicsContext = new GraphicsContext(this);
         this.inputController = new J2DInputController(graphicsContext);
+        this.soundEngine = new SoundEngine(graphicsContext.preLoader);
     }
 
     /**
@@ -76,6 +92,7 @@ public class J2DFactory extends AbstractFactory {
         super(gameState, settings);
         this.properties = new Props();
         this.graphicsContext = new GraphicsContext(this);
+        this.soundEngine = new SoundEngine(graphicsContext.preLoader);
     }
 
     /**
@@ -89,6 +106,9 @@ public class J2DFactory extends AbstractFactory {
     public void initialize() {
         gameState.setPlaying(false);
         graphicsContext.initialize();
+        if (new File(properties.scoreFile).exists()) {
+            scores = loadScores();
+        }
     }
 
     /**
@@ -147,6 +167,11 @@ public class J2DFactory extends AbstractFactory {
         return new J2DBullet(location, owner , this);
     }
 
+    @Override
+    public Torpedo torpedoCreator(Point location, Vector2D initialDirection, HittableEntity owner, HittableEntity target) {
+        return new J2DTorpedo(location, initialDirection, owner, this, target);
+    }
+
     /**
      * This factory is called when a level is loaded.<br>
      * This should be overwritten returning a Wall object.
@@ -162,6 +187,17 @@ public class J2DFactory extends AbstractFactory {
     }
 
     /**
+     * This factory is called when a powerUp drops.
+     * @param location {@link PowerUp#coordinate}
+     * @param type the powerUp Type.
+     * @return {@link J2DPowerUp}
+     */
+    @Override
+    public PowerUp powerUpCreator(Point location, PowerUp.Type type) {
+        return new J2DPowerUp(location, this, type);
+    }
+
+    /**
      * Creates a {@link J2DExterminator}.
      *
      * @param location {@link Exterminator#coordinate}
@@ -170,6 +206,11 @@ public class J2DFactory extends AbstractFactory {
     @Override
     public Exterminator exterminatorCreator(Point location) {
         return new J2DExterminator(location, this);
+    }
+
+    @Override
+    public Nabula nabulaCreator(Point location) {
+        return new J2DNabula(location, this);
     }
 
     /**
@@ -221,15 +262,75 @@ public class J2DFactory extends AbstractFactory {
             }
             case GAME_OVER -> {
                 System.out.println("Game was over");
+                HashMap<String, Integer> finalGameState = (HashMap<String, Integer>) event.getSource();
+                JOptionPane.showMessageDialog(null, "Game Over");
+                int choice = JOptionPane.showConfirmDialog(
+                        null, "You died at level: " + finalGameState.get("level") + "\nYour score was: " + finalGameState.get("score"),
+                        "Save Score?",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE
+                        );
+                if (choice == JOptionPane.YES_OPTION) {
+                    String name = JOptionPane.showInputDialog("Your name: ");
+                    Pair<String, Integer> entry = new Pair<>(name, finalGameState.get("score"));
+                    scores.add(entry);
+                    saveScores();
+                }
                 graphicsContext.gameOver();
-                //TODO 3
             }
             case VICTORY -> {
                 //TODO 4
-                System.out.println("Victory was achieved");
+                HashMap<String, Integer> finalGameState = (HashMap<String, Integer>) event.getSource();
+                JOptionPane.showMessageDialog(null, "Victory");
+                int choice = JOptionPane.showConfirmDialog(
+                        null, "Your score was: " + finalGameState.get("score"),
+                        "Save Score?",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE
+                );
+                if (choice == JOptionPane.YES_OPTION) {
+                    String name = JOptionPane.showInputDialog("Your name: ");
+                    Pair<String, Integer> entry = new Pair<>(name, finalGameState.get("score"));
+                    scores.add(entry);
+                    saveScores();
+                }
                 graphicsContext.gameOver();
             }
 
+        }
+    }
+
+    /**
+     * Save {@link #scores} to a file.
+     */
+    private void saveScores() {
+        try {
+            FileOutputStream fos = new FileOutputStream(properties.scoreFile);
+            ObjectOutputStream bos = new ObjectOutputStream(fos);
+            bos.writeObject(scores);
+            bos.close();
+            fos.close();
+        } catch (IOException e) {
+            System.out.println("Error saving file.");
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * reads the scores from {@link Props#scoreFile} and loads it into an array.
+     * @return a list with the scores.
+     */
+    private ArrayList<Pair<String, Integer>> loadScores() {
+        try {
+            FileInputStream fis = new FileInputStream(properties.scoreFile);
+            ObjectInputStream bis = new ObjectInputStream(fis);
+            ArrayList<Pair<String, Integer>> list = (ArrayList<Pair<String, Integer>>) bis.readObject();
+            bis.close();
+            fis.close();
+            return list;
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading scores.");
+            throw new RuntimeException(e);
         }
     }
 

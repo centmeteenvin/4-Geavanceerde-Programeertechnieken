@@ -1,6 +1,6 @@
 package be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities;
 
-import java.awt.Point;
+import java.awt.*;
 
 /**
  * Base abstract class for all the things that can move and/or be interacted with.

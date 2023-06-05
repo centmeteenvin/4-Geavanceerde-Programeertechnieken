@@ -25,15 +25,15 @@ public abstract class Exterminator extends ShootingEnemy {
      * Add 10 points to the score.
      */
     @Override
-    protected void death() {
+    protected void doEnemyDeath() {
         gameState.addScore(10);
     }
 
     /**
-     * Left empty, not needed.
+     * Left empty, not needed because the firing of bullets is already implemented in {@link ShootingEnemy#doEnemyUpdate()}.
      */
     @Override
-    public final void doHittableEnemyUpdate() {
+    public final void doShootingEnemyUpdate() {
         //Empty
     }
 }

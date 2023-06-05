@@ -28,9 +28,5 @@ public class Constants {
     /**
      * The amount of levels available.
      */
-    public static final int NUMBER_OF_LEVELS = 3;
+    public static final int NUMBER_OF_LEVELS = 8;
 }
-
-
-
-

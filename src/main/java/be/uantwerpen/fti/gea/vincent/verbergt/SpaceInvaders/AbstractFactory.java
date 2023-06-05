@@ -3,11 +3,11 @@ package be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.*;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.DefaultEnemy;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.bosses.Exterminator;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.bosses.Nabula;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.projectiles.Bullet;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.projectiles.Torpedo;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Event;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.GameState;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.InputController;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Settings;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -150,7 +150,6 @@ public abstract class AbstractFactory {
      */
     public final void start() {
         gameState.setCurrentLevel(1);
-        System.out.println(gameState.getCurrentLevel());
         gameState.setPlaying(true);
     }
 
@@ -219,6 +218,16 @@ public abstract class AbstractFactory {
     public abstract Bullet bulletCreator(Point location, HittableEntity entity);
 
     /**
+     * This factory is called when a {@link Nabula} shoots its missile attack.
+     * @param location the starting location.
+     * @param initialDirection the initial direction.
+     * @param owner the owner of the torpedo.
+     * @param target the target of the torpedo.
+     * @return a concrete implementation of {@link Torpedo}.
+     */
+    public abstract Torpedo torpedoCreator(Point location, Vector2D initialDirection, HittableEntity owner, HittableEntity target);
+
+    /**
      * This factory is called when a level is loaded.<br>
      * This should be overwritten returning a Wall object.
      *
@@ -230,11 +239,28 @@ public abstract class AbstractFactory {
     public abstract Wall wallCreator(Point location, int health, double size);
 
     /**
+     * When a {@link be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.Enemy} dies.
+     * This should be overwritten returning a concrete implementation of {@link PowerUp}.
+     * @param location {@link PowerUp#coordinate}
+     * @param type the powerUp Type.
+     * @return concrete {@link PowerUp}.
+     */
+    public abstract PowerUp powerUpCreator(Point location, PowerUp.Type type);
+
+    /**
      * This factory is called when a level is loaded.<br>
      * This should be overwritten returning a concrete implementation of {@link Exterminator}.
      * @param location {@link Exterminator#coordinate}
      * @return concrete {@link Exterminator}.
      */
     public abstract Exterminator exterminatorCreator(Point location);
+
+    /**
+     * This factory is called when a level is loaded.<br>
+     * This should be overwritten returning a concrete implementation of {@link Nabula}.
+     * @param location The starting location.
+     * @return concrete {@link Nabula}.
+     */
+    public abstract Nabula nabulaCreator(Point location);
 
 }

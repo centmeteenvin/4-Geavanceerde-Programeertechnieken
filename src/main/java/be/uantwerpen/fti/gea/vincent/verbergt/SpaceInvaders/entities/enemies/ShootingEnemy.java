@@ -29,6 +29,7 @@ public abstract class ShootingEnemy extends Enemy {
     public ShootingEnemy(Point location, int health, double size, AbstractFactory abstractFactory, double averageTimeToShoot) {
         super(location, health, size, abstractFactory);
         this.averageTimeToShoot = averageTimeToShoot;
+        this.dropChance = 1;
     }
 
     /**
@@ -41,26 +42,29 @@ public abstract class ShootingEnemy extends Enemy {
     @Override
     public final void doEnemyUpdate() {
         //Using a geometric distribution to determine the trigger chance.
-        if (Math.random() <= Math.abs(1.0 - Math.pow(20.0 / 3.0, 1.0 / (abstractFactory.getSettings().getFps() * averageTimeToShoot)))) {
+        if (shouldShoot(averageTimeToShoot)) {
             Point bulletCoordinate = new Point(coordinate.x, coordinate.y - (int) (size / 2));
             abstractFactory.getEntities().add(
-                    abstractFactory.bulletCreator((Point) coordinate.clone(), this)
+                    abstractFactory.bulletCreator(bulletCoordinate, this)
             );
             abstractFactory.addEvent(new Event(Event.Type.SHOOT, this));
         }
-        doHittableEnemyUpdate();
+        doShootingEnemyUpdate();
     }
 
+
     /**
-     * Adds 2 points to the score.
+     * returns a random true of false.
+     * The distribution is made so that on average a true is returned every averageTimeToShoot when called every frame.
+     * @param averageTimeToShoot the average time before a shot is released.
+     * @return true if it shouldShoot.
      */
-    @Override
-    protected void death() {
-        gameState.addScore(2);
+    public final boolean shouldShoot(double averageTimeToShoot) {
+       return Math.random() <= Math.abs(1.0 - Math.pow(20.0 / 3.0, 1.0 / (abstractFactory.getSettings().getFps() * averageTimeToShoot)));
     }
 
     /**
      * Subclasses can implement this method if they want extra functionality during {@link Entity#update()}.
      */
-    public abstract void doHittableEnemyUpdate();
+    public abstract void doShootingEnemyUpdate();
 }

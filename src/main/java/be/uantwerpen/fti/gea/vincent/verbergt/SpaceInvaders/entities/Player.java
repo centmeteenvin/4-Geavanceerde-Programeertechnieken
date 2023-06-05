@@ -15,18 +15,11 @@ import java.awt.*;
  */
 public abstract class Player extends HittableEntity {
 
-//    /**
-//     * The Gamestate.
-//     * The player can interact with the gameState, that's why its here.<br>
-//     * //TODO might be for reconsideration.
-//     */
-//    private final GameState gameState;
-
     /**
      * The InputController.
      * Created and passed by {@link AbstractFactory}.
      */
-    private InputController inputController;
+    private final InputController inputController;
 
     /**
      * The speed of the object.
@@ -39,6 +32,11 @@ public abstract class Player extends HittableEntity {
      * Used to prevent machineGunning.
      */
     private long lastShot = System.currentTimeMillis();
+
+    /**
+     * Indicates if player should deal double damage.
+     */
+    private boolean doubleDamage = false;
 
     /**
      * Default constructor for a Player.
@@ -94,6 +92,59 @@ public abstract class Player extends HittableEntity {
      */
     @Override
     protected final void death() {
+    }
+
+    /**
+     * Add a specific amount of health to the player and notify {@link be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.GameState}.
+     * @param amount The amount of health added.
+     */
+    public final void addHealth(int amount) {
+        this.health += amount;
+        abstractFactory.getGameState().setHealth(health);
+    }
+
+    /**
+     * Get the doubleDamage field.
+     * synchronized to prevent concurrency between threads.
+     * @return {@link #doubleDamage}
+     */
+    public synchronized boolean isDoubleDamage() {
+        return doubleDamage;
+    }
+
+    /**
+     * Set the double damage field to active.
+     * Then spawns a thread the sleeps for 10s and disables the doubleDamage afterwards.
+     */
+    public void doubleDamage() {
+        doubleDamage = true;
+        new Thread(() -> {
+            try {
+                Thread.sleep(5000);
+                synchronized (this) {
+                    doubleDamage = false;
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
+
+    /**
+     * Shrink the player by 75% for 10 seconds.
+     */
+    public void shrink() {
+        size *= 3.0/4;
+        new Thread(() -> {
+            try {
+                Thread.sleep(10000);
+                synchronized (this) {
+                    size *= 4.0/3;
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
 }

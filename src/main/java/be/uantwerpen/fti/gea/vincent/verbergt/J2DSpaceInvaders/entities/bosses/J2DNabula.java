@@ -4,45 +4,39 @@ import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.GraphicsContext;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.J2DFactory;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.ImageService;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Props;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.bosses.Exterminator;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.bosses.Nabula;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * Exterminator is a boss that appears in level 3. It shoots on average one bullet every 10 seconds.
- * The boss is worth 10 points.
- * They have 10 health.
- * They have a size of 100
+ * J2D implementation of {@link Nabula}.
  */
-public class J2DExterminator extends Exterminator {
+public class J2DNabula extends Nabula{
+
 
     /**
-     * {@link J2DFactory#graphicsContext}
+     * The Graphical context we are working in.
      */
     private final GraphicsContext graphicsContext;
 
     /**
-     * Buffered image containing the sprite that needs to be drawn.
+     * The sprite for a Nabula boss.
      */
     private final BufferedImage sprite;
 
-
     /**
-     * The constructor for an J2D Exterminator.
-     * @param location The starting location
+     * The default constructor.
+     * @param location the starting location.
      * @param factory {@link #abstractFactory}.
      */
-    public J2DExterminator(Point location, J2DFactory factory) {
+    public J2DNabula(Point location, J2DFactory factory) {
         super(location, factory);
         this.graphicsContext = factory.getGraphicsContext();
         Props props = factory.properties;
-        sprite = graphicsContext.preLoader.fetchImage(props.exterminatorSprite);
+        sprite = graphicsContext.preLoader.fetchImage(props.nabulaSprite);
     }
 
-    /**
-     * Visualizes this.
-     */
     @Override
     public void visualize() {
         Graphics2D graphics2D = graphicsContext.getGraphics2D();
@@ -50,4 +44,5 @@ public class J2DExterminator extends Exterminator {
         int screenSize = graphicsContext.sizeTranslation(size);
         graphics2D.drawImage(ImageService.redOverlay(sprite, (int) (1 + 254.0*(maxHealth-health)/(maxHealth))), screenCoordinate.x - screenSize/2, screenCoordinate.y - screenSize/2, screenSize, screenSize, null);
     }
+
 }

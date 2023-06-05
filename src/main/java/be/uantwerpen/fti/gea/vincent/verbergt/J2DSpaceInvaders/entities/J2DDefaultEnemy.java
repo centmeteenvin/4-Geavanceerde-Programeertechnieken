@@ -1,18 +1,15 @@
 package be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities;
 
-import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Props;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.DefaultEnemy;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.GraphicsContext;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.J2DFactory;
+import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Props;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.AbstractFactory;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Entity;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.HittableEntity;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.DefaultEnemy;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * J2D Concrete implementation of {@link DefaultEnemy}.
@@ -24,7 +21,7 @@ public class J2DDefaultEnemy extends DefaultEnemy {
     /**
      * {@link J2DFactory#graphicsContext}
      */
-    private GraphicsContext graphicsContext;
+    private final GraphicsContext graphicsContext;
 
     /**
      * Buffered image containing the sprite that needs to be drawn.
@@ -45,12 +42,7 @@ public class J2DDefaultEnemy extends DefaultEnemy {
         super(location, health, size, j2DFactory );
         this.graphicsContext = j2DFactory.getGraphicsContext();
         Props props = j2DFactory.properties;
-        try {
-            sprite = ImageIO.read(new File(props.defaultEnemySprite));
-        } catch (IOException e) {
-            System.out.println("Sprite for DefaultEnemy Not found");
-            throw new RuntimeException(e);
-        }
+        sprite = graphicsContext.preLoader.fetchImage(props.defaultEnemySprite);
     }
 
     /**

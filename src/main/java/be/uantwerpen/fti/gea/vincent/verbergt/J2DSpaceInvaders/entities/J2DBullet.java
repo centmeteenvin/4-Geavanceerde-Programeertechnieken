@@ -1,18 +1,14 @@
 package be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities;
 
+import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.GraphicsContext;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.J2DFactory;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Props;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Entity;
-import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.GraphicsContext;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.projectiles.Bullet;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.HittableEntity;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Settings;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.projectiles.Bullet;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * The J2D implementation of a bullet.
@@ -43,16 +39,10 @@ public class J2DBullet extends Bullet {
         super(location, owner, factory);
         this.graphicsContext = factory.getGraphicsContext();
         Props props = factory.properties;
-        try {
-            if (owner.isFriendly()) {
-                sprite = ImageIO.read(new File(props.friendlyBulletSprite));
-            }
-            else {
-               sprite = ImageIO.read(new File(props.hostileBulletSprite));
-            }
-        } catch (IOException e) {
-            System.out.println("Sprite for ShootingEnemy Not found");
-            throw new RuntimeException(e);
+        if (owner.isFriendly()) {
+            sprite = graphicsContext.preLoader.fetchImage(props.friendlyBulletSprite);
+        } else {
+            sprite = graphicsContext.preLoader.fetchImage(props.hostileBulletSprite);
         }
     }
 
@@ -64,6 +54,6 @@ public class J2DBullet extends Bullet {
         Graphics2D graphics2D = graphicsContext.getGraphics2D();
         graphics2D.setColor(new Color(255, 255, 255));
         Point screenCoordinates = graphicsContext.coordinateTranslation(coordinate);
-        graphics2D.drawImage(sprite, screenCoordinates.x - 2, screenCoordinates.y - 5, 8, 45, null);
+        graphics2D.drawImage(sprite, screenCoordinates.x - 2, screenCoordinates.y - 45 / 2, 8, 45, null);
     }
 }

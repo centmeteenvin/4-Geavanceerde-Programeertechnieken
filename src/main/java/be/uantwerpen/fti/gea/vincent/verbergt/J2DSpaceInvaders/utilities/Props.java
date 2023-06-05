@@ -1,11 +1,12 @@
 package be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities;
 
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.AbstractFactory;
-
-import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
-import java.io.*;
+
 /**
  * Class that holds a lot of constant for J2D visualisation like filenames to certain sounds.
  * I'm also dropping all setters and getters to reduce verbosity.
@@ -16,6 +17,20 @@ public class Props {
      */
     private final File J2DSettingsFile = new File("src/main/resources/J2D/J2Dsetting.properties");
 
+    /**
+     * A set containing all the names of the image assets.
+     */
+    private final HashSet<String> imageAssets = new HashSet<>();
+
+    /**
+     * A set containing all the names of the animation assets.
+     */
+    private final HashSet<String> animationAssets = new HashSet<>();
+
+    /**
+     * A set containing all the names of the sound assets.
+     */
+    private final HashSet<String> soundAssets = new HashSet<>();
 
     /**
      * The default constructor.
@@ -34,6 +49,7 @@ public class Props {
 
     /**
      * Assign our fields from the properties file.
+     *
      * @param properties The Properties file containing all the data.
      */
     private void loadFromPropertiesFile(Properties properties) {
@@ -45,12 +61,27 @@ public class Props {
         hitSound = properties.getProperty("hitSound");
         returnIcon = properties.getProperty("returnIcon");
         exterminatorSprite = properties.getProperty("exterminatorSprite");
+        nabulaSprite = properties.getProperty("nabulaSprite");
         playerSprite = properties.getProperty("playerSprite");
         defaultEnemySprite = properties.getProperty("defaultEnemySprite");
         friendlyBulletSprite = properties.getProperty("friendlyBulletSprite");
         hostileBulletSprite = properties.getProperty("hostileBulletSprite");
+        torpedoSprite = properties.getProperty("torpedoSprite");
         explosionSprite = properties.getProperty("explosionSprite");
         sparkSprite = properties.getProperty("sparkSprite");
+        doubleDamagePowerUpSprite = properties.getProperty("doubleDamagePowerUpSprite");
+        hearthPowerUpSprite = properties.getProperty("hearthPowerUpSprite");
+        explosionPowerUpSprite = properties.getProperty("explosionPowerUpSprite");
+        shrinkPowerUpSprite = properties.getProperty("shrinkPowerUpSprite");
+        scoreFile = properties.getProperty("scoreFile");
+
+        imageAssets.addAll(List.of(
+                returnIcon, exterminatorSprite, nabulaSprite, playerSprite, defaultEnemySprite,
+                friendlyBulletSprite, hostileBulletSprite, torpedoSprite, doubleDamagePowerUpSprite, hearthPowerUpSprite,
+                explosionPowerUpSprite, shrinkPowerUpSprite
+        ));
+        animationAssets.addAll(List.of(explosionSprite, sparkSprite));
+        soundAssets.addAll(List.of(playerShootingSound, enemyShootingSound, hitSound));
     }
 
     /**
@@ -94,6 +125,11 @@ public class Props {
     public String exterminatorSprite;
 
     /**
+     * {@link be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities.bosses.J2DNabula#sprite}.
+     */
+    public String nabulaSprite;
+
+    /**
      * {@link be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities.J2DPlayer#sprite}.
      */
     public String playerSprite;
@@ -114,6 +150,11 @@ public class Props {
     public String hostileBulletSprite;
 
     /**
+     * {@link be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities.J2DTorpedo#sprite}
+     */
+    public String torpedoSprite;
+
+    /**
      * {@link Explosion}.
      */
     public String explosionSprite;
@@ -123,4 +164,55 @@ public class Props {
      */
     public String sparkSprite;
 
+    /**
+     * {@link be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities.J2DPowerUp}.
+     */
+    public String doubleDamagePowerUpSprite;
+
+    /**
+     * {@link be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities.J2DPowerUp}.
+     */
+    public String hearthPowerUpSprite;
+
+    /**
+     * {@link be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities.J2DPowerUp}.
+     */
+    public String explosionPowerUpSprite;
+
+    /**
+     * {@link be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities.J2DPowerUp}.
+     */
+    public String shrinkPowerUpSprite;
+
+    /**
+     * {@link be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.J2DFactory#scores}.
+     */
+    public String scoreFile;
+
+    /**
+     * \
+     *
+     * @return reference to {@link #imageAssets}
+     */
+    public HashSet<String> getImageAssets() {
+        return imageAssets;
+    }
+
+    /**
+     * \
+     *
+     * @return reference to {@link #animationAssets}.
+     */
+    public HashSet<String> getAnimationAssets() {
+        return animationAssets;
+    }
+
+    /**
+     * \
+     *
+     * @return reference to {@link #soundAssets}.
+     */
+    public HashSet<String> getSoundAssets() {
+        return soundAssets;
+    }
 }

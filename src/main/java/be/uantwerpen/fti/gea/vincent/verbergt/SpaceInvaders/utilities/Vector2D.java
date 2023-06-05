@@ -108,6 +108,33 @@ public class Vector2D {
     }
 
     /**
+     * Add this to that in a new vector.
+     * @param that The vector we are adding.
+     * @return a new vector that is the sum of this and that.
+     */
+    public Vector2D add(Vector2D that) {
+        return new Vector2D(this.x + that.x, this.y + that.y);
+    }
+
+    /**
+     * Subtract that from this in a new vector.
+     * @param that The vector we are subtracting.
+     * @return a new vector that is the difference of this and that.
+     */
+    public Vector2D subtract(Vector2D that) {
+        return new Vector2D(this.x - that.x, this.y - that.y);
+    }
+
+    /**
+     * Scale x and y by the given factor.
+     * @param factor the vector we are scaling by.
+     */
+    public void scale(double factor) {
+        x *= factor;
+        y *= factor;
+    }
+
+    /**
      * Get the rounded x base.
      * @return {@link #x}
      */
@@ -154,4 +181,11 @@ public class Vector2D {
         return (int) Math.round(y);
     }
 
+    @Override
+    public String toString() {
+        return "Vector2D{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

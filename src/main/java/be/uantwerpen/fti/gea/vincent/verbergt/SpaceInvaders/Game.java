@@ -1,13 +1,16 @@
 package be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders;
 
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.Enemy;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Entity;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Player;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.Enemy;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.*;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 
 /**
@@ -24,7 +27,7 @@ public class Game {
      * <p>Is passed via constructor.
      * <br>Should be a concrete implementation of an {@link AbstractFactory} class.
      */
-    private AbstractFactory abstractFactory;
+    private final AbstractFactory abstractFactory;
 
     /**
      * An ArrayList of all the entities currently in the SpaceInvaders.
@@ -71,7 +74,6 @@ public class Game {
      */
     public void start() {
         initialize();
-        loadLevel();
         gameLoop();
     }
 
@@ -102,11 +104,14 @@ public class Game {
         File currentLevelFile = new File("src/main/resources/levels/level_" + gameState.getCurrentLevel());
         if (currentLevelFile.exists()) {
             try {
-                // first cleared the list and then added the new one to retain the same reference as abstractfactory
-                entities.clear();
-                entities.addAll(levelLoader.LoadLevel((currentLevelFile)));
+                ArrayList<Entity> levelEntities = levelLoader.LoadLevel((currentLevelFile));
+
+                //If a player already exist we don't need to reload it.
+                if (entities.stream().anyMatch(entity -> entity instanceof Player)) {
+                    levelEntities = levelEntities.stream().filter(entity -> !(entity instanceof Player)).collect(Collectors.toCollection(ArrayList::new));
+                }
+                entities.addAll(levelEntities);
                 gameState.setCurrentLoadedLevel(gameState.getCurrentLevel());
-                return;
             } catch (FileNotFoundException e) {
                 throw new RuntimeException("File not found: " + currentLevelFile.getName());
             }
@@ -127,7 +132,6 @@ public class Game {
         double elapsedTime;
         double msPerFrame = 1000 / settings.getFps();
         while (true) {
-//            System.out.println("checking gameState");
             //using infinite loop because I need to be able to constantly check the getPlaying status
             time = System.currentTimeMillis();
             if (gameState.getCurrentLevel() != gameState.getCurrentLoadedLevel()) {
@@ -149,6 +153,7 @@ public class Game {
                 entities.forEach(Entity::visualize);
                 abstractFactory.processEvents();
                 abstractFactory.render();
+
             }
             elapsedTime = (double) (System.currentTimeMillis() - time);
             if (elapsedTime < msPerFrame) {
@@ -177,7 +182,6 @@ public class Game {
             return;
         }
         abstractFactory.addEvent(new Event(Event.Type.LEVEL_CLEARED, this));
-        entities.clear();
         gameState.setCurrentLoadedLevel(0);
         gameState.setPlaying(false);
 
@@ -191,10 +195,11 @@ public class Game {
      * </p>
      */
     private void gameOver() {
-        gameState.setPlaying(false);
-        entities.clear();
-        gameState.setCurrentLoadedLevel(0);
-        abstractFactory.addEvent(new Event(Event.Type.GAME_OVER, this));
+        HashMap<String, Integer> finalGamestate = new HashMap<>();
+        finalGamestate.put("level", gameState.getCurrentLevel());
+        finalGamestate.put("score", gameState.getScore());
+        abstractFactory.addEvent(new Event(Event.Type.GAME_OVER, finalGamestate));
+        reset();
     }
 
     /**
@@ -203,9 +208,21 @@ public class Game {
      * Creates an {@link Event.Type#VICTORY}.
      */
     private void victory() {
+        HashMap<String, Integer> finalGamestate = new HashMap<>();
+        finalGamestate.put("level", gameState.getCurrentLevel());
+        finalGamestate.put("score", gameState.getScore());
+        abstractFactory.addEvent(new Event(Event.Type.VICTORY, finalGamestate));
+        reset();
+    }
+
+    /**
+     * Reset the state so the game can restart from zero by just calling {@link GameState#setPlaying(Boolean)} to true;
+     */
+    private void reset() {
         gameState.setPlaying(false);
-        abstractFactory.addEvent(new Event(Event.Type.VICTORY, this));
         entities.clear();
+        gameState.setCurrentLevel(0);
+        gameState.setScore(0);
         gameState.setCurrentLoadedLevel(-1);
     }
 }

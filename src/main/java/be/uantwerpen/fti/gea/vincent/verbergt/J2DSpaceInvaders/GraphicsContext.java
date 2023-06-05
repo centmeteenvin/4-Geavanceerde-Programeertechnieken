@@ -4,10 +4,12 @@ import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.panels.GamePanel;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.panels.InformationPanel;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.panels.UIPanel;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Explosion;
+import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.PreLoader;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Props;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.utilities.Spark;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.AbstractFactory;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.GameState;
+import javafx.util.Pair;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +28,7 @@ public class GraphicsContext {
      * {@link AbstractFactory} to call its {@link AbstractFactory#start()} method and such.
      * This allows this is passed to {@link #uiPanel} so it can link it to the corresponding buttons.
      */
-    private J2DFactory factory;
+    private final J2DFactory factory;
 
     /**
      * The graphic that is shown in the
@@ -41,13 +43,13 @@ public class GraphicsContext {
     /**
      * The Window/frame that is displayed to the user.
      */
-    private JFrame frame;
+    private final JFrame frame;
 
     /**
      * The panel added to the {@link #frame} where the game is drawn on.
      * is displayed below {@link #informationPanel} and {@link #uiPanel}
      */
-    private GamePanel gamePanel;
+    private final GamePanel gamePanel;
 
 
     /**
@@ -59,13 +61,13 @@ public class GraphicsContext {
      * The UIPanel for rendering buttons and titles.
      * is displayed on top of {@link #informationPanel} and {@link #gamePanel}
      */
-    private UIPanel uiPanel;
+    private final UIPanel uiPanel;
 
     /**
      * The information screen containing score, lives etc.
-     * is displayed on top of {@link #gamePanel} and below {@link #uiPanel}
+     * Is drawn on the gamePanel.
      */
-    private InformationPanel informationPanel;
+    private final InformationPanel informationPanel;
 
     /**
      * A list containing all explosions that need to be rendered.
@@ -78,6 +80,11 @@ public class GraphicsContext {
     public final ArrayList<Spark> sparks = new ArrayList<>();
 
     /**
+     * A class that has all images stored in memeory.
+     */
+    public final PreLoader preLoader;
+
+    /**
      * Default constructor for GraphicsContext.
      * <p>
      * Creates the necessary objects and structure.<br>
@@ -87,14 +94,15 @@ public class GraphicsContext {
      */
     public GraphicsContext(J2DFactory factory) {
         this.factory = factory;
+        this.preLoader = new PreLoader(factory);
+
         frame = new JFrame();
         JLayeredPane mainPanel = frame.getLayeredPane();
         gamePanel = new GamePanel(null, true, this);
         uiPanel = new UIPanel(null, true, this);
-        informationPanel = new InformationPanel(null, true, this);
+        informationPanel = new InformationPanel( this);
 
         mainPanel.add(uiPanel, Integer.valueOf(2));
-        mainPanel.add(informationPanel, Integer.valueOf(1));
         mainPanel.add(gamePanel, Integer.valueOf(0));
 
     }
@@ -104,11 +112,12 @@ public class GraphicsContext {
      */
     public void render() {
         renderExplosions();
-        //renders sparks on top of explosions.
         renderSparks();
-        gamePanel.drawingPanel.repaint();
+        renderInformation();
+        gamePanel.repaint();
 
     }
+
 
     /**
      * Loops through {@link #explosions} and draws than on top of the game.
@@ -137,6 +146,13 @@ public class GraphicsContext {
     }
 
     /**
+     * Display score and amount of hearts.
+     */
+    private void renderInformation() {
+        informationPanel.visualize();
+    }
+
+    /**
      * Initialize the frame and size for and all related settings using a Properties object.
      */
     public void initialize() {
@@ -147,7 +163,6 @@ public class GraphicsContext {
         frame.setSize(size.width, size.height);
 
         gamePanel.initialize();
-        informationPanel.initialize();
         uiPanel.initialize();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -211,6 +226,7 @@ public class GraphicsContext {
      * Calls the {@link AbstractFactory#start()} method.
      */
     public void start() {
+//        frame.remove(uiPanel);
         factory.start();
     }
 
@@ -259,5 +275,13 @@ public class GraphicsContext {
      */
     public void spark(Point coordinate) {
         sparks.add(new Spark((Point) coordinate.clone(), factory));
+    }
+
+    /**
+     * Gets the scores from the factory.
+     * @return The {@link J2DFactory#scores}.
+     */
+    public ArrayList<Pair<String, Integer>> getScores() {
+        return factory.scores;
     }
 }

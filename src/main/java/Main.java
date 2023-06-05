@@ -10,7 +10,7 @@ public class Main {
      * Start game here.
      * @param args commandline arguments.
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 //        System.out.println("Hello World");
         AbstractFactory abstractFactory = new J2DFactory(); //Give a concrete implementation of the AbstractFactory
         Game game = new Game(abstractFactory); //Pass it into a new gameObject

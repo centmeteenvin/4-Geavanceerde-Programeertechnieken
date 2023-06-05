@@ -1,12 +1,12 @@
 package be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities;
 
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.DefaultEnemy;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.AbstractFactory;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Wall;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Entity;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Player;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.ShootingEnemy;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Wall;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.DefaultEnemy;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.bosses.Exterminator;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.bosses.Nabula;
 
 import java.awt.*;
 import java.io.*;
@@ -21,7 +21,7 @@ public class LevelLoader {
     /**
      * Reference to {@link AbstractFactory} to make the correct calls.
      */
-    private AbstractFactory abstractFactory;
+    private final AbstractFactory abstractFactory;
 
     /**
      * The constructor.
@@ -56,6 +56,7 @@ public class LevelLoader {
                     case "Player" -> entities.add(createPlayer(list));
                     case "Wall" -> entities.add(createWall(list));
                     case "Exterminator" -> entities.add(createExterminator(list));
+                    case "Nabula" -> entities.add(createNabula(list));
                 }
                 line = reader.readLine();
             } while (line != null);
@@ -135,6 +136,18 @@ public class LevelLoader {
         String[] temp = parameters.get(1).split(",");
         Point location = new Point(Integer.parseInt(temp[0]), Integer.parseInt(temp[1]));
         return abstractFactory.exterminatorCreator(location);
+    }
+
+    /**
+     * Createn a Nabula boss.
+     * Calls {@link #abstractFactory} to create a concrete implementation.
+     * @param parameters the list of parameters from the level file.
+     * @return an instance of {@link Nabula}.
+     */
+    private Nabula createNabula(ArrayList<String> parameters) {
+        String[] temp = parameters.get(1).split(",");
+        Point location = new Point(Integer.parseInt(temp[0]), Integer.parseInt(temp[1]));
+        return abstractFactory.nabulaCreator(location);
     }
 
 

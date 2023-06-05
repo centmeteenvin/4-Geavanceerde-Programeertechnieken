@@ -3,6 +3,7 @@ package be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.projectile
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.AbstractFactory;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Entity;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.HittableEntity;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Player;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Vector2D;
 
 import java.awt.*;
@@ -15,17 +16,11 @@ import java.awt.*;
 public abstract class Bullet extends Projectile {
 
     /**
-     * The Creator of the bullet.<br>
-     * Class Type can be checked to prevent friendly fire.<br>
-     */
-    protected HittableEntity owner;
-
-    /**
      * Default Constructor for Entities.
      *
      * @param location {@link Entity#coordinate}.
      * @param owner    {@link #owner}.
-     * @param factory {@link #factory}.
+     * @param factory  {@link #factory}.
      */
     public Bullet(Point location, HittableEntity owner, AbstractFactory factory) {
         super(location,new Vector2D(0, -1) , owner, factory);
@@ -53,7 +48,13 @@ public abstract class Bullet extends Projectile {
      */
     @Override
     protected void doHit(HittableEntity hitEntity) {
-        hitEntity.getHit(factory.getSettings().bulletDamage);
+        int damageFactor = 1;
+        if (owner instanceof Player player) {
+            if (player.isDoubleDamage()) {
+                damageFactor = 5;
+            }
+        }
+        hitEntity.getHit(factory.getSettings().bulletDamage*damageFactor);
     }
 
     /**

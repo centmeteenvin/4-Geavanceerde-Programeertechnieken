@@ -1,8 +1,8 @@
 package be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.entities;
 
+import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.GraphicsContext;
 import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.J2DFactory;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Entity;
-import be.uantwerpen.fti.gea.vincent.verbergt.J2DSpaceInvaders.GraphicsContext;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Wall;
 
 import java.awt.*;
@@ -15,7 +15,7 @@ public class J2DWall extends Wall {
     /**
      * {@link J2DFactory#graphicsContext}
      */
-    private GraphicsContext graphicsContext;
+    private final GraphicsContext graphicsContext;
 
     /**
      * Default Wall Constructor

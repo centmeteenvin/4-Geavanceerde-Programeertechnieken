@@ -5,7 +5,6 @@ import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.Game;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Entity;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.HittableEntity;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Constants;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Event;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities.Vector2D;
 
 import java.awt.*;
@@ -56,7 +55,6 @@ public abstract class Projectile extends Entity {
     public Projectile(Point location, Vector2D direction, HittableEntity owner, AbstractFactory factory) {
         super(location);
         this.direction = direction;
-        this.direction.normalize();
         this.owner = owner;
         this.factory = factory;
         this.entities = factory.getEntities();
@@ -123,8 +121,7 @@ public abstract class Projectile extends Entity {
      */
     private boolean inbounds() {
         if (this.coordinate.y > Constants.FIELD_Y_UPPER || this.coordinate.y < Constants.FIELD_Y_LOWER) return false;
-        if (this.coordinate.x > Constants.FIELD_X_UPPER || this.coordinate.x < Constants.FIELD_X_LOWER) return false;
-        return true;
+        return this.coordinate.x <= Constants.FIELD_X_UPPER && this.coordinate.x >= Constants.FIELD_X_LOWER;
     }
 
     /**

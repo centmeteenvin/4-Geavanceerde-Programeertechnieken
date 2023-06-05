@@ -88,4 +88,48 @@ public class Vector2DTests {
             Assertions.assertEquals(direction, vector.getDirection(), 0.001);
         }
     }
+
+    @Test
+    public void addTest() {
+        for (int i = 0; i < 100; i++) {
+            Vector2D vector1 = random();
+            Vector2D vector2 = random();
+            Vector2D vector3 = vector1.add(vector2);
+            Assertions.assertEquals(vector1.x + vector2.x, vector3.x);
+            Assertions.assertEquals(vector1.y + vector2.y, vector3.y);
+        }
+    }
+
+    @Test
+    public void subtractTest() {
+        for (int i = 0; i < 100; i++) {
+            Vector2D vector1 = random();
+            Vector2D vector2 = random();
+            Vector2D vector2Inv = new Vector2D(-vector2.x, -vector2.y);
+            Vector2D vector3 = vector1.subtract(vector2);
+            Assertions.assertEquals(vector1.add(vector2Inv), vector3);
+        }
+    }
+
+    @Test
+    public void scaleTest() {
+        for (int i = 0; i < 100; i++) {
+            double factor = (Math.random() - 0.5) * 100;
+            Vector2D vector = random();
+            double size = vector.getSize();
+            vector.scale(factor);
+            Assertions.assertEquals(Math.abs(size*factor), vector.getSize(), 0.001);
+        }
+    }
+
+    /**
+     * generate a random vector.
+     * @return randomized vector with bases between -50 and 50;
+     */
+    private Vector2D random() {
+        return new Vector2D((Math.random()- 0.5) * 100, (Math.random() - 0.5) *100);
+    }
+
+
+
 }

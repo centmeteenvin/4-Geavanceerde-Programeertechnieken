@@ -2,9 +2,9 @@ package be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.utilities;
 
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.AbstractFactory;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.Game;
+import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Player;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.enemies.Enemy;
 import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.projectiles.Bullet;
-import be.uantwerpen.fti.gea.vincent.verbergt.SpaceInvaders.entities.Player;
 
 import java.io.File;
 import java.io.FileReader;
